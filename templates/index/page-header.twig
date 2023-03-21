@@ -18,7 +18,10 @@
 <h1 class="hidden">{{ constant('SITE_NAME') }}</h1>
 <div id="header">
 <div id="logo"><a href="index.php"></a></div>
-<div id="userinfo">
+<div class="menu_container">
+<label class="hiden_mobile_menu" for="item-3" class="toggle"><i class="fas fa-cog"></i></label>
+  <input type="checkbox" name="one" id="item-3" class="hide-input">
+<div class="user_mobile_menu_toggle" id="userinfo">
 <ul id="userinfo_username">
     <li id="nav_userinfo" {{ _self.active(document == 'user' and request.id == user.id) }}>
         <a href="user.php?id={{ user.id }}" class="username">{{ user.username }}</a>
@@ -83,21 +86,30 @@
 {%- endfor %}
 </ul>
 </div>
-
-<div id="menu">
-<h4 class="hidden">Site Menu</h4>
-<ul>
-<li id="nav_index"{{    _self.active(document == 'index')    }}><a href="index.php">Home</a> </li>
-<li id="nav_torrents"{{ _self.active(document == 'torrents') }}><a href="torrents.php">Torrents</a> </li>
-<li id="nav_collages"{{ _self.active(document == 'collages') }}><a href="collages.php">Collages</a> </li>
-<li id="nav_requests"{{ _self.active(document == 'requests') }}><a href="requests.php">Requests</a> </li>
-<li id="nav_forums"{{   _self.active(document == 'forums')   }}><a href="forums.php">Forums</a> </li>
-<li id="nav_irc"{{      _self.active(document == 'chat')     }}><a href="wiki.php?action=article&amp;name=irc">IRC</a> </li>
-<li id="nav_top10"{{    _self.active(document == 'top10')    }}><a href="top10.php">Top 10</a> </li>
-<li id="nav_rules"{{    _self.active(document == 'rules')    }}><a href="rules.php">Rules</a> </li>
-<li id="nav_wiki"{{     _self.active(document == 'wiki')     }}><a href="wiki.php">Wiki</a> </li>
-<li id="nav_staff"{{    _self.active(document == 'staff')    }}><a href="staff.php" title="Staff">Staff</a> </li>
-</ul>
+</div>
+<div class="mobile_header"></div>
+  <input type="checkbox" class="mobile_main_menu" id="mobile_main_menu">
+  <label for="mobile_main_menu" class="main_mobile_menu_toggle">
+    <div class="spinner diagonal part-1"></div>
+    <div class="spinner horizontal"></div>
+    <div class="spinner diagonal part-2"></div>
+  </label>
+<div id="main_site_menu">
+    <div id="menu">
+        <h4 class="hidden">Site Menu</h4>
+        <ul class="main_site_menu_inner">
+            <li id="nav_index"{{    _self.active(document == 'index')    }}><a href="index.php">Home</a> </li>
+            <li id="nav_torrents"{{ _self.active(document == 'torrents') }}><a href="torrents.php">Torrents</a> </li>
+            <li id="nav_collages"{{ _self.active(document == 'collages') }}><a href="collages.php">Collages</a> </li>
+            <li id="nav_requests"{{ _self.active(document == 'requests') }}><a href="requests.php">Requests</a> </li>
+            <li id="nav_forums"{{   _self.active(document == 'forums')   }}><a href="forums.php">Forums</a> </li>
+            <li id="nav_irc"{{      _self.active(document == 'chat')     }}><a href="wiki.php?action=article&amp;name=irc">IRC</a> </li>
+            <li id="nav_top10"{{    _self.active(document == 'top10')    }}><a href="top10.php">Top 10</a> </li>
+            <li id="nav_rules"{{    _self.active(document == 'rules')    }}><a href="rules.php">Rules</a> </li>
+            <li id="nav_wiki"{{     _self.active(document == 'wiki')     }}><a href="wiki.php">Wiki</a> </li>
+            <li id="nav_staff"{{    _self.active(document == 'staff')    }}><a href="staff.php" title="Staff">Staff</a> </li>
+        </ul>
+    </div>
 </div>
 
 {% if alert_list or action_list %}

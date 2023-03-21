@@ -1,0 +1,62 @@
+@import '../apollostage/variables';
+
+$primary-accent-color: #e69f90;
+$base-background-color: #1c1d21;
+
+$table-background-color: #2d2e34;
+$secondary-table-background-color: #26272d;
+$form-background-color: #2d2e34;
+$a-color: #f4f4f4;
+$a-hover-color: #fad5cd;
+$header-background-color: #717dab;
+
+$menu-li-second-child-background-color: #3d4f8e;
+$menu-li-third-child-background-color: #445290;
+$menu-li-fourth-child-background-color: #4a5693;
+$menu-li-fifth-child-background-color: #505995;
+$menu-li-sixth-child-background-color: #565d97;
+$menu-li-seventh-child-background-color: #5c609a;
+$header-background-color: #61649c;
+$menu-li-ninth-child-background-color: #67689e;
+
+$userinfo-username-color: #6c6ba1;
+$userinfo-background-color-1: #6c6ba1;
+$userinfo-background-color-2: #87869f;
+$userinfo-username-hover-background-color: #87869f;
+
+$userinfo-minor-color: #716fa3;
+$userinfo-minor-hover-background-color: #81809d;
+
+$blockquote-background-color: #36373d;
+$input-background-color: #3e4046;
+
+$span-green-color: #54ba54;
+$span-blue-color: #5454ed;
+
+$torrent-background-color: #36373d;
+
+$footer-color: #a4a4a4;
+
+$input-color: #d1d1d1;
+
+$ratio-red-color: #ed5454;
+$ratio-yellow-color: #e8be69;
+
+$menu-background-color-1: #c4789199;
+$menu-background-color-2: #c47891;
+
+$selection-background-color: rgba(217, 130, 111, 0.6);
+$poll-background-color: rgba(230, 159, 144, 0.1);
+
+$unread-icon: url(./assets/icons/Forum-Dark-Unread.svg);
+$unread-locked-icon: url(./assets/icons/Forum-Dark-Locked.svg);
+$unread-sticky-icon: url(./assets/icons/Forum-Dark-Pinned.svg);
+$unread-locked-sticky-icon: url(./assets/icons/Forum-Dark-Pinned-Locked.svg);
+
+$read-icon: url(./assets/icons/Forum-Dark-Read.svg);
+$read-locked-icon: url(./assets/icons/Forum-Dark-Pinned-Locked-Read.svg);
+$read-sticky-icon: url(./assets/icons/Forum-Dark-Pinned-Read.svg);
+$read-locked-sticky-icon: url(./assets/icons/Forum-Dark-Pinned-Locked-Read.svg);
+
+@import '../apollostage/_base';
+@import './_base';

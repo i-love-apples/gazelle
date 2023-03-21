@@ -273,56 +273,11 @@ foreach ($slice as $Key => $Post) {
     </colgroup>
     <tr class="colhead_dark">
         <td colspan="<?= $Viewer->showAvatars() ? 2 : 1 ?>">
-            <span style="float: left;"><a class="post_id" href="forums.php?action=viewthread&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>#post<?=$PostID?>">#<?=$PostID?></a>
-                <?=Users::format_username($AuthorID, true, true, true, true, true, $IsDonorForum) ?>
-                <?=time_diff($AddedTime, 2); ?>
-                <span id="postcontrol-<?= $PostID ?>">
-<?php if (!$thread->isLocked() && !$Viewer->disablePosting()) { ?>
-                - <a href="#quickpost" id="quote_<?=$PostID?>" onclick="Quote('<?=$PostID?>', '<?= $author->username() ?>', true);" title="Select text to quote" class="brackets">Quote</a>
-<?php
-    }
-    if ((!$thread->isLocked() && $Viewer->writeAccess($forum) && $AuthorID == $Viewer->id()) && !$Viewer->disablePosting() || $Viewer->permitted('site_moderate_forums')) {
-?>
-                - <a href="#post<?=$PostID?>" onclick="Edit_Form('<?=$PostID?>', '<?=$Key?>');" class="brackets">Edit</a>
-<?php } ?>
-<?php if ($Viewer->permitted('site_forum_post_delete') && $thread->postTotal() > 1) { ?>
-                - <a href="#post<?=$PostID?>" onclick="Delete('<?=$PostID?>');" class="brackets">Delete</a>
-<?php
-    }
-    if ($PostID == $thread->pinnedPostId()) { ?>
-                <strong><span class="sticky_post_label" class="brackets">Pinned</span></strong>
-<?php   if ($Viewer->permitted('site_moderate_forums')) { ?>
-                - <a href="forums.php?action=sticky_post&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>&amp;remove=true&amp;auth=<?=$auth?>" title="Unpin this post" class="brackets tooltip">X</a>
-<?php
-        }
-    } else {
-        if ($Viewer->permitted('site_moderate_forums')) {
-?>
-                - <a href="forums.php?action=sticky_post&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>&amp;auth=<?=$auth?>" title="Pin this post" class="tooltip" style="font-size: 1.4em">&#X1f4cc;</a>
-<?php
-        }
-    }
-?>
-                </span>
-            </span>
-            <span id="bar<?=$PostID?>" style="float: right">
-                <a href="reports.php?action=report&amp;type=post&amp;id=<?=$PostID?>" class="brackets">Report</a>
-<?php
-    $author = new Gazelle\User($AuthorID);
-    if ($Viewer->permitted('users_warn') && $Viewer->id() != $AuthorID && $Viewer->classLevel() >= $author->classLevel()) {
-?>
-                <form class="manage_form hidden" name="user" id="warn<?=$PostID?>" action="" method="post">
-                    <input type="hidden" name="action" value="warn" />
-                    <input type="hidden" name="auth" value="<?= $auth ?>" />
-                    <input type="hidden" name="postid" value="<?=$PostID?>" />
-                    <input type="hidden" name="userid" value="<?=$AuthorID?>" />
-                    <input type="hidden" name="key" value="<?=$Key?>" />
-                </form>
-                - <a href="#" onclick="$('#warn<?=$PostID?>').raw().submit(); return false;" class="brackets">Warn</a>
-<?php } ?>
-                &nbsp;
-                <a href="#">&uarr;</a>
-            </span>
+                <span style="float: left;"><a class="post_id" href="forums.php?action=viewthread&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>#post<?=$PostID?>">#<?=$PostID?></a>
+                    <?=Users::format_username($AuthorID, true, true, true, true, true, $IsDonorForum) ?>
+                    <?=time_diff($AddedTime, 2); ?>
+
+                    
         </td>
     </tr>
     <tr>
@@ -332,20 +287,76 @@ foreach ($slice as $Key => $Post) {
         </td>
 <?php   } ?>
         <td class="body" valign="top"<?php if (!$Viewer->showAvatars()) { echo ' colspan="2"'; } ?>>
-            <div id="content<?=$PostID?>">
-                <?= Text::full_format($Body) ?>
-<?php   if ($EditedUserID) { ?>
-                <br />
-                <br />
-                <span class="last_edited">
-<?php       if ($Viewer->permitted('site_admin_forums')) { ?>
-                <a href="#content<?=$PostID?>" onclick="LoadEdit('forums', <?=$PostID?>, 1); return false;">&laquo;</a>
-<?php       } ?>
-                Last edited by
-                <?=Users::format_username($EditedUserID, false, false, false, false, false, $IsDonorForum) ?> <?=time_diff($EditedTime, 2)?>
-                </span>
-<?php    } ?>
+            <div class=cnt>
+                <div id="content<?=$PostID?>">
+
+                    <?= Text::full_format($Body) ?>
+    <?php   if ($EditedUserID) { ?>
+                    <br />
+                    <br />
+                    <span class="last_edited">
+    <?php       if ($Viewer->permitted('site_admin_forums')) { ?>
+                    <a href="#content<?=$PostID?>" onclick="LoadEdit('forums', <?=$PostID?>, 1); return false;">&laquo;</a>
+    <?php       } ?>
+                    Last edited by
+                    <?=Users::format_username($EditedUserID, false, false, false, false, false, $IsDonorForum) ?> <?=time_diff($EditedTime, 2)?>
+                    </span>
+    <?php    } ?>
+                
+
             </div>
+            <div class="post-controls">
+                                <span id="postcontrol-<?= $PostID ?>">
+                <?php if (!$thread->isLocked() && !$Viewer->disablePosting()) { ?>
+                                <a href="#quickpost" id="quote_<?=$PostID?>" onclick="Quote('<?=$PostID?>', '<?= $author->username() ?>', true);" title="Select text to quote" class="btn"><span class="s-icon"><i class="fa-solid fa-quote-left"></i></span>Quote</a>
+                <?php
+                    }
+                    if ((!$thread->isLocked() && $Viewer->writeAccess($forum) && $AuthorID == $Viewer->id()) && !$Viewer->disablePosting() || $Viewer->permitted('site_moderate_forums')) {
+                ?>
+                                <a href="#post<?=$PostID?>" onclick="Edit_Form('<?=$PostID?>', '<?=$Key?>');" class="btn"><span class="s-icon"><i class="fa-solid fa-pencil"></i></span>Edit</a>
+                <?php } ?>
+                <?php if ($Viewer->permitted('site_forum_post_delete') && $thread->postTotal() > 1) { ?>
+                                <a href="#post<?=$PostID?>" onclick="Delete('<?=$PostID?>');" class="btn"><span class="s-icon"><i class="fa-solid fa-trash-can"></i></span>Delete</a>
+                <?php
+                    }
+                    if ($PostID == $thread->pinnedPostId()) { ?>
+                                <strong><span class="sticky_post_label btn green-btn">Pinned</span></strong>
+                <?php   if ($Viewer->permitted('site_moderate_forums')) { ?>
+                                <a href="forums.php?action=sticky_post&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>&amp;remove=true&amp;auth=<?=$auth?>" title="Unpin this post" class="btn tooltip"><span class="s-icon"><i class="fa-solid fa-minus"></i></span>&nbsp;<i class="fa-solid fa-thumbtack"></i></a>
+                <?php
+                        }
+                    } else {
+                        if ($Viewer->permitted('site_moderate_forums')) {
+                ?>
+                                <a href="forums.php?action=sticky_post&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>&amp;auth=<?=$auth?>" title="Pin this post" class="btn tooltip" ><span class="s-icon"><i class="fa-solid fa-plus"></i></span><i class="fa-solid fa-thumbtack"></i></a>
+                <?php
+                        }
+                    }
+                ?>              
+                                
+                                </span>
+                            </span>
+
+                            <span id="bar<?=$PostID?>">
+                                <a href="reports.php?action=report&amp;type=post&amp;id=<?=$PostID?>" class="btn"><i class="fa-solid fa-triangle-exclamation"></i></a>
+                <?php
+                    $author = new Gazelle\User($AuthorID);
+                    if ($Viewer->permitted('users_warn') && $Viewer->id() != $AuthorID && $Viewer->classLevel() >= $author->classLevel()) {
+                ?>
+                                <form class="manage_form hidden" name="user" id="warn<?=$PostID?>" action="" method="post">
+                                    <input type="hidden" name="action" value="warn" />
+                                    <input type="hidden" name="auth" value="<?= $auth ?>" />
+                                    <input type="hidden" name="postid" value="<?=$PostID?>" />
+                                    <input type="hidden" name="userid" value="<?=$AuthorID?>" />
+                                    <input type="hidden" name="key" value="<?=$Key?>" />
+                                </form>
+                                <a href="#" onclick="$('#warn<?=$PostID?>').raw().submit(); return false;" class="btn"><i class="fa-solid fa-circle-exclamation"></i></a>
+                <?php } ?>
+                                &nbsp;
+                                <a href="#">&uarr;</a>
+                            </span>
+            </div>
+        </div>
         </td>
     </tr>
 </table>
@@ -424,7 +435,7 @@ if ($Viewer->permitted('site_moderate_forums')) {
         </div>
         <table cellpadding="6" cellspacing="1" border="0" width="100%" class="layout border">
             <tr>
-                <td class="label"><label for="sticky_thread_checkbox" title="Pin this thread at the top of the list of threads">Pin</label></td>
+                <td class="label"><label for="sticky_thread_checkbox" title="Pin this thread at the top of the list of threads"><i class="fa-solid fa-thumbtack"></i></label></td>
                 <td>
                     <input type="checkbox" id="sticky_thread_checkbox" onclick="$('#ranking_row').gtoggle();" name="sticky"<?php if ($thread->isPinned()) { echo ' checked="checked"'; } ?> tabindex="4" />
                 </td>

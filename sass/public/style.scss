@@ -16,10 +16,25 @@
 }
 
 #logo {
-  height: 170px;
   margin-top: 60px;
   text-align: center;
   width: 100%;
+}
+
+#logo a img {
+  max-height: 7em;
+}
+
+div .auth_form input, div .create_form input {
+  padding: 0.8em 1em;
+  margin-bottom: 0.5em;
+  font-size: 0.75em;
+  border: none;
+  outline: none;
+}
+
+.create_form p, .create_form label {
+  font-size: 0.75em;
 }
 
 #maincontent {
@@ -55,7 +70,7 @@ input[type="text"]:invalid, input[type="password"]:invalid {
 }
 
 body {
-  background-color: #041813;
+  background-color: #010101;
   font-family: Bitstream Vera Sans, Tahoma, sans-serif;
   color: #e0e0e0;
 }
@@ -93,7 +108,7 @@ a:hover {
 .auth_form a {
   display: block;
   font-size: 0.7em;
-  margin-left: 80px;
+  margin-left: 100px;
   margin-top: 10px;
 }
 
@@ -138,7 +153,7 @@ a:hover {
 }
 
 .main .submit {
-  margin: 10px 0 0 80px;
+  margin: 10px 0 0 100px;
 }
 
 .para {

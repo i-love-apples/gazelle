@@ -29,7 +29,7 @@
                     &rsaquo; quoted by {{ quote.quoter_id|user_url }} {{ quote.date|time_diff }}
                     {% if quote.unread %} <span class="new">(New!)</span>{% endif %}
                 </span>
-                <span style="float: left;" class="tooltip last_read" title="Jump to quote"> <a href="{{ quote.jump|raw }}"></a></span>
+                <span style="float: left;" class="tooltip last_read" title="Jump to quote"> <a href="{{ quote.jump|raw }}"><i class="fa-solid fa-circle-arrow-right"></i></a></span>
                 <span style="float: right;"><a href="#">&uarr;</a></span>
             </td>
         </tr>

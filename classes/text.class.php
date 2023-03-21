@@ -961,7 +961,7 @@ class Text {
                 case 'mature':
                     if (self::$viewer->option('EnableMatureContent')) {
                         if (!empty($Block['Attr'])) {
-                            $Str .= '<strong class="mature" style="font-size: 1.2em;">Mature content:</strong><strong> ' . $Block['Attr'] . '</strong><br /> <a href="javascript:void(0);" onclick="BBCode.spoiler(this);">Show</a>';
+                            $Str .= '<strong class="mature">Mature content:</strong><strong> ' . $Block['Attr'] . '</strong><br /> <a href="javascript:void(0);" onclick="BBCode.spoiler(this);">Show</a>';
                             $Str .= '<blockquote class="hidden spoiler">'.self::to_html($Block['Val'], $Rules).'</blockquote>';
                         }
                         else {

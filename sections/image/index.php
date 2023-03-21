@@ -60,8 +60,8 @@ if ($imageData !== false) {
         switch($usage) {
             case 'avatar':
             case 'avatar2':
-                $maxHeight = 400;
-                $maxSizeKb = 256;
+                $maxHeight = 600;
+                $maxSizeKb = 700;
                 break;
             case 'donoricon':
                 $maxHeight = 100;

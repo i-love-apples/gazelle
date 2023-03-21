@@ -214,7 +214,7 @@ foreach ($results as $r) {
 <?php
     }
     if ($search->isBodySearch()) { ?>
-                <a href="#" onclick="$('#post_<?=$PostID?>_text').gtoggle(); return false;">(Show)</a> <span style="float: right;" class="tooltip last_read" title="Jump to post"><a href="forums.php?action=viewthread&amp;threadid=<?=$ID?><?php if (!empty($PostID)) { echo "&amp;postid=$PostID#post$PostID"; } ?>"></a></span>
+                <a href="#" onclick="$('#post_<?=$PostID?>_text').gtoggle(); return false;">(Show)</a> <span style="float: right;" class="tooltip last_read" title="Jump to post"><a href="forums.php?action=viewthread&amp;threadid=<?=$ID?><?php if (!empty($PostID)) { echo "&amp;postid=$PostID#post$PostID"; } ?>"><i class="fa-solid fa-circle-arrow-right"></i></a></span>
 <?php    } ?>
             </td>
             <td>

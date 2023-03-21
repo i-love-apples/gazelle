@@ -11,29 +11,50 @@ final class DeleteStyles extends AbstractMigration
     public function up(): void
     {
         $removedStylesheets = [
-            'Layer cake',
-            'Proton',
-            'postmod',
-            'Kuro',
-            'Dark Ambient',
-            'Xanax cake',
-            'Haze',
-            'Post Office',
-            'LinoHaze',
+            'Anorex',
             'Apollo Mat',
+            'Dark Ambient',
+            'GTFO Spaceship',
+            'Haze',
+            'Hydro',
+            'Kuro',
+            'Layer cake',
+            'LinoHaze',
+            'Minimal',
+            'Mono',
+            'Post Office',
+            'Proton',
+            'Shiro',
+            'Whatlove',
+            'White.cd',
+            'Xanax cake',
+            'postmod',
         ];
         $this->query("DELETE FROM stylesheets WHERE `Name` IN ('" . implode("','", $removedStylesheets) . "')");
-
-        $row = $this->query("SELECT * FROM stylesheets WHERE `Name` = 'Dark Cake'")->fetch(\PDO::FETCH_NUM);
-        if ($row === false) {
-            $this->table('stylesheets')->insert([
-                ['Name' => 'Dark Cake', 'Description' => 'Dark Cake for Orpheus']
-            ])->save();
-        }
     }
 
     public function down(): void
     {
-        $this->query("DELETE FROM stylesheets WHERE `Name` = 'Dark Cake'");
+        $removedStylesheets = [
+            'Anorex',
+            'Apollo Mat',
+            'Dark Ambient',
+            'GTFO Spaceship',
+            'Haze',
+            'Hydro',
+            'Kuro',
+            'Layer cake',
+            'LinoHaze',
+            'Minimal',
+            'Mono',
+            'Post Office',
+            'Proton',
+            'Shiro',
+            'Whatlove',
+            'White.cd',
+            'Xanax cake',
+            'postmod',
+        ];
+        $this->query("DELETE FROM stylesheets WHERE `Name` IN ('" . implode("','", $removedStylesheets) . "')");
     }
 }

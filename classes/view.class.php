@@ -40,6 +40,9 @@ class View {
         array_push($js, 'autocomplete', 'jquery.autocomplete', 'jquery.countdown.min');
         $Style = [
             'global.css',
+            'fontawesome.min.css',
+            'brands.min.css',
+            'solid.min.css',
         ];
         if (!empty($option['css'])) {
             array_push($Style, ...array_map(fn($s) => "$s/style.css", explode(',', $option['css'])));
