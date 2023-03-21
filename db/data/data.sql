@@ -63,10 +63,13 @@ INSERT INTO stylesheets VALUES (37,'Xanax cake','Xanax cake','0');
 INSERT INTO stylesheets VALUES (38,'Haze','Haze by Exanurous & apopagasm','0');
 INSERT INTO stylesheets VALUES (39,'Post Office','Post Office by dannymichel','0');
 INSERT INTO stylesheets VALUES (40,'LinoHaze','LinoHaze by linotype ','0');
-INSERT INTO stylesheets VALUES (41,'ApolloStage','ApolloStage by burtoo','1');
+INSERT INTO stylesheets VALUES (41,'ApolloStage','ApolloStage by burtoo','0');
 INSERT INTO stylesheets VALUES (42,'ApolloStage Coffee','ApolloStage by burtoo','0');
 INSERT INTO stylesheets VALUES (43,'ApolloStage Sunset','ApolloStage Sunset by burtoo','0');
 INSERT INTO stylesheets VALUES (44,'Apollo Mat','Apollo Mat by salem','0');
+INSERT INTO stylesheets VALUES (45,'iAnon Imperial','Imperial by iAnon','0');
+INSERT INTO stylesheets VALUES (46,'iAnon Sky','Sky by iAnon','1');
+INSERT INTO stylesheets VALUES (47,'Red Esteem','Based on redacted theme','0');
 
 INSERT INTO forums_categories VALUES (1,'Site',1);
 INSERT INTO forums_categories VALUES (21,'Suggestions',3);

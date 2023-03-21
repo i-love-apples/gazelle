@@ -8946,10 +8946,13 @@ RETURN IF(n = 0,0.0,((p + 1.35336) / n - 1.6452 * SQRT((p * (n-p)) / n + 0.67668
             ['Name' => 'Haze', 'Description' => 'Haze by Exanurous & apopagasm'],
             ['Name' => 'Post Office', 'Description' => 'Post Office by dannymichel'],
             ['Name' => 'LinoHaze', 'Description' => 'LinoHaze by linotype'],
-            ['Name' => 'ApolloStage', 'Description' => 'ApolloStage by burtoo', 'Default' => '1'],
+            ['Name' => 'ApolloStage', 'Description' => 'ApolloStage by burtoo'],
             ['Name' => 'ApolloStage Coffee', 'Description' => 'ApolloStage by burtoo'],
             ['Name' => 'ApolloStage Sunset', 'Description' => 'ApolloStage Sunset by burtoo'],
-            ['Name' => 'Apollo Mat', 'Description' => 'Apollo Mat by salem']
+            ['Name' => 'Apollo Mat', 'Description' => 'Apollo Mat by salem'],
+            ['Name' => 'iAnon Imperial', 'Description' => 'Imperial by iAnon'],
+            ['Name' => 'Red Esteem', 'Description' => 'Based on redacted theme'],
+            ['Name' => 'iAnon Sky', 'Description' => 'Sky by iAnon', 'Default' => '1']
         ])->save();
 
         $this->table('schedule')->insert([

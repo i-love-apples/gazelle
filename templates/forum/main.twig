@@ -19,7 +19,7 @@
     <td class="td_forum">
         <h4 class="min_padding">
             <a class="{{ f.tooltip }}" href="forums.php?action=viewforum&amp;forumid={{ f.forum_id }}" title="{{ f.description }}">{{ f.name }}</a>
-            {%- if f.autosub %} <span class="tooltip" title="You are subscribed to new threads in this forum">&#x1F514;</span>{% endif -%}
+            {%- if f.autosub %} <span class="tooltip" title="You are subscribed to new threads in this forum"><i class="fa-sharp fa-solid fa-check-double"></i></i></span>{% endif -%}
         </h4>
     </td>
         {% if not f.threads %}
@@ -35,7 +35,7 @@
         </span>
             {% if f.is_read %}
         <span style="float: left;" class="{{ f.tooltip }} last_read" title="Jump to last read">
-            <a href="forums.php?action=viewthread&amp;threadid={{ f.id }}&amp;page={{ f.last_read_page }}#post{{ f.last_read_post }}"></a>
+            <a href="forums.php?action=viewthread&amp;threadid={{ f.id }}&amp;page={{ f.last_read_page }}#post{{ f.last_read_post }}"><i class="fa-solid fa-circle-arrow-right"></i></a>
         </span>
             {% endif %}
         <span style="float: right;" class="last_poster">by {{ f.last_post_user|user_url|raw }} {{ f.last_post_time|time_diff(1) }}</span>

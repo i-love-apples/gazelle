@@ -41,7 +41,7 @@
     {% if result.PostID < result.LastPost %} <span class="new">(New!)</span>{% endif %}
     {% if result.PostID %}
                 <span style="float: left;" class="tooltip last_read" title="Jump to last read">
-                    <a href="{{ result.jump|raw }}"></a>
+                    <a href="{{ result.jump|raw }}"><i class="fa-solid fa-circle-arrow-right"></i></a>
                 </span>
     {% endif %}
     {% if result.Page == 'forums' %}

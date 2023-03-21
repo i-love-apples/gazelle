@@ -13,7 +13,7 @@
 {% for n in nav_items %}
             <div style="padding: 2pt 0;">
             <input style="padding: 2px 3px;" type="checkbox" id="n_{{ n.id }}" name="n_{{ n.id }}"{{ checked(n.mandatory or n.id in nav_items_user) }}{% if n.mandatory %} disabled="disabled"{% endif %} />
-            <label style="font-size: 1.2em;" for="n_{{ n.id }}">{{ n.title }}</label>
+            <label for="n_{{ n.id }}">{{ n.title }}</label>
             </div>
 {% endfor %}
         </td>

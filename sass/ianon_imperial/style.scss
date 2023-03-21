@@ -1,0 +1,65 @@
+$primary-accent-color: #e4b495;
+$base-background-color: #171616;
+$base-text-color: #b4b5b0;
+
+$table-background-color: #262626;
+$secondary-table-background-color: #272727;
+$form-background-color: #232323;
+$a-color: #f3f3f3;
+$a-hover-color: #d4b79f;
+
+$forum-body-background-color: #232222;
+$forum-head-background-color: #3a3939;
+
+$free-leech-color: #5aad57;
+
+$menu-li-second-child-background-color: #3a3939;
+$menu-li-third-child-background-color: #444040;
+$menu-li-fourth-child-background-color: #4e4746;
+$menu-li-fifth-child-background-color: #594f4d;
+$menu-li-sixth-child-background-color: #635653;
+$menu-li-seventh-child-background-color: #6d5e59;
+$header-background-color: #77665e;
+$menu-li-ninth-child-background-color: #816f64;
+
+$userinfo-username-color: #8b7769;
+$userinfo-background-color-1: #8b7769;
+$userinfo-background-color-2: #897a70;
+$userinfo-username-hover-background-color: #897a70;
+
+$userinfo-minor-color: #94806f;
+$userinfo-minor-hover-background-color: #a08f7e;
+
+$blockquote-background-color: #303030;
+$input-background-color: #2e2e2e;
+
+$span-green-color: #54ba54;
+$span-blue-color: #5454ed;
+
+$torrent-background-color: #232323;
+
+$footer-color: #969595;
+
+$input-color: #d1d1d1;
+
+$ratio-red-color: #ed5454;
+$ratio-yellow-color: #e8be69;
+
+$menu-background-color-1: #c4789199;
+$menu-background-color-2: #c47891;
+
+$selection-background-color: rgba(105, 188, 217, 0.6);
+$poll-background-color: rgba(230, 159, 144, 0.1);
+
+$unread-icon: url(./assets/icons/Forum-Dark-Unread.svg);
+$unread-locked-icon: url(./assets/icons/Forum-Dark-Locked.svg);
+$unread-sticky-icon: url(./assets/icons/Forum-Dark-Pinned.svg);
+$unread-locked-sticky-icon: url(./assets/icons/Forum-Dark-Pinned-Locked.svg);
+
+$read-icon: url(./assets/icons/Forum-Dark-Read.svg);
+$read-locked-icon: url(./assets/icons/Forum-Dark-Pinned-Locked-Read.svg);
+$read-sticky-icon: url(./assets/icons/Forum-Dark-Pinned-Read.svg);
+$read-locked-sticky-icon: url(./assets/icons/Forum-Dark-Pinned-Locked-Read.svg);
+
+@import '../apollostage/_base';
+@import './_base';
