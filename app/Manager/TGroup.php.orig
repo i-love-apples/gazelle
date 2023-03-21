@@ -86,12 +86,12 @@ class TGroup extends \Gazelle\BaseManager {
 
     public function create(
         int $categoryId,
-        ?int $releaseType,
+        int $releaseType,
         string $name,
         string $description,
-        ?int $year,
-        ?string $recordLabel,
-        ?string $catalogueNumber,
+        int $year,
+        string $recordLabel,
+        string $catalogueNumber,
         ?string $image,
         bool $showcase,
     ): \Gazelle\TGroup {

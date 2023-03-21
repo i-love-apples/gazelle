@@ -545,14 +545,11 @@ class TGroup extends BaseObject {
     }
 
     public function primaryArtist(): ?Artist {
-
-        if(isset($this->artistRole()->roleList)){
-          $roleList = $this->artistRole()->roleList();
-          foreach (['dj', 'composer', 'conductor', 'main'] as $role) {
+        $roleList = $this->artistRole()->roleList();
+        foreach (['dj', 'composer', 'conductor', 'main'] as $role) {
             if (count($roleList[$role])) {
                 return new Artist($roleList[$role][0]['id']);
             }
-          }
         }
         return null;
     }
@@ -804,7 +801,7 @@ class TGroup extends BaseObject {
         self::$db->commit();
 
         $this->flush();
-        foreach (($this->artistRole()?->idList() ?? []) as $role) {
+        foreach ($this->artistRole()->idList() as $role) {
             foreach ($role as $artist) {
                 self::$cache->delete_value('artist_groups_' . $artist['id']); //Needed for at least freeleech change, if not others.
             }
