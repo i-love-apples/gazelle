@@ -1,7 +1,7 @@
 From: itismadness
 To: Developers
 Date: 2021-08-21
-Subject: Orpheus Development Papers #7 - API Documentation
+Subject: iAnon Development Papers #7 - API Documentation
 Version: 1
 
 The JSON API provides an easily parseable interface to Gazelle. The API comes standard in public Gazelle and works out

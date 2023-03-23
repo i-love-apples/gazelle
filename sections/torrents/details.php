@@ -473,7 +473,7 @@ if (!$torrentList) {
             'viewer'  => $Viewer,
             'extra'   => [
                 "<a href=\"ajax.php?action=torrent&amp;id=$TorrentID\" download=\"" . display_str($title)
-                    . " [$TorrentID] [orpheus.network].json\" class=\"tooltip\" title=\"Download JSON\">JS</a>",
+                    . " [$TorrentID] [ianon.app].json\" class=\"tooltip\" title=\"Download JSON\">JS</a>",
             ],
         ]);
 ?>

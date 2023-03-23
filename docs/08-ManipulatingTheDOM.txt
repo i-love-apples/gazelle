@@ -1,7 +1,7 @@
 From: Spine
 To: Developers
 Date: 2021-10-31
-Subject: Orpheus Development Papers #8 - Manipulating the DOM
+Subject: iAnon Development Papers #8 - Manipulating the DOM
 Version: 1
 
 Traditional Gazelle markup blithely mixes HTML and Javascript together,

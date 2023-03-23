@@ -121,7 +121,7 @@ function setAllowedFormat(formatField, bitrateField) {
             $('#upload_logs').ghide();
         }
         if ($(formatField).val() === 'AAC') {
-            warning.raw().innerHTML = 'AAC torrents may only be uploaded if they represent editions unavailable on Orpheus in any other format sourced from the same medium and edition <a href="rules.php?p=upload#r2.1.21" target="_blank">(2.1.21)</a>';
+            warning.raw().innerHTML = 'AAC torrents may only be uploaded if they represent editions unavailable on iAnon in any other format sourced from the same medium and edition <a href="rules.php?p=upload#r2.1.21" target="_blank">(2.1.21)</a>';
         } else {
             warning.raw().innerHTML = '';
         }

@@ -1,14 +1,14 @@
 From: Spine
 To: Developers
 Date: 2021-01-17
-Subject: Orpheus Development Papers #4 - Witness Tables
+Subject: iAnon Development Papers #4 - Witness Tables
 Version: 1
 
 This technique is a response to a problem that exists in the original
 Gazelle implementation. There are many wide tables (that is, tables with
 dozens of columns) that suffer during updates.
 
-On Orpheus, lock contentions when updating users_info.LastReadNews can
+On iAnon, lock contentions when updating users_info.LastReadNews can
 sometimes result in fifty second response times. Similar problems occur with
 LastReadNews and CatchupTime. The contentions are probably due to scheduled
 tasks wanting to update other fields at the same time, or people opening

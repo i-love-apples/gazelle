@@ -8083,7 +8083,7 @@ RETURN IF(n = 0,0.0,((p + 1.35336) / n - 1.6452 * SQRT((p * (n-p)) / n + 0.67668
             ['ID' => 30, 'CategoryID' => 1, 'Sort' => 900, 'Name' => 'Interviewers', 'Description' => 'The Candidates', 'MinClassRead' => 900, 'MinClassWrite' => 900, 'MinClassCreate' => 900],
 
             ['ID' => 31, 'CategoryID' => 1, 'Sort' => 1000, 'Name' => 'Charlie Team', 'Description' => 'Quality Assurance', 'MinClassRead' => 850, 'MinClassWrite' => 850, 'MinClassCreate' => 850],
-            ['ID' => 1, 'CategoryID' => 1, 'Sort' => 300, 'Name' => 'Orpheus', 'Description' => 'orpheus.network', 'MinClassRead' => 100, 'MinClassWrite' => 100, 'MinClassCreate' => 100],
+            ['ID' => 1, 'CategoryID' => 1, 'Sort' => 300, 'Name' => 'iAnon', 'Description' => 'ianon.app', 'MinClassRead' => 100, 'MinClassWrite' => 100, 'MinClassCreate' => 100],
             ['ID' => 12, 'CategoryID' => 1, 'Sort' => 600, 'Name' => 'Announcements', 'Description' => 'Public service announcements', 'MinClassRead' => 100, 'MinClassWrite' => 100, 'MinClassCreate' => 800],
             ['ID' => 6, 'CategoryID' => 1, 'Sort' => 400, 'Name' => 'Bugs', 'Description' => 'I found a non critical bug', 'MinClassRead' => 100, 'MinClassWrite' => 100, 'MinClassCreate' => 100],
             ['ID' => 24, 'CategoryID' => 5, 'Sort' => 2000, 'Name' => 'Projects', 'Description' => 'I\'m working on a project', 'MinClassRead' => 100, 'MinClassWrite' => 100, 'MinClassCreate' => 100],

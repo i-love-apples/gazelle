@@ -1,7 +1,7 @@
 From: Spine
 To: Developers
 Date: 2020-11-28
-Subject: Orpheus Development Papers #3 - Voting Implementation
+Subject: iAnon Development Papers #3 - Voting Implementation
 Version: 2
 
 When a person upvotes or downvotes a release group, that information is recorded

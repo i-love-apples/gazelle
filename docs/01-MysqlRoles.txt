@@ -1,7 +1,7 @@
 From: Spine
 To: Developers
 Date: 2020-03-21
-Subject: Orpheus Development Papers #1 - Mysql Roles
+Subject: iAnon Development Papers #1 - Mysql Roles
 Version: 1
 
 The default Gazelle installation defines a single Mysql role (with full
@@ -9,7 +9,7 @@ privileges) and used for everything: the website, Ocelot and Sphinx. If any
 of these systems are compromised through an SQL injection, it is possible to
 wreak any amount of havoc: dropping tables, and even the entire database.
 
-Orpheus uses a set of roles, each dedicated to a single purpose. Each role
+iAnon uses a set of roles, each dedicated to a single purpose. Each role
 has the strict minimum privileges granted to only the necessary tables.
 
 The remaining DROP privileges are for performing TRUNCATE operations.

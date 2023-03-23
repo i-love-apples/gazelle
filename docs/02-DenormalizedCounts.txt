@@ -1,7 +1,7 @@
 From: Spine
 To: Developers
 Date: 2020-08-04
-Subject: Orpheus Development Papers #2 - Denormalized Totals
+Subject: iAnon Development Papers #2 - Denormalized Totals
 Version: 1
 
 Certain tables in Gazelle precompute and store totals in parent tables to

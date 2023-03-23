@@ -369,7 +369,7 @@ if ($sections = $Artist->sections()) {
                     'viewer'  => $Viewer,
                     'extra'   => [
                         "<a href=\"ajax.php?action=torrent&amp;id=$torrentId\" download=\""
-                            . $torrent->fullName() . " $torrentId [orpheus.network].json\" class=\"tooltip\" title=\"Download JSON\">JS</a>",
+                            . $torrent->fullName() . " $torrentId [ianon.app].json\" class=\"tooltip\" title=\"Download JSON\">JS</a>",
                     ],
                 ]) ?>
                 &nbsp;&nbsp;&raquo;&nbsp;<?= $torrent->shortLabelLink() ?>

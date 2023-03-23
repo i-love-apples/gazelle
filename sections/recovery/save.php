@@ -83,8 +83,8 @@ recheck your spam folder), join the <tt>#recovery</tt> channel on IRC.</p>
 
 <blockquote>
 <h4>IRC details</h4>
-<p>Server: <tt>irc.orpheus.network</tt><br />
-Port: 6667 or +7000 for SSL</p>
+<p>Server: <tt>irc.ianon.app</tt><br />
+Port: 6697</p>
 </blockquote>
 
 <?php

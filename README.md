@@ -133,9 +133,9 @@ repo and place them alongside the `Dockerfile-gitlab`. Then run
 in the gazelle repo's root directory (this one).
 
 ## Contact and Discussion
-Feel free to join #develop on irc.orpheus.network to discuss any
+Feel free to join #develop on irc.ianon.app to discuss any
 questions concerning Gazelle (or any of the repos published by
-Orpheus).
+iAnon).
 
 ## Open source
 Create issues at https://github.com/ianonapp

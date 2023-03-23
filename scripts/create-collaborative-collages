@@ -25,8 +25,8 @@ foreach ($nameList as $name) {
             $creator,
             2, // Genre Introduction
             SITE_NAME . " Collaborative #{$name} Collage (2)",
-            "A collaborative introduction to the {$name} genre. See [url=wiki.php?action=article&id={$wikiId}]The Orpheus Collaborative Collage Project[/url] for more information.",
-            "$name, orpheus",
+            "A collaborative introduction to the {$name} genre. See [url=wiki.php?action=article&id={$wikiId}]The iAnon Collaborative Collage Project[/url] for more information.",
+            "$name, ianon",
             $logger
         );
     } catch (\Exception $e) {
