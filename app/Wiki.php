@@ -77,7 +77,11 @@ class Wiki extends BaseObject {
     }
 
     public function body(): string {
+      if(isset($this->info()['body'])){
         return $this->info()['body'];
+      } else {
+        return "";
+      }
     }
 
     public function date(): string {
