@@ -93,7 +93,6 @@ $StaffPMs = $DB->prepared_query("
     ", ...$args
 );
 $list = $DB->to_array(false, MYSQLI_NUM, false);
-
 View::show_header('Staff Inbox');
 ?>
 <div class="thin">
@@ -128,7 +127,8 @@ if ($Viewer->isFLS()) { ?>
     <br />
     <?= $paginator->linkbox() ?>
     <div class="box pad" id="inbox">
-<?php if (!$DB->has_results()) { ?>
+<?php echo $DB->has_results(); ?>
+<?php if (1<0) { ?>
         <h2>No messages</h2>
 <?php
 } else {
