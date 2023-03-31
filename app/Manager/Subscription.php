@@ -25,10 +25,16 @@ class Subscription extends \Gazelle\Base {
             );
         }
 
-        $affected = count(self::$cache->delete_multi(array_map(
+        $deletedKeys = self::$cache->delete_multi(array_map(
             fn ($id) => "subscriptions_user_new_$id",
             self::$db->collect('UserID', false)
-        )));
+        ));
+
+        if (is_array($deletedKeys) || $deletedKeys instanceof Countable) {
+            $affected = count($deletedKeys);
+        } else {
+            $affected = 0; // or some other default value
+        }
 
         self::$db->prepared_query('
             SELECT UserID FROM users_notify_quoted WHERE Page = ?  AND PageID = ?
