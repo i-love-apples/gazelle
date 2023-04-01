@@ -293,19 +293,24 @@ class ForumThread extends BaseObject {
 
         (new Manager\Subscription)->move('forums', $this->id, null);
 
-        $this->updateRoot(
-            ...self::$db->row("
-                SELECT AuthorID, ID
-                FROM forums_posts
-                WHERE TopicID = ?
-                ORDER BY ID DESC
-                LIMIT 1
-                ", $this->id
-            )
+        $last_post = self::$db->row("
+            SELECT AuthorID, ID
+            FROM forums_posts
+            WHERE TopicID = ?
+            ORDER BY ID DESC
+            LIMIT 1
+            ", $this->id
         );
+
+        if ($last_post) {
+            [$author_id, $post_id] = $last_post;
+            $this->updateRoot($author_id, $post_id);
+        }
+
         $this->flush();
         return $affected;
     }
+
 
     public function addThreadNote(int $userId, string $notes): int {
         self::$db->prepared_query("
