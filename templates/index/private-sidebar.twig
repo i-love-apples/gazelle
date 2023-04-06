@@ -145,9 +145,6 @@
         <li>Users active this week: {{ user_stats.weekActiveTotal }} ({{ (user_stats.weekActiveTotal / user_count * 100)|number_format(2) }}%)</li>
         <li>Users active this month: {{ user_stats.monthActiveTotal }} ({{ (user_stats.monthActiveTotal / user_count * 100)|number_format(2) }}%)</li>
         <li>Torrents: {{ torrent_stats.torrentTotal|number_format }}</li>
-        <li>Releases: {{ torrent_stats.albumTotal|number_format }}</li>
-        <li>Artists: {{ torrent_stats.artistTotal|number_format }}</li>
-        <li>"Perfect" FLACs: {{ torrent_stats.perfectFlacTotal|number_format }}</li>
         <li>Collages: {{ collage_count|number_format }}</li>
         <li>Requests: {{ request_stats.total|number_format }} ({{ request_stats.filledPercent|number_format(2) }}% filled)</li>
         <li>Snatches: {{ user_stats.snatchTotal|number_format }}</li>
