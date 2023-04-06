@@ -24,11 +24,6 @@
             <a href="comments.php?id={{ user.id }}" class="brackets{{ _self.override(visible['torrentcomments']) }}">View</a>
     {% endif %}
         </li>
-        <li id="comm_artcomm"{{ _self.class_override(visible['torrentcomments']) }}>Artist comments: {{ stats.commentTotal('artist')|number_format }}
-    {% if stats.commentTotal('artist') and visible['torrentcomments'] %}
-            <a href="comments.php?id={{ user.id }}&amp;action=artist" class="brackets{{ _self.override(visible['torrentcomments']) }}">View</a>
-    {% endif %}
-        </li>
         <li id="comm_collcomm"{{ _self.class_override(visible['torrentcomments']) }}>Collage comments: {{ stats.commentTotal('collages')|number_format }}
     {% if stats.commentTotal('collages') and visible['torrentcomments'] %}
             <a href="comments.php?id={{ user.id }}&amp;action=collages" class="brackets{{ _self.override(visible['torrentcomments']) }}">View</a>
@@ -115,14 +110,6 @@
         <li id="comm_uniquegroup"{{ _self.class_override(visible['uniquegroups+']) }}>Unique groups: {{ stats.uniqueGroupTotal|number_format }}
     {% if stats.uniqueGroupTotal and visible['uniquegroups'] %}
             <a href="torrents.php?type=uploaded&amp;userid={{ user.id }}&amp;filter=uniquegroup" class="brackets{{ _self.override(visible['uniquegroups']) }}">View</a>
-    {% endif %}
-        </li>
-{% endif %}
-
-{% if visible['perfectflacs+'] %}
-        <li id="comm_perfectflac"{{ _self.class_override(visible['perfectflacs+']) }}>"Perfect" FLACs: {{ stats.perfectFlacTotal|number_format }}
-    {% if stats.perfectFlacTotal and visible['perfectflacs'] %}
-            <a href="torrents.php?type=uploaded&amp;userid={{ user.id }}&amp;filter=perfectflac" class="brackets{{ _self.override(visible['perfectflacs']) }}">View</a>
     {% endif %}
         </li>
 {% endif %}
