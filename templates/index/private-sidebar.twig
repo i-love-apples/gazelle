@@ -146,7 +146,6 @@
         <li>Users active this month: {{ user_stats.monthActiveTotal }} ({{ (user_stats.monthActiveTotal / user_count * 100)|number_format(2) }}%)</li>
         <li>Torrents: {{ torrent_stats.torrentTotal|number_format }}</li>
         <li>Collages: {{ collage_count|number_format }}</li>
-        <li>Requests: {{ request_stats.total|number_format }} ({{ request_stats.filledPercent|number_format(2) }}% filled)</li>
         <li>Snatches: {{ user_stats.snatchTotal|number_format }}</li>
         <li>Peers: {{ user_stats.peerTotal|number_format }}</li>
         <li>Seeders: {{ user_stats.seederTotal|number_format }}</li>
