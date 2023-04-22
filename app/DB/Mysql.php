@@ -469,7 +469,7 @@ class Mysql {
      * Stashes the current query id so that this can be used within a block
      * that is looping over an active resultset.
      */
-    public function scalar(string $sql, mixed ...$args): int|string|bool|null {
+    public function scalar(string $sql, mixed ...$args): int|string|bool|float|null {
         $qid = $this->get_query_id();
         $this->prepared_query($sql, ...$args);
         $result = $this->has_results() ? $this->next_record(MYSQLI_NUM, false) : [null];
