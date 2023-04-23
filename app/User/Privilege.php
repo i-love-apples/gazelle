@@ -55,7 +55,7 @@ class Privilege extends \Gazelle\BaseUser {
                 }
             }
         }
-        return array_keys($allowed);
+        return $allowed;
     }
 
     /**
