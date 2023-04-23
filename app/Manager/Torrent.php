@@ -549,10 +549,8 @@ class Torrent extends \Gazelle\BaseManager {
     }
 
     /**
-     * Return the N most recent lossless uploads
-     * Note that if both a Lossless and 24bit Lossless are uploaded at the same time,
-     * only one entry will be returned, to ensure that the result is comprised of N
-     * different groups. Uploads of paranoid and disabled users are excluded.
+     * Return the N most recent uploads
+     * Uploads of paranoid and disabled users are excluded.
      * Uploads without cover art are excluded.
      *
      * @return array of \Gazelle\TGroup objects
@@ -569,7 +567,6 @@ class Torrent extends \Gazelle\BaseManager {
                 INNER JOIN torrents_group tg ON (tg.ID = t.GroupID)
                 INNER JOIN users_main     um ON (um.ID = t.UserID)
                 WHERE t.Time > now() - INTERVAL 3 DAY
-                    AND t.Encoding IN ('Lossless', '24bit Lossless')
                     AND tg.WikiImage != ''
                     AND um.Enabled = '1'
                     AND NOT EXISTS (
