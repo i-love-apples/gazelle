@@ -6,8 +6,12 @@ if (!$tgroup) {
 }
 authorize();
 
+$forum = (new Gazelle\Manager\Forum)->findById(EDITING_FORUM_ID);
+if (is_null($forum)) {
+    error(404);
+}
 $thread = (new Gazelle\Manager\ForumThread)->create(
-    forumId: EDITING_FORUM_ID,
+    forum: $forum,
     userId:  SYSTEM_USER_ID,
     title:   "Editing request \xE2\x80\x93 Torrent Group: " . $tgroup->name(),
     body:    $Twig->render('forum/edit-request-body.twig', [
