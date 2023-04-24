@@ -179,7 +179,6 @@ function Categories() {
         $('#formats_tr').ghide();
         $('#bitrates_tr').ghide();
         $('#media_tr').ghide();
-        $('#logcue_tr').ghide();
         $('#year_tr').ghide();
         $('#cataloguenumber_tr').ghide();
         $('#toggle_formats').prop("checked", true);
@@ -188,6 +187,7 @@ function Categories() {
         Toggle('bitrates', 1);
         $('#toggle_media').prop("checked", true);
         Toggle('media', 1);
+        $('#logcue_tr').ghide();
     } else {
         $('#year_tr').gshow();
         $('#artist_tr').ghide();
