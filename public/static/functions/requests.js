@@ -170,16 +170,10 @@ function Categories() {
         ToggleLogCue();
         $('#year_tr').gshow();
         $('#cataloguenumber_tr').gshow();
-    } else if (cat == "Audiobooks" || cat == "Comedy") {
-        $('#year_tr').gshow();
-        $('#artist_tr').ghide();
-        $('#releasetypes_tr').ghide();
-        $('#formats_tr').ghide();
-        $('#bitrates_tr').ghide();
-        $('#media_tr').ghide();
-        $('#logcue_tr').ghide();
-        $('#cataloguenumber_tr').ghide();
-    } else {
+    } else if (cat == "Applications") {
+        $('#recordlabel_tr').ghide();
+        $('#oclc_tr').ghide();
+        $('#genre_tags').ghide();
         $('#artist_tr').ghide();
         $('#releasetypes_tr').ghide();
         $('#formats_tr').ghide();
@@ -187,6 +181,21 @@ function Categories() {
         $('#media_tr').ghide();
         $('#logcue_tr').ghide();
         $('#year_tr').ghide();
+        $('#cataloguenumber_tr').ghide();
+        $('#toggle_formats').prop("checked", true);
+        Toggle('formats', 1);
+        $('#toggle_bitrates').prop("checked", true);
+        Toggle('bitrates', 1);
+        $('#toggle_media').prop("checked", true);
+        Toggle('media', 1);
+    } else {
+        $('#year_tr').gshow();
+        $('#artist_tr').ghide();
+        $('#releasetypes_tr').ghide();
+        $('#formats_tr').ghide();
+        $('#bitrates_tr').ghide();
+        $('#media_tr').ghide();
+        $('#logcue_tr').ghide();
         $('#cataloguenumber_tr').ghide();
     }
 }

@@ -78,7 +78,8 @@ if (empty($_POST['artists'])) {
 
 $year = (int)$_POST['year'];
 if (!$year) {
-    $Err = 'The given year is not a number.';
+    // $Err = 'The given year is not a number.';
+    $year = date("Y");
 }
 
 // optional
@@ -98,7 +99,8 @@ $MinLogScore  = 0;
 if (!$onlyMetadata) {
     $releaseType = (int)$_POST['releasetype'];
     if (!(new Gazelle\ReleaseType)->findNameById($releaseType)) {
-        $Err = 'Please pick a release type';
+        // $Err = 'Please pick a release type';
+        $releaseType = 0;
     }
 
     $EncodingArray = $_POST['bitrates'] ?? [];
