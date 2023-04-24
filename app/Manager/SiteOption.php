@@ -18,6 +18,18 @@ class SiteOption extends \Gazelle\Base {
         return $value;
     }
 
+    public function findOptionalValueByName(string $name): ?string {
+        $key = sprintf(self::CACHE_KEY, $name);
+        if (($value = self::$cache->get_value($key)) === false) {
+            $value = self::$db->scalar(
+                "SELECT Value FROM site_options WHERE Name = ?",
+                $name
+            );
+            self::$cache->cache_value($key, $value, 86400 * 30);
+        }
+        return $value;
+    }
+
     /**
      * Get the list of current site options.
      *

@@ -580,6 +580,22 @@ if (!$Properties['GroupID']) {
 }
 
 // Torrent
+$isFreeTorrent = 0;
+$freeTorrent = '0';
+$freeLeechType = '0';
+$converted_mb_size = $TotalSize/1024/1024;
+$freeleech_min = (new \Gazelle\Manager\SiteOption)->findOptionalValueByName('freeleech-min');
+if (is_null($freeleech_min)) {
+    $freeleech_min = -1;
+} else {
+    $freeleech_min = (int)$freeleech_min;
+}
+if ($freeleech_min >= 0 && $freeleech_min <= $converted_mb_size) {
+    $isFreeTorrent = 1;
+    $freeTorrent = '1';
+    $freeLeechType = '1';
+}
+
 $DB->prepared_query("
     INSERT INTO torrents
         (GroupID, UserID, Media, Format, Encoding,
@@ -592,12 +608,12 @@ $DB->prepared_query("
          ?, ?, ?, ?, ?,
          ?, ?, ?, ?, ?,
          ?, ?, ?, ?, ?,
-         ?, ?, now(), '0', '0')
+         ?, ?, now(), ?, ?)
     ", $GroupID, $Viewer->id(), $Properties['Media'], $Properties['Format'], $Properties['Encoding'],
        $Properties['Remastered'], $Properties['RemasterYear'], $Properties['RemasterTitle'], $Properties['RemasterRecordLabel'], $Properties['RemasterCatalogueNumber'],
        $Properties['Scene'], $HasLog, $HasCue, $LogInDB, $logfileSummary->overallScore(),
        $logfileSummary->checksumStatus(), $InfoHash, count($FileList), implode("\n", $TmpFileList), $DirName,
-       $TotalSize, $Properties['TorrentDescription']
+       $TotalSize, $Properties['TorrentDescription'], $freeTorrent, $freeLeechType,
 );
 $TorrentID = $DB->inserted_id();
 $DB->prepared_query('
@@ -630,11 +646,11 @@ foreach ($ExtraTorrentsInsert as $ExtraTorrent) {
             (?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?, ?,
-            now(), 0, '0', '0', '0', '0')
+            now(), 0, '0', '0', ?, ?)
         ", $GroupID, $Viewer->id(), $Properties['Media'], $ExtraTorrent['Format'], $ExtraTorrent['Encoding'],
         $Properties['Remastered'], $Properties['RemasterYear'], $Properties['RemasterTitle'], $Properties['RemasterRecordLabel'], $Properties['RemasterCatalogueNumber'],
         $ExtraTorrent['InfoHash'], $ExtraTorrent['NumFiles'], $ExtraTorrent['FileString'],
-        $ExtraTorrent['FilePath'], $ExtraTorrent['TotalSize'], $ExtraTorrent['TorrentDescription']
+        $ExtraTorrent['FilePath'], $ExtraTorrent['TotalSize'], $ExtraTorrent['TorrentDescription'], $freeTorrent, $freeLeechType,
     );
     $ExtraTorrentID = $DB->inserted_id();
     $DB->prepared_query('
@@ -694,7 +710,7 @@ $Debug->set_flag('upload: database committed');
 $tracker = new \Gazelle\Tracker;
 $trackerUpdate[$TorrentID] = rawurlencode($InfoHash);
 foreach ($trackerUpdate as $id => $hash) {
-    $tracker->update_tracker('add_torrent', ['id' => $id, 'info_hash' => $hash, 'freetorrent' => 0]);
+    $tracker->update_tracker('add_torrent', ['id' => $id, 'info_hash' => $hash, 'freetorrent' => $isFreeTorrent]);
 }
 $Debug->set_flag('upload: ocelot updated');
 
