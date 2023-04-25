@@ -127,7 +127,6 @@ if ($Viewer->isFLS()) { ?>
     <br />
     <?= $paginator->linkbox() ?>
     <div class="box pad" id="inbox">
-<?php echo $DB->has_results(); ?>
 <?php if (1<0) { ?>
         <h2>No messages</h2>
 <?php
