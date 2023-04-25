@@ -79,7 +79,7 @@ way you will be able to associate yourself with what you have just uploaded.<p>
 <center><b><tt style="font-size: 20pt;"><?= $info['token'] ?></tt></b></center>
 
 <p>Keep an eye on your mailbox, and we hope to see you soon. If you don't receive anything in an hour (check and
-recheck your spam folder), join the <tt>#recovery</tt> channel on IRC.</p>
+recheck your spam folder), join the <tt>#disabled</tt> channel on IRC.</p>
 
 <blockquote>
 <h4>IRC details</h4>
