@@ -380,6 +380,16 @@ class Forum extends BaseObject {
             ", $this->id, $userId
         );
     }
+    
+    public function isAutoSubForum(int $userId, int $forumId): bool {
+        return (bool)$this->pg->scalar("
+            SELECT 1
+            FROM forum_autosub
+            WHERE id_forum = ?
+                AND id_user = ?
+            ", $forumId, $userId
+        );
+    }
 
     public function autoSubscribeUserIdList(): array {
         return $this->pg->column("

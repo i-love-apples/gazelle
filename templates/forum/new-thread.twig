@@ -48,9 +48,11 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td>
+                    <td>	
+			{% if not forum.isAutoSubForum(viewer.id, id) %}
                         <input id="subscribebox" type="checkbox" name="subscribe"{{ checked(viewer.option('AutoSubscribe')) }} />
                         <label for="subscribebox">Subscribe to thread</label>
+		        {% endif %}
                     </td>
                 </tr>
 {% if viewer.permitted('forums_polls_create') %}
@@ -78,8 +80,10 @@
 {% endif %}
             </table>
             <div id="subscribediv" class="hidden">
+	        {% if not forum.isAutoSubForum(viewer.id, id) %}
                 <input id="subscribeboxpreview" type="checkbox" name="subscribe"{{ checked(viewer.option('AutoSubscribe')) }} />
                 <label for="subscribebox">Subscribe to thread</label>
+	        {% endif %}
             </div>
             <div id="buttons" class="center">
                 {{ textarea.button|raw }}
