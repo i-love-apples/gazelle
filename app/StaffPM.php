@@ -170,9 +170,10 @@ class StaffPM extends BaseObject {
         self::$db->prepared_query("
             UPDATE staff_pm_conversations SET
                 Date   = now(),
-                Status = ?
+                Status = ?,
+		ResolverID = ?
             WHERE ID = ?
-            ", $status, $this->id
+            ", $status, $user->id, $this->id
         );
         $affected = self::$db->affected_rows();
         $this->flush();
