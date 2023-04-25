@@ -13,4 +13,5 @@ echo $Twig->render('forum/new-thread.twig', [
     'name'      => $forum->name(),
     'textarea'  => new Gazelle\Util\Textarea('body', '', 90, 8),
     'viewer'    => $Viewer,
+    'forum'	=> $forum,
 ]);
