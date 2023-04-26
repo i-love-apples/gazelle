@@ -3,9 +3,9 @@
         // Upload button is clicked
         $("#post").click(function(e) {
             // Make sure "Music" category is selected.
-            if ($("#categories").find(":selected").val() == 0) {
-                checkHasMainArtist(e);
-            }
+            // if ($("#categories").find(":selected").val() == 0) {
+            //     checkHasMainArtist(e);
+            // }
         });
 
         /**

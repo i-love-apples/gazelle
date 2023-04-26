@@ -63,25 +63,52 @@ function Categories() {
             script.innerHTML = resp2[0];
             document.body.append(script);
             dynamic_form.data('loaded', true);
-            if ($('#categories').raw().value == 1) {
-                var TORRENTS_AUTOCOMPLETE_UPLOAD_URL    = 'torrents.php?action=autocomplete_upload';
-                $('#title_search_group').autocomplete({
-                    deferRequestBy: 300,
-                    onSelect : function(suggestion) {
-                        $("#groupid").val(suggestion['id']);
-                        // $("#title_search_group").val(suggestion['name']);
-                        $("#tags").val(suggestion['taglist']);
-                        $("#image").val(suggestion['wikiimage']);
-                        $("#desc").val(suggestion['wikibody']);
-                    },
-                    serviceUrl : TORRENTS_AUTOCOMPLETE_UPLOAD_URL,
-                });
-            }
+            var TORRENTS_AUTOCOMPLETE_UPLOAD_URL    = 'torrents.php?action=autocomplete_upload';
+            $('#title_search_group').autocomplete({
+                deferRequestBy: 300,
+                onSelect : function(suggestion) {
+                    $("#categories").val(suggestion['id']);
+                    $("#groupid").val(suggestion['id']);
+                    $("#tags").val(suggestion['taglist']);
+                    $("#image").val(suggestion['wikiimage']);
+                    $("#album_desc").val(suggestion['wikibody']);
+
+                    $("#categories").prop( "disabled", true );
+                    $("#title_search_group").prop( "disabled", true );
+                    $("#genre_tags").prop( "disabled", true );
+                    $("#tags").prop( "disabled", true );
+                    $("#image").prop( "disabled", true );
+                    $("#album_desc").prop( "disabled", true );
+                },
+                serviceUrl : TORRENTS_AUTOCOMPLETE_UPLOAD_URL,
+            });
         },
         function (err) {
             console.error(err);
         },
     );
+}
+
+function SetAutocomplete() {
+    var TORRENTS_AUTOCOMPLETE_UPLOAD_URL    = 'torrents.php?action=autocomplete_upload';
+    $('#title_search_group').autocomplete({
+        deferRequestBy: 300,
+        onSelect : function(suggestion) {
+            $("#categories").val(suggestion['id']);
+            $("#groupid").val(suggestion['id']);
+            $("#tags").val(suggestion['taglist']);
+            $("#image").val(suggestion['wikiimage']);
+            $("#album_desc").val(suggestion['wikibody']);
+
+            $("#categories").prop( "disabled", true );
+            $("#title_search_group").prop( "readonly", true );
+            $("#genre_tags").prop( "disabled", true );
+            $("#tags").prop( "readonly", true );
+            $("#image").prop( "readonly", true );
+            $("#album_desc").prop( "readonly", true );
+        },
+        serviceUrl : TORRENTS_AUTOCOMPLETE_UPLOAD_URL,
+    });
 }
 
 function Remaster() {
@@ -325,6 +352,10 @@ function add_tag() {
     } else {
         $('#tags').raw().value = $('#tags').raw().value + ', ' + $('#genre_tags').raw().options[$('#genre_tags').raw().selectedIndex].value;
     }
+}
+
+function clear_tag() {
+    $('#tags').raw().value = "";
 }
 
 function AddLogField(acceptTypes) {
@@ -919,5 +950,5 @@ function uploadFormInit() {
 }
 
 $(document).ready(function () {
-    uploadFormInit();
+    //uploadFormInit();
 });

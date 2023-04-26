@@ -1660,6 +1660,36 @@ CREATE TABLE `release_type` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `release_tags`
+--
+CREATE TABLE `release_tags` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `Name` (`Name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `release_platform`
+--
+CREATE TABLE `release_platform` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `Name` (`Name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `release_includes`
+--
+CREATE TABLE `release_includes` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `Name` (`Name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
 -- Table structure for table `reports`
 --
 

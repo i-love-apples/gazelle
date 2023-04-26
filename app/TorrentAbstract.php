@@ -144,6 +144,12 @@ abstract class TorrentAbstract extends BaseObject {
     public function version(): string {
         return (string)$this->info()['Version'];
     }
+    public function platform(): string {
+        return (string)$this->info()['Platform'];
+    }
+    public function includes(): string {
+        return (string)$this->info()['Includes'];
+    }
 
     /**
      * Generate the edition of the torrent
@@ -605,7 +611,13 @@ abstract class TorrentAbstract extends BaseObject {
     public function versionLink(): string {
         $short = $this->version();
         if (!$short) {
-            $short = "Unspecified version";
+            $short = "Base version";
+        }
+        $platform = $this->platform();
+        $includes = $this->includes();
+        $short_extra = "[$platform/$includes]";
+        if ($short_extra == "[/]") {
+            $short_extra = "";
         }
         // deal with nested log link
         // we have "....<a href="x">....</a>...."
@@ -613,7 +625,7 @@ abstract class TorrentAbstract extends BaseObject {
         if (str_contains($short, '<a href=')) {
             $short = preg_replace('#(<a href=.*</a>)#', "</a>\\1<a href=\"{$this->url()}\">", $short);
         }
-        return "<a href=\"{$this->url()}\">[$short]</a>";
+        return "<a href=\"{$this->url()}\">$short $short_extra</a>";
     }
 
     public function labelList(): array {
