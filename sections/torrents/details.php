@@ -477,7 +477,7 @@ if (!$torrentList) {
             ],
         ]);
 ?>
-                    <a href="#" onclick="$('#torrent_<?=$TorrentID?>').gtoggle(); return false;">&#x25B6; <?= $torrent->label() ?></a>
+                    <a href="#" onclick="$('#torrent_<?=$TorrentID?>').gtoggle(); return false;">&#x25B6; <?php if ($tgroup->categoryId() == 2) { echo($torrent->versionLink()); } else { echo($torrent->label()); } ?></a>
                 </td>
                 <?= $Twig->render('torrent/stats.twig', ['torrent' => $torrent]) ?>
             </tr>

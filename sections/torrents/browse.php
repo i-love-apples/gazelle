@@ -202,9 +202,11 @@ foreach ($Results as $GroupID) {
                 $EditionID++;
 
 ?>
+<?php if ($tgroup->categoryId() != 2) { ?>
     <tr class="group_torrent groupid_<?=$tgroup->id()?> edition<?=$SnatchedGroupClass . ($groupsClosed ? ' hidden' : '')?>">
         <td colspan="9" class="edition_info"><strong><a href="#" onclick="toggle_edition(<?=$tgroup->id()?>, <?=$EditionID?>, this, event);" class="tooltip" title="Collapse this edition. Hold [Command] <em>(Mac)</em> or [Ctrl] <em>(PC)</em> while clicking to collapse all editions in this torrent group.">&minus;</a> <?= $torrent->edition() ?></strong></td>
     </tr>
+<?php } ?>
 <?php
             }
             $prev = $current;
@@ -217,7 +219,7 @@ foreach ($Results as $GroupID) {
                 'torrent' => $torrent,
                 'viewer'  => $Viewer,
             ]) ?>
-            &raquo; <?= $torrent->shortLabelLink() ?>
+            &raquo; <?php if ($tgroup->categoryId() == 2) { echo($torrent->versionLink()); } else { echo($torrent->shortLabelLink()); } ?>
         </td>
         <td class="td_file_count"><?=$torrent->fileTotal()?></td>
         <td class="td_time nobr"><?=time_diff($torrent->created(), 1)?></td>

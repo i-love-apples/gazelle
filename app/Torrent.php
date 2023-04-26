@@ -46,6 +46,7 @@ class Torrent extends TorrentAbstract {
                 t.Time,
                 t.Description,
                 t.LastReseedRequest,
+                t.Version,
                 tls.Seeders,
                 tls.Leechers,
                 tls.Snatched,

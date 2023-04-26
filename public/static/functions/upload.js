@@ -63,6 +63,20 @@ function Categories() {
             script.innerHTML = resp2[0];
             document.body.append(script);
             dynamic_form.data('loaded', true);
+            if ($('#categories').raw().value == 1) {
+                var TORRENTS_AUTOCOMPLETE_UPLOAD_URL    = 'torrents.php?action=autocomplete_upload';
+                $('#title_search_group').autocomplete({
+                    deferRequestBy: 300,
+                    onSelect : function(suggestion) {
+                        $("#groupid").val(suggestion['id']);
+                        // $("#title_search_group").val(suggestion['name']);
+                        $("#tags").val(suggestion['taglist']);
+                        $("#image").val(suggestion['wikiimage']);
+                        $("#desc").val(suggestion['wikibody']);
+                    },
+                    serviceUrl : TORRENTS_AUTOCOMPLETE_UPLOAD_URL,
+                });
+            }
         },
         function (err) {
             console.error(err);
@@ -781,7 +795,7 @@ function checkFields() {
         ++error;
         $("#check").append('<li>No torrent file specified, no-one will be able to download from you.</li>');
     }
-    if (!is_edit && (is_new && !$('#title').val())) {
+    if (!is_edit && (is_new && !$('#title').val() && !$('#title_search_group').val())) {
         ++error;
         $("#check").append('<li>No title specified.</li>');
     }

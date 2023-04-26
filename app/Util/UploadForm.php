@@ -636,14 +636,19 @@ class UploadForm extends \Gazelle\Base {
             if (CATEGORY[$this->categoryId] == 'E-Books') {
 ?>
                 <td class="label">Author - Title:</td>
+                <td><input type="text" id="title" name="title" size="60" value="<?=display_str($Torrent['Title'] ?? '') ?>" /></td>
 <?php       } else { ?>
                 <td class="label">Title:</td>
+                <td><input type="text" id="title_search_group" name="title" size="60" value="<?=display_str($Torrent['Title'] ?? '') ?>" /></td>
 <?php       } ?>
-                <td><input type="text" id="title" name="title" size="60" value="<?=display_str($Torrent['Title'] ?? '') ?>" /></td>
+            </tr>
+            <tr>
+                <td class="label">Version:</td>
+                <td><input type="text" id="version" name="version" size="60" value="<?= display_str($Torrent['Version'] ?? '') ?>" /></td>
             </tr>
             <tr>
                 <td class="label">Tags:</td>
-                <td><input type="text" id="tags" name="tags" size="60" value="<?= display_str($Torrent['TagList'] ?? '') ?>"<?=
+                <td><input type="text" id="tags" name="tags" size="60" value="<?= display_str($Torrent['TagList'][0] ?? '') ?>"<?=
                     $this->user->hasAutocomplete('other') ? ' data-gazelle-autocomplete="true"' : '' ?> /></td>
             </tr>
             <tr>

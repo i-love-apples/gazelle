@@ -141,6 +141,10 @@ abstract class TorrentAbstract extends BaseObject {
         return $this->info()['Description'] ?? '';
     }
 
+    public function version(): string {
+        return (string)$this->info()['Version'];
+    }
+
     /**
      * Generate the edition of the torrent
      */
@@ -588,6 +592,20 @@ abstract class TorrentAbstract extends BaseObject {
         $short = $this->shortLabel();
         if (!$short) {
             return '';
+        }
+        // deal with nested log link
+        // we have "....<a href="x">....</a>...."
+        // we want "<a href="y">....</a><a href="x">....</a><a href="y">....</a>"
+        if (str_contains($short, '<a href=')) {
+            $short = preg_replace('#(<a href=.*</a>)#', "</a>\\1<a href=\"{$this->url()}\">", $short);
+        }
+        return "<a href=\"{$this->url()}\">[$short]</a>";
+    }
+
+    public function versionLink(): string {
+        $short = $this->version();
+        if (!$short) {
+            $short = "Unspecified version";
         }
         // deal with nested log link
         // we have "....<a href="x">....</a>...."

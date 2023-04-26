@@ -3,8 +3,17 @@ $(document).ready(function() {
     var ARTIST_AUTOCOMPLETE_URL  = 'artist.php?action=autocomplete';
     var COLLAGE_AUTOCOMPLETE_URL = 'collages.php?action=autocomplete';
     var TAGS_AUTOCOMPLETE_URL    = 'torrents.php?action=autocomplete_tags';
+    var TORRENTS_AUTOCOMPLETE_URL    = 'torrents.php?action=autocomplete';
     var SELECTOR = '[data-gazelle-autocomplete="true"]';
 
+    $('#torrentssearch').autocomplete({
+        deferRequestBy: 300,
+        onSelect : function(suggestion) {
+            window.location = 'torrents.php?id=' + suggestion['data'];
+        },
+        serviceUrl : TORRENTS_AUTOCOMPLETE_URL,
+    });
+    
     $('#artistsearch' + SELECTOR).autocomplete({
         deferRequestBy: 300,
         onSelect : function(suggestion) {

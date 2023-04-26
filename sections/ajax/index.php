@@ -96,6 +96,8 @@ switch ($Action) {
     case 'torrent_info':
         require_once('torrent_info.php');
         break;
+    case 'torrent_autocomplete':
+        require_once('torrent_autocomplete.php');
     case 'add_tag':
         require_once('torrent_tag_add.php');
         break;

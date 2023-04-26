@@ -22,6 +22,8 @@
     {% if info.GroupID %}
             <input type="hidden" name="groupid" value="{{ info.GroupID }}" />
             <input type="hidden" name="type" value="{{ category_id }}" />
+    {% else %}
+            <input type="hidden" id="groupid" name="groupid" value="" placeholder="groupid" />
     {% endif %}
     {% if info.RequestID %}
             <input type="hidden" name="requestid" value="{{ info.RequestID }}" />
