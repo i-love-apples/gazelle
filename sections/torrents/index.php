@@ -135,6 +135,12 @@ if (!empty($_REQUEST['action'])) {
         case 'autocomplete_tags':
             require_once('autocomplete_tags.php');
             break;
+        case 'autocomplete':
+            require_once('autocomplete.php');
+            break;
+        case 'autocomplete_upload':
+            require_once('autocomplete_upload.php');
+            break;
 
         default:
             if (!empty($_GET['id'])) {

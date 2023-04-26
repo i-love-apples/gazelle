@@ -20,6 +20,7 @@ $Err = null;
 $Properties = [];
 $categoryId = (int)$_POST['type'] + 1;
 $categoryName = CATEGORY[$categoryId - 1];
+$Properties['CategoryName'] = $categoryName;
 $Properties['Title'] = isset($_POST['title']) ? trim($_POST['title']) : null;
 // Remastered is an Enum in the DB
 $Properties['Remastered'] = !empty($_POST['remaster']) ? '1' : '0';
@@ -57,12 +58,16 @@ if (isset($_POST['tags'])) {
 $Properties['Image'] = trim($_POST['image'] ?? '');
 $Properties['GroupDescription'] = trim($_POST['album_desc'] ?? '');
 $Properties['TorrentDescription'] = trim($_POST['release_desc'] ?? '');
+if ($categoryName === 'Applications') {
+    $Properties['TorrentDescription'] = trim($_POST['desc'] ?? '');
+}
 if (isset($_POST['album_desc'])) {
     $Properties['GroupDescription'] = trim($_POST['album_desc'] ?? '');
 } elseif (isset($_POST['desc'])) {
     $Properties['GroupDescription'] = trim($_POST['desc'] ?? '');
 }
 $Properties['GroupID'] = $_POST['groupid'] ?? null;
+$Properties['Version'] = $_POST['version'] ?? "";
 if (empty($_POST['artists'])) {
     $Err = "You didn't enter any artists";
 } else {
@@ -77,6 +82,7 @@ if (!empty($_POST['requestid'])) {
 //--------------- Validate data in upload form ---------------------------------//
 
 $isMusicUpload = ($categoryName === 'Music');
+$isApplicationsUpload = ($categoryName === 'Applications');
 
 // common to all types
 $Validate = new Gazelle\Util\Validator;
@@ -92,6 +98,10 @@ if (!$isMusicUpload || ($isMusicUpload && !$Properties['GroupID'])) {
         ['tags', '1','string','You must enter at least one tag. Maximum length is 200 characters.', ['range' => [2, 200]]],
         ['title', '1','string','Title must be less than 200 characters.', ['maxlength' => 200]],
     ]);
+}
+
+if ($categoryName === 'Applications') {
+    $Validate->setField('version', '1','string','The application must have a version.', ['range' => [1, 100]]);
 }
 
 if (isset($_POST['album_desc'])) {
@@ -519,6 +529,11 @@ if ($isMusicUpload) {
             }
         }
     }
+} else if ($isApplicationsUpload) {
+    // Does it belong in a group?
+    if ($Properties['GroupID']) {
+        $tgroup = $tgMan->findById($Properties['GroupID']);
+    }
 }
 
 //For notifications--take note now whether it's a new group
@@ -602,18 +617,18 @@ $DB->prepared_query("
         Remastered, RemasterYear, RemasterTitle, RemasterRecordLabel, RemasterCatalogueNumber,
         Scene, HasLog, HasCue, HasLogDB, LogScore,
         LogChecksum, info_hash, FileCount, FileList, FilePath,
-        Size, Description, Time, FreeTorrent, FreeLeechType)
+        Size, Description, Time, FreeTorrent, FreeLeechType, Version)
     VALUES
         (?, ?, ?, ?, ?,
          ?, ?, ?, ?, ?,
          ?, ?, ?, ?, ?,
          ?, ?, ?, ?, ?,
-         ?, ?, now(), ?, ?)
+         ?, ?, now(), ?, ?, ?)
     ", $GroupID, $Viewer->id(), $Properties['Media'], $Properties['Format'], $Properties['Encoding'],
        $Properties['Remastered'], $Properties['RemasterYear'], $Properties['RemasterTitle'], $Properties['RemasterRecordLabel'], $Properties['RemasterCatalogueNumber'],
        $Properties['Scene'], $HasLog, $HasCue, $LogInDB, $logfileSummary->overallScore(),
        $logfileSummary->checksumStatus(), $InfoHash, count($FileList), implode("\n", $TmpFileList), $DirName,
-       $TotalSize, $Properties['TorrentDescription'], $freeTorrent, $freeLeechType,
+       $TotalSize, $Properties['TorrentDescription'], $freeTorrent, $freeLeechType, $Properties['Version'],
 );
 $TorrentID = $DB->inserted_id();
 $DB->prepared_query('
