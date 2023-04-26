@@ -23,57 +23,22 @@ $categoryName = CATEGORY[$categoryId - 1];
 $Properties['CategoryName'] = $categoryName;
 $Properties['Title'] = isset($_POST['title']) ? trim($_POST['title']) : null;
 // Remastered is an Enum in the DB
-$Properties['Remastered'] = !empty($_POST['remaster']) ? '1' : '0';
-if ($Properties['Remastered'] || !empty($_POST['unknown'])) {
-    $Properties['UnknownRelease'] = !empty($_POST['unknown']) ? 1 : 0;
-    $Properties['RemasterYear'] = isset($_POST['remaster_year']) ? (int)$_POST['remaster_year'] : null;
-    $_POST['remaster_year'] = $Properties['RemasterYear'];
-    $Properties['RemasterTitle'] = trim($_POST['remaster_title'] ?? '');
-    $Properties['RemasterRecordLabel'] = trim($_POST['remaster_record_label'] ?? '');
-    $Properties['RemasterCatalogueNumber'] = trim($_POST['remaster_catalogue_number'] ?? '');
-}
-if (!$Properties['Remastered'] || $Properties['UnknownRelease']) {
-    $Properties['UnknownRelease'] = 1;
-    $Properties['RemasterYear'] = null;
-    $Properties['RemasterTitle'] = '';
-    $Properties['RemasterRecordLabel'] = '';
-    $Properties['RemasterCatalogueNumber'] = '';
-}
-$Properties['Year'] = isset($_POST['year']) ? (int)$_POST['year'] : null;
-$_POST['year'] = $Properties['Year'];
-$Properties['RecordLabel'] = trim($_POST['record_label'] ?? '');
-$Properties['CatalogueNumber'] = trim($_POST['catalogue_number'] ?? '');
-$Properties['ReleaseType'] = $_POST['releasetype'] ?? null;
-$Properties['Scene'] = !empty($_POST['scene']) ? '1' : '0';
-$Properties['Format'] = isset($_POST['format']) ? trim($_POST['format']) : null;
-$Properties['Media'] = trim($_POST['media'] ?? '');
-$Properties['Encoding'] = trim($_POST['bitrate'] ?? '');
-if ($Properties['Encoding'] === 'Other') {
-    $_POST['other_bitrate'] = trim($_POST['other_bitrate'] ?? '');
-}
-$Properties['MultiDisc'] = $_POST['multi_disc'] ?? null;
 if (isset($_POST['tags'])) {
+    $Properties['Tags'] = $_POST['tags'];
     $Properties['TagList'] = array_unique(array_map('trim', explode(',', $_POST['tags']))); // Musicbranes loves to send duplicates
 }
 $Properties['Image'] = trim($_POST['image'] ?? '');
 $Properties['GroupDescription'] = trim($_POST['album_desc'] ?? '');
-$Properties['TorrentDescription'] = trim($_POST['release_desc'] ?? '');
-if ($categoryName === 'Applications') {
-    $Properties['TorrentDescription'] = trim($_POST['desc'] ?? '');
-}
-if (isset($_POST['album_desc'])) {
-    $Properties['GroupDescription'] = trim($_POST['album_desc'] ?? '');
-} elseif (isset($_POST['desc'])) {
-    $Properties['GroupDescription'] = trim($_POST['desc'] ?? '');
-}
+$Properties['TorrentDescription'] = trim($_POST['desc'] ?? '');
 $Properties['GroupID'] = $_POST['groupid'] ?? null;
 $Properties['Version'] = $_POST['version'] ?? "";
-if (empty($_POST['artists'])) {
-    $Err = "You didn't enter any artists";
-} else {
-    $Artists = $_POST['artists'];
-    $Importance = $_POST['importance'];
-}
+$Properties['Platform'] = $_POST['platform'] ?? "";
+$Properties['Includes'] = $_POST['includes'] ?? "";
+$Properties['OSVersion'] = $_POST['osversion'] ?? "";
+$Properties['Processor'] = $_POST['processor'] ?? "";
+$Properties['RAM'] = $_POST['ram'] ?? "";
+$Properties['VRAM'] = $_POST['vram'] ?? "";
+
 if (!empty($_POST['requestid'])) {
     $RequestID = $_POST['requestid'];
     $Properties['RequestID'] = $RequestID;
@@ -81,8 +46,8 @@ if (!empty($_POST['requestid'])) {
 //******************************************************************************//
 //--------------- Validate data in upload form ---------------------------------//
 
-$isMusicUpload = ($categoryName === 'Music');
-$isApplicationsUpload = ($categoryName === 'Applications');
+
+$isApplicationsUpload = ($categoryName === 'Applications' || $categoryName === 'Games' || $categoryName === 'IOS Applications' || $categoryName === 'IOS Games');
 
 // common to all types
 $Validate = new Gazelle\Util\Validator;
@@ -92,7 +57,7 @@ $Validate->setFields([
     ['rules', '1','require','Your torrent must abide by the rules.'],
 ]);
 
-if (!$isMusicUpload || ($isMusicUpload && !$Properties['GroupID'])) {
+if (!$Properties['GroupID']) {
     $Validate->setFields([
         ['image', '0','link','The image URL you entered was invalid.', ['range' => [255, 12]]],
         ['tags', '1','string','You must enter at least one tag. Maximum length is 200 characters.', ['range' => [2, 200]]],
@@ -100,105 +65,44 @@ if (!$isMusicUpload || ($isMusicUpload && !$Properties['GroupID'])) {
     ]);
 }
 
-if ($categoryName === 'Applications') {
-    $Validate->setField('version', '1','string','The application must have a version.', ['range' => [1, 100]]);
-}
+$Validate->setField('album_desc', '1','string','The description has a minimum length of 10 characters.', ['range' => [10, 1_000_000]]);
 
-if (isset($_POST['album_desc'])) {
-    $Validate->setField('album_desc', '1','string','The album description has a minimum length of 10 characters.', ['range' => [10, 1_000_000]]);
-} elseif (isset($_POST['desc'])) {
+if ($isApplicationsUpload) {
+    $Validate->setField('version', '1','string','The application must have a version. Maximum length is 45 characters.', ['range' => [1, 45]]);
+    $Validate->setField('platform', '1','string','The application must have a mac platform.', ['range' => [2, 100]]);
+    $Validate->setField('includes', '1','string','The application must have an include of.', ['range' => [1, 100]]);
     $Validate->setField('desc', '1','string','The description has a minimum length of 10 characters.', ['range' => [10, 1_000_000]]);
-}
-
-// audio types
-if (in_array($categoryName, ['Music', 'Audiobooks', 'Comedy'])) {
-    $Validate->setField('format', '1','inarray','Please select a valid format.', ['inarray'=>FORMAT]);
-    if ($Properties['Encoding'] !== 'Other') {
-        $Validate->setField('bitrate', '1','inarray','You must choose a bitrate.', ['inarray'=>ENCODING]);
-    } else {
-        if ($Properties['Format'] === 'FLAC') {
-            $Validate->setField('bitrate', '1','string','FLAC bitrate must be lossless.', ['regex'=>'/Lossless/']);
-        } else {
-            $Validate->setField('other_bitrate',
-                '1','string','You must enter the other bitrate (max length: 9 characters).', ['maxlength'=>9]);
-            $Properties['Encoding'] = trim($_POST['other_bitrate']) . (!empty($_POST['vbr']) ? ' (VBR)' : '');;
-        }
-    }
+    $Validate->setField('osversion', '1','string','Maximum OS Version length is 100 characters.', ['range' => [0, 100]]);
+    $Validate->setField('processor', '1','string','Maximum CPU length is 100 characters.', ['range' => [0, 100]]);
+    $Validate->setField('ram', '1','string','Maximum RAM length is 100 characters.', ['range' => [0, 100]]);
+    $Validate->setField('vram', '1','string','Maximum VRAM length is 100 characters.', ['range' => [0, 100]]);
 }
 
 $feedType = ['torrents_all'];
-
-$releaseTypes = (new Gazelle\ReleaseType)->list();
 switch ($categoryName) {
-    case 'Music':
-        $Validate->setFields([
-            ['groupid', '0', 'number', 'Group ID was not numeric'],
-            ['media', '1','inarray','Please select a valid media.', ['inarray'=>MEDIA]],
-            ['remaster_title', '0','string','Remaster title must be between 1 and 80 characters.', ['range' => [1, 80]]],
-            ['remaster_record_label', '0','string','Remaster record label must be between 1 and 80 characters.', ['range' => [1, 80]]],
-            ['remaster_catalogue_number', '0','string','Remaster catalogue number must be between 1 and 80 characters.', ['range' => [1, 80]]],
-        ]);
-        if (!$Properties['GroupID']) {
-            $Validate->setFields([
-                ['year', '1','number','The year of the original release must be entered.', ['length'=>40]],
-                ['releasetype', '1','inarray','Please select a valid release type.', ['inarray'=>array_keys($releaseTypes)]],
-                ['record_label', '0','string','Record label must be between 1 and 80 characters.', ['range' => [1, 80]]],
-                ['catalogue_number', '0','string','Catalogue Number must be between 1 and 80 characters.', ['range' => [1, 80]]],
-            ]);
-            if ($Properties['Media'] == 'CD' && !$Properties['Remastered']) {
-                $Validate->setField('year', '1', 'number', 'You have selected a year for an album that predates the media you say it was created on.', ['minlength'=>1982]);
-            }
-        }
-
-        if ($Properties['RemasterTitle'] === 'Original Release') {
-            $Validate->setField('remaster_title', '0', 'string', '"Orginal Release" is not a valid remaster title.');
-        }
-        if (!$Properties['Remastered']) {
-            $Validate->setField('remaster_year', '0','number','Invalid remaster year.');
-        } else {
-            if (!$Properties['UnknownRelease']) {
-                $Validate->setField('remaster_year', '1','number','Year of remaster/re-issue must be entered.');
-            }
-            if ($Properties['Media'] == 'CD' ) {
-                $Validate->setField('remaster_year', '1', 'number', 'You have selected a year for an album that predates the media you say it was created on.',
-                    ['minlength' => 1982]
-                );
-            }
-        }
-        $feedType[] = 'torrents_music';
-        if ($Properties['Media'] === 'Vinyl') {
-            $feedType[] = 'torrents_vinyl';
-        }
-        if ($Properties['Encoding'] === 'Lossless') {
-            $feedType[] = 'torrents_lossless';
-        } elseif ($Properties['Encoding'] === '24bit Lossless') {
-            $feedType[] = 'torrents_lossless24';
-        }
-        if ($Properties['Format'] === 'MP3') {
-            $feedType[] = 'torrents_mp3';
-        } elseif ($Properties['Format'] === 'FLAC') {
-            $feedType[] = 'torrents_flac';
-        }
-        break;
-
     case 'Applications':
         $feedType[] = 'torrents_apps';
         break;
-    case 'Audiobooks':
-        $Validate->setField('year', '1','number','The year of the release must be entered.');
-        $feedType[] = 'torrents_abooks';
+    case 'Games':
+        $feedType[] = 'torrents_games';
         break;
-    case 'Comedy':
-        $feedType[] = 'torrents_comedy';
+    case 'IOS Applications':
+        $feedType[] = 'torrents_iosapps';
         break;
-    case 'Comics':
-        $feedType[] = 'torrents_comics';
+    case 'IOS Games':
+        $feedType[] = 'torrents_iosgames';
         break;
-    case 'E-Books':
-        $feedType[] = 'torrents_ebooks';
+    case 'Graphics':
+        $feedType[] = 'torrents_graphics';
         break;
-    case 'E-Learning Videos':
-        $feedType[] = '';
+    case 'Audio':
+        $feedType[] = 'torrents_audio';
+        break;
+    case 'Tutorials':
+        $feedType[] = 'torrents_tutorials';
+        break;
+    case 'Other':
+        $feedType[] = 'torrents_other';
         break;
 }
 
@@ -225,94 +129,6 @@ if ($Properties['Image']) {
     $banned = (new Gazelle\Util\ImageProxy($Viewer))->badHost($Properties['Image']);
     if ($banned) {
         $Err = "Please rehost images from $banned elsewhere.";
-    }
-}
-
-if (!$Err && $isMusicUpload) {
-    // additional torrent files
-    $ExtraTorrents = [];
-    $DupeNames = [$_FILES['file_input']['name']];
-    if (!empty($_POST['extra_format']) && !empty($_POST['extra_bitrate'])) {
-        for ($i = 1; $i <= 5; $i++) {
-            if (!empty($_FILES["extra_file_$i"])) {
-                $ExtraFile = $_FILES["extra_file_$i"];
-                $ExtraTorrentName = $ExtraFile['tmp_name'];
-                if (!is_uploaded_file($ExtraTorrentName) || !filesize($ExtraTorrentName)) {
-                    $Err = 'No extra torrent file uploaded, or file is empty.';
-                } elseif (substr(strtolower($ExtraFile['name']), strlen($ExtraFile['name']) - strlen('.torrent')) !== '.torrent') {
-                    $Err = 'You seem to have put something other than an extra torrent file into the upload field. (' . $ExtraFile['name'] . ').';
-                } elseif (in_array($ExtraFile['name'], $DupeNames)) {
-                    $Err = 'One or more torrents has been entered into the form twice.';
-                } else {
-                    $j = $i - 1;
-                    $ExtraTorrents[$ExtraTorrentName]['Name'] = $ExtraTorrentName;
-                    $ExtraFormat = trim($_POST['extra_format'][$j]);
-                    if (empty($ExtraFormat)) {
-                        $Err = 'Missing format for extra torrent.';
-                        break;
-                    } else {
-                        $ExtraTorrents[$ExtraTorrentName]['Format'] = $ExtraFormat;
-                    }
-                    $ExtraBitrate = trim($_POST['extra_bitrate'][$j]);
-                    if (empty($ExtraBitrate)) {
-                        $Err = 'Missing bitrate for extra torrent.';
-                        break;
-                    } else {
-                        $ExtraTorrents[$ExtraTorrentName]['Encoding'] = $ExtraBitrate;
-                    }
-                    $ExtraReleaseDescription = trim($_POST['extra_release_desc'][$j]);
-                    $ExtraTorrents[$ExtraTorrentName]['TorrentDescription'] = $ExtraReleaseDescription;
-                    $DupeNames[] = $ExtraFile['name'];
-                }
-            }
-        }
-    }
-    unset($DupeNames);
-
-    // Multiple artists
-    if (!$Err && empty($Properties['GroupID'])) {
-        $ArtistForm = [
-            ARTIST_MAIN      => [],
-            ARTIST_GUEST     => [],
-            ARTIST_REMIXER   => [],
-            ARTIST_COMPOSER  => [],
-            ARTIST_CONDUCTOR => [],
-            ARTIST_DJ        => [],
-            ARTIST_PRODUCER  => [],
-            ARTIST_ARRANGER  => [],
-        ];
-        $ArtistNameByRole = [
-            ARTIST_MAIN      => [],
-            ARTIST_GUEST     => [],
-            ARTIST_REMIXER   => [],
-            ARTIST_COMPOSER  => [],
-            ARTIST_CONDUCTOR => [],
-            ARTIST_DJ        => [],
-            ARTIST_PRODUCER  => [],
-            ARTIST_ARRANGER  => [],
-        ];
-        $ArtistRoleList = [];
-        $ArtistNameList = [];
-        if (is_array($Artists)) {
-            for ($i = 0, $end = count($Artists); $i < $end; $i++) {
-                $name = Gazelle\Artist::sanitize($Artists[$i]);
-                if ($name === '') {
-                    continue;
-                }
-                $role = (int)$Importance[$i];
-                if (!in_array($name, $ArtistNameByRole[$role])) {
-                    $ArtistNameByRole[$role][] = $name;
-                    $ArtistForm[$role][] = ['name' => $name];
-                    $ArtistRoleList[] = $role;
-                    $ArtistNameList[] = $name;
-                }
-            }
-        }
-        if (empty($ArtistNameByRole[ARTIST_MAIN])) {
-            $Err = 'Please enter at least one main artist';
-        } else {
-            $LogName .= Artists::display_artists($ArtistForm, false, true, false);
-        }
     }
 }
 
@@ -379,14 +195,6 @@ if (!$Err) {
 }
 foreach ($FileList as $FileInfo) {
     ['path' => $Name, 'size' => $Size] = $FileInfo;
-    // add +log to encoding
-    if ($Properties['Media'] == 'CD' && $Properties['Encoding'] == "Lossless" && !in_array(strtolower($Name), $IgnoredLogFileNames) && preg_match('/\.log$/i', $Name)) {
-        $HasLog = '1';
-    }
-    // add +cue to encoding
-    if ($Properties['Encoding'] == "Lossless" && preg_match('/\.cue$/i', $Name)) {
-        $HasCue = '1';
-    }
     // Check file name and extension against blacklist/whitelist
     if (!$Err) {
         $Err = $checker->checkFile($categoryName, $Name);
@@ -404,73 +212,6 @@ if (count($TooLongPaths) > 0) {
         : ('The torrent contained one or more files with too long a name: <ul>' . implode('', $TooLongPaths) . '</ul><br />');
 }
 $Debug->set_flag('upload: torrent decoded');
-
-$ExtraTorrentsInsert = [];
-// disable extra torrents when using ajax, just have them re-submit multiple times
-if ($isMusicUpload) {
-    foreach ($ExtraTorrents as $ExtraTorrent) {
-        $Name = $ExtraTorrent['Name'];
-        $ExtraTorrentsInsert[$Name] = $ExtraTorrent;
-        $ThisInsert =& $ExtraTorrentsInsert[$Name];
-        $xbencoder = new OrpheusNET\BencodeTorrent\BencodeTorrent;
-        $xbencoder->decodeFile($Name);
-        $ExtraTorData = $xbencoder->getData();
-        if (isset($ExtraTorData['encrypted_files'])) {
-            $Err = 'At least one of the torrents contain an encrypted file list which is not supported here';
-            break;
-        }
-        if (!$xbencoder->isPrivate()) {
-            $xbencoder->makePrivate(); // The torrent is now private.
-            $PublicTorrent = true;
-        }
-        if ($torMan->setSourceFlag($xbencoder)) {
-            $UnsourcedTorrent = true;
-        }
-
-        // File list and size
-        ['total_size' => $ExtraTotalSize, 'files' => $ExtraFileList] = $xbencoder->getFileList();
-        $ExtraDirName = isset($ExtraTorData['info']['files']) ? make_utf8($xbencoder->getName()) : '';
-        $ExtraTmpFileList = [];
-        foreach ($ExtraFileList as $ExtraFile) {
-            ['path' => $ExtraName, 'size' => $ExtraSize] = $ExtraFile;
-            if (!$Err) {
-                $Err = $checker->checkFile($categoryName, $ExtraName);
-            }
-            if (mb_strlen($ExtraName, 'UTF-8') + mb_strlen($ExtraDirName, 'UTF-8') + 1 > MAX_FILENAME_LENGTH) {
-                $Err = defined('AJAX')
-                    ? "The torrent contained one or more files with too long a name: $ExtraDirName/$ExtraName"
-                    : "The torrent contained one or more files with too long a name: <br />$ExtraDirName/$ExtraName";
-                break;
-            }
-            $ExtraTmpFileList[] = $torMan->metaFilename($ExtraName, $ExtraSize);
-        }
-
-        // To be stored in the database
-        $ThisInsert['FilePath'] = $ExtraDirName;
-        $ThisInsert['FileString'] = implode("\n", $ExtraTmpFileList);
-        $ThisInsert['InfoHash'] = $xbencoder->getHexInfoHash();
-        $ThisInsert['NumFiles'] = count($ExtraFileList);
-        $ThisInsert['TorEnc'] = $xbencoder->getEncode();
-        $ThisInsert['TotalSize'] = $ExtraTotalSize;
-
-        $Debug->set_flag('upload: torrent decoded');
-        $torrent = $torMan->findByInfohash(bin2hex($ThisInsert['InfoHash']));
-        if ($torrent) {
-            $torrentId = $torrent->id();
-            if ($torrentFiler->exists($torrentId)) {
-                $Err = defined('AJAX')
-                   ? "The exact same torrent file already exists on the site! (torrentid=$torrentId)"
-                   : "<a href=\"torrents.php?torrentid=$torrentId\">The exact same torrent file already exists on the site!</a>";
-            } else {
-                $torrentFiler->put($ThisInsert['TorEnc'], $torrentId);
-                $Err = defined('AJAX')
-                    ? "Thank you for fixing this torrent (torrentid=$torrentId)"
-                    : "<a href=\"torrents.php?torrentid=$torrentId\">Thank you for fixing this torrent</a>";
-            }
-        }
-    }
-    unset($ThisInsert);
-}
 
 if ($Err) {
     if (defined('AJAX')) {
@@ -502,34 +243,7 @@ $LogInDB = count($logfileSummary->all()) ? '1' : '0';
 
 $tgroup = null;
 $NoRevision = false;
-if ($isMusicUpload) {
-    // Does it belong in a group?
-    if ($Properties['GroupID']) {
-        $tgroup = $tgMan->findById($Properties['GroupID']);
-    }
-    if (is_null($tgroup)) {
-        foreach ($ArtistForm[ARTIST_MAIN] as $Artist) {
-            $tgroup = $tgMan->findByArtistReleaseYear($Artist['name'], $Properties['Title'], $Properties['ReleaseType'], $Properties['Year']);
-            if ($tgroup) {
-                break;
-            }
-        }
-    }
-    if ($tgroup) {
-        $Properties['ReleaseType'] = $tgroup->releaseType();
-        $Properties['Year'] = $tgroup->year();
-        $Properties['TagList'] = $tgroup->tagNameList();
-        if (!$Properties['Image'] && $tgroup->image()) {
-            $Properties['Image'] = $tgroup->image();
-        }
-        if ($Properties['GroupDescription'] != $tgroup->description()) {
-            $Properties['GroupDescription'] = $tgroup->description();
-            if (!$Properties['Image'] || $Properties['Image'] == $tgroup->image()) {
-                $NoRevision = true;
-            }
-        }
-    }
-} else if ($isApplicationsUpload) {
+if ($isApplicationsUpload) {
     // Does it belong in a group?
     if ($Properties['GroupID']) {
         $tgroup = $tgMan->findById($Properties['GroupID']);
@@ -559,18 +273,10 @@ if (!$IsNewGroup) {
     $tgroup = $tgMan->create(
         categoryId:      $categoryId,
         name:            $Properties['Title'],
-        year:            $Properties['Year'],
-        recordLabel:     $Properties['RecordLabel'],
-        catalogueNumber: $Properties['CatalogueNumber'],
         description:     $Properties['GroupDescription'],
         image:           $Properties['Image'],
-        releaseType:     $Properties['ReleaseType'],
         showcase:        (bool)($Viewer->permitted('torrents_edit_vanityhouse') && isset($_POST['vanity_house'])),
     );
-    if ($isMusicUpload) {
-        $tgroup->addArtists($Viewer, $ArtistRoleList, $ArtistNameList);
-        $Cache->increment_value('stats_album_count', count($ArtistNameList));
-    }
     $Viewer->stats()->increment('unique_group_total');
 }
 $GroupID = $tgroup->id();
@@ -613,22 +319,22 @@ if ($freeleech_min >= 0 && $freeleech_min <= $converted_mb_size) {
 
 $DB->prepared_query("
     INSERT INTO torrents
-        (GroupID, UserID, Media, Format, Encoding,
-        Remastered, RemasterYear, RemasterTitle, RemasterRecordLabel, RemasterCatalogueNumber,
-        Scene, HasLog, HasCue, HasLogDB, LogScore,
+        (GroupID, UserID, 
+        HasLog, HasLogDB, LogScore,
         LogChecksum, info_hash, FileCount, FileList, FilePath,
-        Size, Description, Time, FreeTorrent, FreeLeechType, Version)
+        Size, Description, Time, FreeTorrent, FreeLeechType,
+        Version, Platform, Includes, OSVersion, Processor, RAM, VRAM)
     VALUES
-        (?, ?, ?, ?, ?,
+        (?, ?, 
+         ?, ?, ?, 
          ?, ?, ?, ?, ?,
-         ?, ?, ?, ?, ?,
-         ?, ?, ?, ?, ?,
-         ?, ?, now(), ?, ?, ?)
-    ", $GroupID, $Viewer->id(), $Properties['Media'], $Properties['Format'], $Properties['Encoding'],
-       $Properties['Remastered'], $Properties['RemasterYear'], $Properties['RemasterTitle'], $Properties['RemasterRecordLabel'], $Properties['RemasterCatalogueNumber'],
-       $Properties['Scene'], $HasLog, $HasCue, $LogInDB, $logfileSummary->overallScore(),
+         ?, ?, now(), ?, ?,
+         ?, ?, ?, ?, ?, ?, ?)
+    ", $GroupID, $Viewer->id(), 
+       $HasLog, $LogInDB, $logfileSummary->overallScore(),
        $logfileSummary->checksumStatus(), $InfoHash, count($FileList), implode("\n", $TmpFileList), $DirName,
-       $TotalSize, $Properties['TorrentDescription'], $freeTorrent, $freeLeechType, $Properties['Version'],
+       $TotalSize, $Properties['TorrentDescription'], $freeTorrent, $freeLeechType,
+       $Properties['Version'], $Properties['Platform'], $Properties['Includes'], $Properties['OSVersion'], $Properties['Processor'], $Properties['RAM'], $Properties['VRAM'],
 );
 $TorrentID = $DB->inserted_id();
 $DB->prepared_query('
@@ -643,48 +349,6 @@ $bonusTotal = $bonus->torrentValue($torrent);
 
 // Prevent deletion of this torrent until the rest of the upload process is done
 $Cache->cache_value("torrent_{$TorrentID}_lock", true, 120);
-
-//******************************************************************************//
-//--------------- Upload Extra torrents ----------------------------------------//
-
-$extraFile = [];
-$trackerUpdate = [];
-
-foreach ($ExtraTorrentsInsert as $ExtraTorrent) {
-    $DB->prepared_query("
-        INSERT INTO torrents
-            (GroupID, UserID, Media, Format, Encoding,
-            Remastered, RemasterYear, RemasterTitle, RemasterRecordLabel, RemasterCatalogueNumber,
-            info_hash, FileCount, FileList, FilePath, Size, Description,
-            Time, LogScore, HasLog, HasCue, FreeTorrent, FreeLeechType)
-        VALUES
-            (?, ?, ?, ?, ?,
-            ?, ?, ?, ?, ?,
-            ?, ?, ?, ?, ?, ?,
-            now(), 0, '0', '0', ?, ?)
-        ", $GroupID, $Viewer->id(), $Properties['Media'], $ExtraTorrent['Format'], $ExtraTorrent['Encoding'],
-        $Properties['Remastered'], $Properties['RemasterYear'], $Properties['RemasterTitle'], $Properties['RemasterRecordLabel'], $Properties['RemasterCatalogueNumber'],
-        $ExtraTorrent['InfoHash'], $ExtraTorrent['NumFiles'], $ExtraTorrent['FileString'],
-        $ExtraTorrent['FilePath'], $ExtraTorrent['TotalSize'], $ExtraTorrent['TorrentDescription'], $freeTorrent, $freeLeechType,
-    );
-    $ExtraTorrentID = $DB->inserted_id();
-    $DB->prepared_query('
-        INSERT INTO torrents_leech_stats (TorrentID)
-        VALUES (?)
-        ', $ExtraTorrentID
-    );
-    $torrent = new Gazelle\Torrent($ExtraTorrentID);
-
-    $torMan->flushFoldernameCache($ExtraTorrent['FilePath']);
-    $folderCheck[] = $ExtraTorrent['FilePath'];
-    $trackerUpdate[$ExtraTorrentID] = rawurlencode($ExtraTorrent['InfoHash']);
-    $bonusTotal += $bonus->torrentValue($torrent);
-
-    $extraFile[$ExtraTorrentID] = [
-        'payload' => $ExtraTorrent['TorEnc'],
-        'size' => number_format($ExtraTorrent['TotalSize'] / (1024 * 1024), 2)
-    ];
-}
 
 //******************************************************************************//
 //--------------- Write Files To Disk ------------------------------------------//
@@ -735,17 +399,9 @@ if (!$Viewer->disableBonusPoints()) {
 
 $tgroup->refresh();
 $torMan->flushFoldernameCache($DirName);
-if (in_array($Properties['Encoding'], ['Lossless', '24bit Lossless'])) {
-    $torMan->flushLatestUploads(5);
-}
 
-$totalNew = 1 + count($ExtraTorrentsInsert);
+$totalNew = 1;
 $Viewer->stats()->increment('upload_total', $totalNew);
-if ($torrent->isPerfectFlac()) {
-    $Viewer->stats()->increment('perfect_flac_total');
-} elseif ($torrent->isPerfecterFlac()) {
-    $Viewer->stats()->increment('perfecter_flac_total');
-}
 
 // Update the various cache keys affected by this
 $Cache->increment_value('stats_torrent_count', $totalNew);
@@ -771,23 +427,6 @@ if ($isMusicUpload) {
 }
 $Announce .= $Properties['Title'] . ' ';
 $Details = "";
-if ($isMusicUpload) {
-    $Announce .= '['.$Properties['Year'].']';
-    if ($Properties['ReleaseType'] > 0) {
-        $Announce .= ' [' . $releaseTypes[$Properties['ReleaseType']] . ']';
-    }
-    $Details .= $Properties['Format'].' / '.$Properties['Encoding'];
-    if ($HasLog == 1) {
-        $Details .= ' / Log'.($LogInDB ? " ({$logfileSummary->overallScore()}%)" : "");
-    }
-    if ($HasCue == 1) {
-        $Details .= ' / Cue';
-    }
-    $Details .= ' / '.$Properties['Media'];
-    if ($Properties['Scene'] == '1') {
-        $Details .= ' / Scene';
-    }
-}
 
 $Title = $Announce;
 if ($Details !== "") {
@@ -847,19 +486,10 @@ if (defined('AJAX')) {
     );
 
     $notification = (new Gazelle\Notification\Upload)
-        ->addFormat($Properties['Format'])
-        ->addEncodings($Properties['Encoding'])
-        ->addMedia($Properties['Media'])
-        ->addYear($Properties['Year'], $Properties['RemasterYear'])
-        ->addArtists($tgroup->artistRole()->roleList())
         ->addTags($tagList)
         ->addCategory($categoryName)
         ->addUser($Viewer)
         ->setDebug(DEBUG_UPLOAD_NOTIFICATION);
-
-    if (isset($releaseTypes[$Properties['ReleaseType']])) {
-        $notification->addReleaseType($releaseTypes[$Properties['ReleaseType']]);
-    }
 
     $notification->trigger($GroupID, $TorrentID, $Feed, $Item);
 
@@ -885,15 +515,6 @@ if (defined('AJAX')) {
     json_print('success', $Response);
 } else {
     $folderClash = 0;
-    if ($isMusicUpload) {
-        foreach ($folderCheck as $foldername) {
-            // This also has the nice side effect of warming the cache immediately
-            $list = $torMan->findAllByFoldername($foldername);
-            if (count($list) > 1) {
-                ++$folderClash;
-            }
-        }
-    }
     if ($PublicTorrent || $UnsourcedTorrent || $folderClash) {
         View::show_header('Warning');
         echo $Twig->render('upload/result_warnings.twig', [
@@ -925,32 +546,6 @@ if ($Viewer->option('AutoSubscribe')) {
 }
 
 // Manage notifications
-$seenFormatEncoding = [];
-
-if (!$IsNewGroup) {
-    // maybe there are torrents in the same release as the new torrent. Let's find out (for notifications)
-    $GroupInfo = get_group_info($GroupID, 0, false);
-
-    $ThisMedia = display_str($Properties['Media']);
-    $ThisRemastered = display_str($Properties['Remastered']);
-    $ThisRemasterYear = display_str($Properties['RemasterYear']);
-    $ThisRemasterTitle = display_str($Properties['RemasterTitle']);
-    $ThisRemasterRecordLabel = display_str($Properties['RemasterRecordLabel']);
-    $ThisRemasterCatalogueNumber = display_str($Properties['RemasterCatalogueNumber']);
-
-    foreach ($GroupInfo[1] as $TorrentInfo) {
-        if (($TorrentInfo['Media'] == $ThisMedia)
-            && ($TorrentInfo['Remastered'] == $ThisRemastered)
-            && ($TorrentInfo['RemasterYear'] == (int)$ThisRemasterYear)
-            && ($TorrentInfo['RemasterTitle'] == $ThisRemasterTitle)
-            && ($TorrentInfo['RemasterRecordLabel'] == $ThisRemasterRecordLabel)
-            && ($TorrentInfo['RemasterCatalogueNumber'] == $ThisRemasterCatalogueNumber)
-            && ($TorrentInfo['ID'] != $TorrentID)) {
-            $seenFormatEncoding[] = ['format' => $TorrentInfo['Format'], 'bitrate' => $TorrentInfo['Encoding']];
-        }
-    }
-}
-
 if (!in_array('notifications', $Viewer->paranoia())) {
     // For RSS
     $Feed = new Gazelle\Feed;
@@ -965,20 +560,10 @@ if (!in_array('notifications', $Viewer->paranoia())) {
     );
 
     $notification = (new Gazelle\Notification\Upload)
-        ->addFormat($Properties['Format'])
-        ->addEncodings($Properties['Encoding'])
-        ->addMedia($Properties['Media'])
-        ->addYear($Properties['Year'], $Properties['RemasterYear'])
-        ->addArtists($tgroup->artistRole()->roleList())
         ->addTags($tagList)
         ->addCategory($categoryName)
         ->addUser($Viewer)
         ->setDebug(DEBUG_UPLOAD_NOTIFICATION);
-
-    if ($isMusicUpload) {
-        $notification->addReleaseType($releaseTypes[$Properties['ReleaseType']]);
-    }
-
     $notification->trigger($GroupID, $TorrentID, $Feed, $Item);
 
     // RSS for bookmarks

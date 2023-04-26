@@ -449,10 +449,10 @@ if (!$torrentList) {
         if ($tgroup->categoryGrouped() && ($prev != $current || $FirstUnknown)) {
             $EditionID++;
 ?>
-            <tr class="releases_<?= $tgroup->releaseTypeName() ?> groupid_<?=$tgroupId?> edition group_torrent">
+            <!-- <tr class="releases_<?= $tgroup->releaseTypeName() ?> groupid_<?=$tgroupId?> edition group_torrent">
                 <td colspan="5" class="edition_info"><strong><a href="#" onclick="toggle_edition(<?=$tgroupId?>, <?=
                     $EditionID?>, this, event);" title="Collapse this edition. Hold [Command] <em>(Mac)</em> or [Ctrl] <em>(PC)</em> while clicking to collapse all editions in this torrent group." class="tooltip">&ndash;</a> <?= $torrent->edition() ?></strong></td>
-            </tr>
+            </tr> -->
 <?php
         }
         $prev = $current;
@@ -477,7 +477,7 @@ if (!$torrentList) {
             ],
         ]);
 ?>
-                    <a href="#" onclick="$('#torrent_<?=$TorrentID?>').gtoggle(); return false;">&#x25B6; <?php if ($tgroup->categoryId() == 2) { echo($torrent->versionLink()); } else { echo($torrent->label()); } ?></a>
+                    <a href="#" onclick="$('#torrent_<?=$TorrentID?>').gtoggle(); return false;">&#x25B6; <?php echo($torrent->versionLink()); ?></a>
                 </td>
                 <?= $Twig->render('torrent/stats.twig', ['torrent' => $torrent]) ?>
             </tr>
@@ -641,7 +641,7 @@ echo $Twig->render('tgroup/similar.twig', [
 ]);
 ?>
         <div class="box torrent_description">
-            <div class="head"><a href="#">&uarr;</a>&nbsp;<strong><?= $tgroup->releaseTypeName() ? $tgroup->releaseTypeName() . ' info' : 'Info' ?></strong></div>
+            <div class="head"><a href="#">&uarr;</a>&nbsp;<strong>Torrent Info</strong></div>
             <div class="body">
 <?php if (!empty($tgroup->description())) { ?>
                 <?= Text::full_format($tgroup->description()) ?>

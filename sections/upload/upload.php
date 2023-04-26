@@ -107,8 +107,7 @@ if (isset($categoryId)) {
 }
 echo $uploadForm->head();
 echo match (CATEGORY[($categoryId ?? 1) - 1]) {
-    'Audiobooks', 'Comedy'                                   => $uploadForm->audiobook_form(),
-    'Applications', 'Comics', 'E-Books', 'E-Learning Videos' => $uploadForm->simple_form(),
-    default                                                  => $uploadForm->music_form((new Gazelle\Manager\Tag)->genreList()),
+    'Applications', 'Games', 'IOS Applications', 'IOS Games' => $uploadForm->simple_group_form(),
+    default                                                  => $uploadForm->simple_form(),
 };
 echo $uploadForm->foot(true);

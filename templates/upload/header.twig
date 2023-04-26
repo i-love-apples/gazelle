@@ -23,7 +23,7 @@
             <input type="hidden" name="groupid" value="{{ info.GroupID }}" />
             <input type="hidden" name="type" value="{{ category_id }}" />
     {% else %}
-            <input type="hidden" id="groupid" name="groupid" value="" placeholder="groupid" />
+            <input type="hidden" id="groupid" name="groupid" value="{{ category_id }}" placeholder="groupid" />
     {% endif %}
     {% if info.RequestID %}
             <input type="hidden" name="requestid" value="{{ info.RequestID }}" />
@@ -36,13 +36,6 @@
                 <td class="label">Torrent file:</td>
                 <td>
                     <input id="file" type="file" name="file_input" size="50" accept="application/x-bittorrent, .torrent" />
-                </td>
-            </tr>
-            <tr>
-                <td class="label">JSON file:</td>
-                <td>
-                    <input type="file" id="torrent-json-file" accept="application/json, .json" />
-                    <br />(If you are not cross-seeding from another site, you can safely leave this field empty).
                 </td>
             </tr>
             <tr>

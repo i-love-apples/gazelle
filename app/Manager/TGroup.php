@@ -86,20 +86,16 @@ class TGroup extends \Gazelle\BaseManager {
 
     public function create(
         int $categoryId,
-        ?int $releaseType,
         string $name,
         string $description,
-        ?int $year,
-        ?string $recordLabel,
-        ?string $catalogueNumber,
         ?string $image,
         bool $showcase,
     ): \Gazelle\TGroup {
         self::$db->prepared_query("
             INSERT INTO torrents_group
-                   (CategoryID, Name, WikiBody, Year, RecordLabel, CatalogueNumber, WikiImage, ReleaseType, VanityHouse)
-            VALUES (?,          ?,    ?,    ?,           ?,               ?,        ?,         ?,           ?)
-            ", $categoryId, $name, $description, $year, $recordLabel, $catalogueNumber, $image, $releaseType, (int)$showcase
+                   (CategoryID, Name, WikiBody, WikiImage, VanityHouse)
+            VALUES (?, ?, ?, ?, ?)
+            ", $categoryId, $name, $description, $image, (int)$showcase
         );
         $id = self::$db->inserted_id();
         self::$cache->increment_value('stats_group_count');

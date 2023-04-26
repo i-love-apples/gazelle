@@ -745,16 +745,16 @@ defined('FILELIST_DELIM') or define('FILELIST_DELIM', "\xC3\xB7");
 
 // Upload categories.
 defined('CATEGORY') or define('CATEGORY', [
-    'Music',
     'Applications',
-    'E-Books',
-    'Audiobooks',
-    'E-Learning Videos',
-    'Comedy',
-    'Comics'
+    'Games',
+    'IOS Applications',
+    'IOS Games',
+    'Graphics',
+    'Audio',
+    'Tutorials',
+    'Other'
 ]);
-defined('CATEGORY_GROUPED') or define('CATEGORY_GROUPED', array_intersect(['Music'], CATEGORY));
-
+defined('CATEGORY_GROUPED') or define('CATEGORY_GROUPED', array_intersect(['Applications', 'Games', 'IOS Applications', 'IOS Games'], CATEGORY));
 // Icons of upload categories.
 defined('CATEGORY_ICON') or define('CATEGORY_ICON', [
     'music.png',
