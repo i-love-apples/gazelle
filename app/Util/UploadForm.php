@@ -131,11 +131,10 @@ class UploadForm extends \Gazelle\Base {
 <?php       } ?>
                 </td>
             </tr>
-
             <tr>
                 <td class="label">Description:</td>
                 <td>
-                    <?= (new Textarea('album_desc', display_str($Torrent['GroupDescription'] ?? ''), 60, 5))->emit() ?>
+                    <?= (new Textarea('album_desc', display_str($Torrent['GroupDescription'] ?? ''), 60, 5, $this->Readonly))->emit() ?>
                 </td>
             </tr>
 <?php   } ?>

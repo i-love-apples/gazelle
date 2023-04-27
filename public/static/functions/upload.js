@@ -111,6 +111,17 @@ function SetAutocomplete() {
     });
 }
 
+function SetAutocompleteForMigration() {
+    var TORRENTS_AUTOCOMPLETE_UPLOAD_URL    = 'torrents.php?action=autocomplete_upload';
+    $('#title_search_groupid').autocomplete({
+        deferRequestBy: 300,
+        onSelect : function(suggestion) {
+            $("#changegroupid").val(suggestion['id']);
+        },
+        serviceUrl : TORRENTS_AUTOCOMPLETE_UPLOAD_URL,
+    });
+}
+
 function Remaster() {
     if ($('#remaster').raw().checked) {
         $('#remaster_true').gshow();
