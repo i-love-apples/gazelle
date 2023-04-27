@@ -21,10 +21,8 @@ if (is_null($old)) {
     error('The source torrent group does not exist!');
 }
 
-$ArtistName = trim($_POST['artist']);
 $Title      = trim($_POST['title']);
-$Year       = (int)$_POST['year'];
-if (!$Year || empty($Title) || empty($ArtistName)) {
+if (empty($Title)) {
     error(0);
 }
 
@@ -43,13 +41,12 @@ if (empty($_POST['confirm'])) {
 
 $DB->prepared_query("
     INSERT INTO torrents_group
-           (Name, Year, CategoryID, WikiBody, WikiImage)
-    VALUES (?,    ?,    1,          '',       '')
-    ", $Title, $Year
+           (Name, CategoryID, WikiBody, WikiImage)
+    VALUES (?,    1,          '',       '')
+    ", $Title
 );
 $new = $tgMan->findById($DB->inserted_id());
 
-$new->addArtists($Viewer, [ARTIST_MAIN], [$ArtistName]);
 
 $DB->prepared_query('
     UPDATE torrents SET

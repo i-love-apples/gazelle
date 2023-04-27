@@ -36,6 +36,9 @@ if (!empty($_REQUEST['action'])) {
         case 'changecategory':
             require_once('takechangecategory.php');
             break;
+        case 'changetorrent':
+            require_once('takechangetorrent.php');
+            break;
         case 'grouplog':
             require_once('grouplog.php');
             break;

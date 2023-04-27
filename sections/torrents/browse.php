@@ -121,7 +121,7 @@ echo $paginator->linkbox();
         <td class="small"></td>
 <?php    } ?>
         <td class="small cats_col"></td>
-        <td class="m_th_left m_th_left_collapsable nobr" width="100%">Name / <?= $header->emit('year') ?></td>
+        <td class="m_th_left m_th_left_collapsable nobr" width="100%">Name</td>
         <td>Files</td>
         <td class="nobr"><?= $header->emit('time') ?></td>
         <td class="nobr"><?= $header->emit('size') ?></td>

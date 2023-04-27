@@ -757,13 +757,14 @@ defined('CATEGORY') or define('CATEGORY', [
 defined('CATEGORY_GROUPED') or define('CATEGORY_GROUPED', array_intersect(['Applications', 'Games', 'IOS Applications', 'IOS Games'], CATEGORY));
 // Icons of upload categories.
 defined('CATEGORY_ICON') or define('CATEGORY_ICON', [
-    'music.png',
     'apps.png',
-    'ebook.png',
-    'audiobook.png',
-    'elearning.png',
-    'comedy.png',
-    'comics.png'
+    'apps.png',
+    'apps.png',
+    'apps.png',
+    'apps.png',
+    'apps.png',
+    'apps.png',
+    'apps.png'
 ]);
 
 // Allowed upload formats.

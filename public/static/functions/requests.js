@@ -89,6 +89,10 @@ function Calculate() {
     }
 }
 
+function clear_tag() {
+    $('#tags').raw().value = "";
+}
+
 function AddArtistField() {
     var ArtistCount = document.getElementsByName("artists[]").length;
     if (ArtistCount >= 200) {
@@ -161,43 +165,43 @@ function RemoveArtistField() {
 
 function Categories() {
     var cat = $('#categories').raw().options[$('#categories').raw().selectedIndex].value;
-    if (cat == "Music") {
-        $('#artist_tr').gshow();
-        $('#releasetypes_tr').gshow();
-        $('#formats_tr').gshow();
-        $('#bitrates_tr').gshow();
-        $('#media_tr').gshow();
-        ToggleLogCue();
-        $('#year_tr').gshow();
-        $('#cataloguenumber_tr').gshow();
-    } else if (cat == "Applications") {
-        $('#recordlabel_tr').ghide();
-        $('#oclc_tr').ghide();
-        $('#genre_tags').ghide();
-        $('#artist_tr').ghide();
-        $('#releasetypes_tr').ghide();
-        $('#formats_tr').ghide();
-        $('#bitrates_tr').ghide();
-        $('#media_tr').ghide();
-        $('#year_tr').ghide();
-        $('#cataloguenumber_tr').ghide();
-        $('#toggle_formats').prop("checked", true);
-        Toggle('formats', 1);
-        $('#toggle_bitrates').prop("checked", true);
-        Toggle('bitrates', 1);
-        $('#toggle_media').prop("checked", true);
-        Toggle('media', 1);
-        $('#logcue_tr').ghide();
-    } else {
-        $('#year_tr').gshow();
-        $('#artist_tr').ghide();
-        $('#releasetypes_tr').ghide();
-        $('#formats_tr').ghide();
-        $('#bitrates_tr').ghide();
-        $('#media_tr').ghide();
-        $('#logcue_tr').ghide();
-        $('#cataloguenumber_tr').ghide();
-    }
+    // if (cat == "Music") {
+    //     $('#artist_tr').gshow();
+    //     $('#releasetypes_tr').gshow();
+    //     $('#formats_tr').gshow();
+    //     $('#bitrates_tr').gshow();
+    //     $('#media_tr').gshow();
+    //     ToggleLogCue();
+    //     $('#year_tr').gshow();
+    //     $('#cataloguenumber_tr').gshow();
+    // } else if (cat == "Applications") {
+    //     $('#recordlabel_tr').ghide();
+    //     $('#oclc_tr').ghide();
+    //     $('#genre_tags').ghide();
+    //     $('#artist_tr').ghide();
+    //     $('#releasetypes_tr').ghide();
+    //     $('#formats_tr').ghide();
+    //     $('#bitrates_tr').ghide();
+    //     $('#media_tr').ghide();
+    //     $('#year_tr').ghide();
+    //     $('#cataloguenumber_tr').ghide();
+    //     $('#toggle_formats').prop("checked", true);
+    //     Toggle('formats', 1);
+    //     $('#toggle_bitrates').prop("checked", true);
+    //     Toggle('bitrates', 1);
+    //     $('#toggle_media').prop("checked", true);
+    //     Toggle('media', 1);
+    //     $('#logcue_tr').ghide();
+    // } else {
+    //     $('#year_tr').gshow();
+    //     $('#artist_tr').ghide();
+    //     $('#releasetypes_tr').ghide();
+    //     $('#formats_tr').ghide();
+    //     $('#bitrates_tr').ghide();
+    //     $('#media_tr').ghide();
+    //     $('#logcue_tr').ghide();
+    //     $('#cataloguenumber_tr').ghide();
+    // }
 }
 
 function add_tag() {

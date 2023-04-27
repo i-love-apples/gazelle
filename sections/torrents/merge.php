@@ -16,7 +16,7 @@ if (is_null($new)) {
 if ($new->id() === $old->id()) {
     error('Old group ID is the same as new group ID!');
 }
-if ($old->categoryName() !== 'Music') {
+if ($old->categoryName() !== 'Applications' && $old->categoryName() !== 'Games' && $old->categoryName() !== 'IOS Applications' && $old->categoryName() !== 'IOS Games') {
     error('Only music groups can be merged.');
 }
 

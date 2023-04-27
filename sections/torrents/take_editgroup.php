@@ -35,26 +35,26 @@ if (($_GET['action'] ?? '') == 'revert') {
     [$Body, $Image] = $revert;
 } else {
     // edit, variables are passed via POST
-    $ReleaseType = (int)$_POST['releasetype'];
-    $rt = new Gazelle\ReleaseType;
-    $newReleaseTypeName = $rt->findNameById($ReleaseType);
-    if ($tgroup->categoryId() == 1 && !$newReleaseTypeName || $tgroup->categoryId() != 1 && $ReleaseType) {
-        error(403);
-    }
-    if ($ReleaseType != $tgroup->releaseType()) {
-        $tgroup->setUpdate('ReleaseType', $ReleaseType);
-        $logInfo[] = "Release type changed from "
-            . $rt->findNameById($tgroup->releaseType())
-            . " to $newReleaseTypeName";
-    }
+    // $ReleaseType = (int)$_POST['releasetype'];
+    // $rt = new Gazelle\ReleaseType;
+    // $newReleaseTypeName = $rt->findNameById($ReleaseType);
+    // if ($tgroup->categoryId() == 1 && !$newReleaseTypeName || $tgroup->categoryId() != 1 && $ReleaseType) {
+    //     error(403);
+    // }
+    // if ($ReleaseType != $tgroup->releaseType()) {
+    //     $tgroup->setUpdate('ReleaseType', $ReleaseType);
+    //     $logInfo[] = "Release type changed from "
+    //         . $rt->findNameById($tgroup->releaseType())
+    //         . " to $newReleaseTypeName";
+    // }
 
-    if ($Viewer->permitted('torrents_edit_vanityhouse')) {
-        $showcase = isset($_POST['vanity_house']) ? 1 : 0;
-        if ($tgroup->isShowcase() != $showcase) {
-            $tgroup->setUpdate('VanityHouse', $showcase);
-            $logInfo[] = 'Vanity House status changed to '. ($showcase ? 'true' : 'false');
-        }
-    }
+    // if ($Viewer->permitted('torrents_edit_vanityhouse')) {
+    //     $showcase = isset($_POST['vanity_house']) ? 1 : 0;
+    //     if ($tgroup->isShowcase() != $showcase) {
+    //         $tgroup->setUpdate('VanityHouse', $showcase);
+    //         $logInfo[] = 'Vanity House status changed to '. ($showcase ? 'true' : 'false');
+    //     }
+    // }
 
     if (empty($_POST['image'])) {
         $Image = '';
@@ -69,7 +69,12 @@ if (($_GET['action'] ?? '') == 'revert') {
         }
     }
 
+    $categoryID = $_POST['type'];
+
     $Body = $_POST['body'];
+    if (strlen($Body) < 10) {
+        error('The description has a minimum length of 10 characters.');
+    }
     if ($_POST['summary']) {
         $logInfo[] = "summary: " . trim($_POST['summary']);
     }
@@ -78,8 +83,9 @@ if (($_GET['action'] ?? '') == 'revert') {
 
 $imageFlush = ($Image != $tgroup->showFallbackImage(false)->image());
 
-$tgroup->setUpdate('WikiBody', $Body)
+$tgroup->setUpdate('CategoryID', $categoryID+1)
     ->setUpdate('WikiImage', $Image)
+    ->setUpdate('WikiBody', $Body)
     ->modify();
 
 if ($imageFlush) {

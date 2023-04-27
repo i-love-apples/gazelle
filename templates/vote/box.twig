@@ -4,7 +4,7 @@
 {% set score = vote.score(total, up) * 100 %}
 {% set way   = vote.vote(group_id) %}
 <div class="box" id="votes">
-    <div class="head"><strong>Album Votes</strong></div>
+    <div class="head"><strong>Torrent Votes</strong></div>
     <div class="album_votes body">
         <span class="favoritecount tooltip" title="{{ up }} upvote{% if up != 1 %}s{% endif %}"><span id="upvotes">{{ up|number_format }}</span> <span class="vote_album_up">&#x25b2;</span></span>
         &nbsp;&nbsp;

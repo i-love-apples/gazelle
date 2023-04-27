@@ -171,6 +171,8 @@ class TGroup extends \Gazelle\BaseManager {
         while ([$TorrentID] = self::$db->next_row()) {
             $cacheKeys[] = 'torrent_download_' . $TorrentID;
             $cacheKeys[] = 'tid_to_group_' . $TorrentID;
+            $cacheKeys[] = 'zz_t_' . $TorrentID;
+            $cacheKeys[] = 'tg_' . $TorrentID;
         }
         self::$cache->delete_multi($cacheKeys);
         unset($cacheKeys);
@@ -242,6 +244,9 @@ class TGroup extends \Gazelle\BaseManager {
             "torrent_collages_personal_" . $new->id(),
             "votes_" . $new->id(),
         ]);
+
+        $old->flush();
+        $new->flush();
         return true;
     }
 

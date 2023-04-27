@@ -81,10 +81,11 @@ View::show_header(display_str($title), ['js' => 'browse,comments,torrent,bbcode,
 ?>
 <div class="thin">
     <div class="header">
-        <h2><?= $tgroup->link() ?></h2>
+        <h2><?= $tgroup->link() ?>
+        <br><small><?= $tgroup->categoryName() ?></small></h2>
         <div class="linkbox">
-<?php if ($Viewer->permitted('site_edit_wiki')) { ?>
-            <a href="<?= $tgroup->url() ?>&amp;action=editgroup" class="brackets">Edit description</a>
+<?php if ($Viewer->permitted('site_edit_wiki') && ($Viewer->permitted('torrents_edit') || $Viewer->permitted('users_mod')) ) { ?>
+            <a href="<?= $tgroup->url() ?>&amp;action=editgroup" class="brackets">Edit group</a>
 <?php } ?>
             <a href="<?= $tgroup->url() ?>&amp;action=editrequest" class="brackets">Request an Edit</a>
 <?php if ($RevisionID && $Viewer->permitted('site_edit_wiki')) { ?>
@@ -152,7 +153,7 @@ if ($tgroup->image() != '') {
 ?>
             <p align="center"><img width="100%" src="<?= $image ?>" alt="<?= display_str($title) ?>" onclick="lightbox.init('<?= $image ?>', 220);" /></p>
 <?php } else { ?>
-            <p align="center"><img width="100%" src="<?=STATIC_SERVER?>/common/noartwork/<?= $tgroup->categoryIcon() ?>" class="brackets tooltip" title="<?= $tgroup->categoryName() ?>" height="220" border="0" /></p>
+            <p align="center"><img width="100%" src="<?=STATIC_SERVER?>/common/noartwork/apps.png" class="brackets tooltip" title="<?= $tgroup->categoryName() ?>" height="220" border="0" /></p>
 <?php
 }
 $Index++;
@@ -508,6 +509,14 @@ if (!$torrentList) {
         }
     }
 ?>
+                            <?php if ($torrent->version() != "") { ?>Version: <b><?= $torrent->version()?></b><br><?php } ?>
+                            <?php if ($torrent->platform() != "") { ?>Mac Platform: <b><?= $torrent->platform()?></b><br><?php } ?>
+                            <?php if ($torrent->includes() != "") { ?>Includes: <b><?= $torrent->includes()?></b><br><?php } ?>
+                            <?php if ($torrent->osversion() != "") { ?>OS version: <b><?= $torrent->osversion()?></b><br><?php } ?>
+                            <?php if ($torrent->processor() != "") { ?>CPU: <b><?= $torrent->processor()?></b><br><?php } ?>
+                            <?php if ($torrent->ram() != "") { ?>RAM: <b><?= $torrent->ram()?></b><br><?php } ?>
+                            <?php if ($torrent->vram() != "") { ?>Video RAM: <b><?= $torrent->vram()?></b><br><?php } ?>
+                            <br>
                             Uploaded by <?= $torrent->uploader()->link() ?> <?=time_diff($torrent->created());?>
 <?php
     if ($torrent->seederTotal() == 0) {
