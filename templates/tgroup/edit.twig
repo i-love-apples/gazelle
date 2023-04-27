@@ -16,7 +16,28 @@
                     <option value="{{ loop.index0 }}"{{ selected(name == tgroup.categoryName) }}>{{ name }}</option>
 {%- endfor %}
                 </select>
-
+                <h3>Tags:</h3>
+                <select id="genre_tags" name="genre_tags" onchange="add_tag();"<?=$this->Disabled?>>
+                    <option></option>
+{% for key, value in release_tags %}
+                    <option value="{{ value }}">{{ value }}</option>
+{% endfor %}
+                </select>
+                <input type="text" id="tags" name="tags" size="40" value="{{ tgroup.tags }}" data-gazelle-autocomplete="true"' />
+                <input type="button" onclick="clear_tag()" value="Clean tags" title="Clean tags">
+                <script>
+                    function add_tag() {
+                        if ($('#tags').raw().value == "") {
+                            $('#tags').raw().value = $('#genre_tags').raw().options[$('#genre_tags').raw().selectedIndex].value;
+                        } else if ($('#genre_tags').raw().options[$('#genre_tags').raw().selectedIndex].value === '---') {
+                        } else {
+                            $('#tags').raw().value = $('#tags').raw().value + ', ' + $('#genre_tags').raw().options[$('#genre_tags').raw().selectedIndex].value;
+                        }
+                    }
+                    function clear_tag() {
+                        $('#tags').raw().value = "";
+                    }
+                </script>
                 <h3>Image:</h3>
                 <input type="text" name="image" size="92" value="{{ tgroup.image }}" /><br />
 {% if constant('IMAGE_HOST_BANNED') %}

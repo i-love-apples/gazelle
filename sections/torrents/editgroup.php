@@ -18,6 +18,7 @@ if ($Viewer->disableWiki()) {
 echo $Twig->render('tgroup/edit.twig', [
     'body'         => new Gazelle\Util\Textarea('body', $tgroup->description(), 80, 20),
     'release_type' => (new Gazelle\ReleaseType)->list(),
+    'release_tags' => (new \Gazelle\ReleaseTags)->list(),
     'tgroup'       => $tgroup->showFallbackImage(false),
     'viewer'       => $Viewer,
 ]);
