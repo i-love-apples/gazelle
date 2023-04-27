@@ -33,10 +33,10 @@ if ($Includes === '') {
 
 $Description = trim($_POST['desc'] ?? '');
 if ($Description === '') {
-    error('Includes cannot be blank');
+    error('Release description cannot be blank');
 } else {
     if (strlen($Description) < 10) {
-        error('The description has a minimum length of 10 characters.');
+        error('The release description has a minimum length of 10 characters.');
     }
 }
 
