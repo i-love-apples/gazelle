@@ -84,6 +84,9 @@ View::show_header(display_str($title), ['js' => 'browse,comments,torrent,bbcode,
         <h2><?= $tgroup->link() ?>
         <br><small><?= $tgroup->categoryName() ?></small></h2>
         <div class="linkbox">
+<?php if ($tgroup->categoryName() == 'Applications' || $tgroup->categoryName() == 'Games' || $tgroup->categoryName() == 'IOS Applications' || $tgroup->categoryName() == 'IOS Games') { ?>
+        <a href="upload.php?groupid=<?= $tgroup->id() ?>" class="brackets">Add version</a>
+<?php } ?>
 <?php if ($Viewer->permitted('site_edit_wiki') && ($Viewer->permitted('torrents_edit') || $Viewer->permitted('users_mod')) ) { ?>
             <a href="<?= $tgroup->url() ?>&amp;action=editgroup" class="brackets">Edit group</a>
 <?php } ?>
@@ -450,7 +453,7 @@ if (!$torrentList) {
         if ($tgroup->categoryGrouped() && ($prev != $current || $FirstUnknown)) {
             $EditionID++;
 ?>
-            <!-- <tr class="releases_<?= $tgroup->releaseTypeName() ?> groupid_<?=$tgroupId?> edition group_torrent">
+            <!-- <tr class="releases_< ?= $tgroup->releaseTypeName() ?> groupid_<?=$tgroupId?> edition group_torrent">
                 <td colspan="5" class="edition_info"><strong><a href="#" onclick="toggle_edition(<?=$tgroupId?>, <?=
                     $EditionID?>, this, event);" title="Collapse this edition. Hold [Command] <em>(Mac)</em> or [Ctrl] <em>(PC)</em> while clicking to collapse all editions in this torrent group." class="tooltip">&ndash;</a> <?= $torrent->edition() ?></strong></td>
             </tr> -->

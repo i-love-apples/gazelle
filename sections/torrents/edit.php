@@ -155,9 +155,11 @@ View::show_header('Edit torrent', ['js' => 'upload,torrent']);
             <input type="hidden" name="auth" value="<?= $Viewer->auth() ?>" />
             <input type="hidden" name="torrentid" value="<?= $torrentId ?>" />
             <input type="hidden" name="oldgroupid" value="<?= $tgroupId ?>" />
-            <div>
+            <div><br>
+                Select an existing group to autocomplete group id:<br>
+                <input type="text" id="title_search_groupid" size="60" /><br><br>
                 <h3>Group ID: </h3>
-                <input type="text" name="groupid" value="<?= $tgroupId ?>" size="10" />
+                <input type="text" id="changegroupid" name="groupid" value="<?= $tgroupId ?>" size="10" />
                 <br>
                 <br>
                 <div style="text-align: center;">
@@ -166,6 +168,7 @@ View::show_header('Edit torrent', ['js' => 'upload,torrent']);
             </div>
         </form>
     </div>
+    <script>SetAutocompleteForMigration();</script>
     <h3>Split off into new group</h3>
     <div class="box pad">
         <form class="split_form" name="torrent_group" action="torrents.php" method="post">

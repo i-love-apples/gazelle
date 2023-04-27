@@ -37,12 +37,14 @@ class Textarea extends \Gazelle\Base {
      * @param string $value default text attribute
      * @param int $cols  cols attribute
      * @param int $rows  rows attribute
+     * @param int $readonly  readonly attribute
      */
     public function __construct(
         protected readonly string $name,
         protected readonly string $value,
         protected readonly int $cols = 72,
-        protected readonly int $rows = 10
+        protected readonly int $rows = 10,
+        protected readonly string $extraattr = ""
     ) {
         $this->id     = count(self::$list);
         self::$list[] = "[{$this->id}, '$name']";
@@ -85,11 +87,13 @@ class Textarea extends \Gazelle\Base {
     }
 
     public function field(): string {
+        $readonly_attr = "";
         $attr = array_merge($this->extra, [
             'name="' . $this->name . '"',
             'id="' . $this->name . '"',
             'cols="' . $this->cols . '"',
             'rows="' . $this->rows . '"',
+            ' ' . $this->extraattr . ' ',
             'onkeyup="resize(\'' . $this->name . '\')"',
         ]);
         return '<div id="textarea_wrap_' . $this->id . '" class="field_div textarea_wrap">'
