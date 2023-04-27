@@ -67,7 +67,7 @@
                 <input type="hidden" name="action" value="rename" />
                 <input type="hidden" name="auth" value="{{ viewer.auth }}" />
                 <input type="hidden" name="groupid" value="{{ tgroup.id }}" />
-                <input type="text" name="name" size="92" value="{{ tgroup.name }}" /><br><br>
+                <input type="text" name="name" size="92" value="{{ tgroup.name }}" /><br><br>                
                 <div style="text-align: center;">
                     <input type="submit" value="Rename" />
                 </div>
@@ -81,14 +81,28 @@
                 <input type="hidden" name="action" value="merge" />
                 <input type="hidden" name="auth" value="{{ viewer.auth }}" />
                 <input type="hidden" name="groupid" value="{{ tgroup.id }}" />
-                <h3>Target torrent group ID: </h3>
-                <input type="text" name="targetgroupid" size="10" /><br><br>
+                <div><br>
+                    Select an existing group to autocomplete group id:<br>
+                    <input type="text" id="title_search_groupid" size="60" /><br><br>
+                    <h3>Target torrent group ID: </h3>
+                    <input type="text" id="changegroupid" name="targetgroupid" value="" size="10" />
+                </div><br>
                 <div style="text-align: center;">
                     <input type="submit" value="Merge" />
                 </div>
             </div>
         </form>
     </div>
+    <script>
+        var TORRENTS_AUTOCOMPLETE_UPLOAD_URL    = 'torrents.php?action=autocomplete_upload';
+        $('#title_search_groupid').autocomplete({
+            deferRequestBy: 300,
+            onSelect : function(suggestion) {
+                $("#changegroupid").val(suggestion['id']);
+            },
+            serviceUrl : TORRENTS_AUTOCOMPLETE_UPLOAD_URL,
+        });
+    </script>
 {% endif %}
 </div>
 {{ footer() }}
