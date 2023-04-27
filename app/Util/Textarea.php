@@ -87,7 +87,6 @@ class Textarea extends \Gazelle\Base {
     }
 
     public function field(): string {
-        $readonly_attr = "";
         $attr = array_merge($this->extra, [
             'name="' . $this->name . '"',
             'id="' . $this->name . '"',
