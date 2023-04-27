@@ -16,7 +16,9 @@
             and not torrent.isRemasteredUnknown
         )
     ) %}
+    {% if torrent.isGrouped %}
  | <a href="torrents.php?action=edit&amp;id={{ torrent.id }}" class="tooltip" title="Edit">ED</a>
+ {% endif %}
 {% endif %}
 {% if remove 
     and (

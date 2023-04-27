@@ -13,201 +13,182 @@ if (is_null($torrent)) {
     error(404);
 }
 
-if (($Viewer->id() != $torrent->uploaderId() && !$Viewer->permitted('torrents_edit')) || $Viewer->disableWiki()) {
-    error(403);
+if ($Viewer->id() != $torrent->uploaderId() || $Viewer->disableWiki()) {
+    if (!$Viewer->permitted('torrents_edit') && !$Viewer->permitted('edit_unknowns') && !$Viewer->permitted('users_mod')) {
+        error(403);
+    }
 }
 
 $artist       = $torrent->group()->primaryArtist();
 $categoryId   = $torrent->group()->categoryId();
 $categoryName = $torrent->group()->categoryName();
-$isMusic      = $categoryName === 'Music';
 $tgroupId     = $torrent->groupId();
 $torrentId    = $torrent->id();
 $releaseTypes = (new Gazelle\ReleaseType)->list();
 
 View::show_header('Edit torrent', ['js' => 'upload,torrent']);
-
-if ($Viewer->permitted('torrents_edit') && ($Viewer->permitted('users_mod') || $isMusic)) {
-    if ($isMusic) {
-?>
-<div class="linkbox">
-    <a class="brackets" href="#group-change">Change Group</a>
-    <a class="brackets" href="#group-split">Split Off into New Group</a>
-<?php   if ($Viewer->permitted('users_mod')) { ?>
-    <a class="brackets" href="#category-change">Change Category</a>
-<?php   } ?>
-</div>
-<?php
-    }
-}
-
-if (!($torrent->isRemastered() && !$torrent->remasterYear()) || $Viewer->permitted('edit_unknowns')) {
-    $uploadForm = new Gazelle\Util\UploadForm(
-        $Viewer,
-        [
-            'ID'                      => $torrentId,
-            'Media'                   => $torrent->media(),
-            'Format'                  => $torrent->format(),
-            'Bitrate'                 => $torrent->encoding(),
-            'RemasterYear'            => $torrent->remasterYear(),
-            'Remastered'              => $torrent->isRemastered(),
-            'RemasterTitle'           => $torrent->remasterTitle(),
-            'RemasterCatalogueNumber' => $torrent->remasterCatalogueNumber(),
-            'RemasterRecordLabel'     => $torrent->remasterRecordLabel(),
-            'Scene'                   => $torrent->isScene(),
-            'FreeTorrent'             => $torrent->isFreeleech(),
-            'FreeLeechType'           => $torrent->freeleechType(),
-            'TorrentDescription'      => $torrent->description(),
-            'CategoryID'              => $categoryId,
-            'Title'                   => $torrent->group()->name(),
-            'Year'                    => $torrent->group()->year(),
-            'VanityHouse'             => $torrent->group()->isShowcase(),
-            'GroupID'                 => $tgroupId,
-            'UserID'                  => $torrent->uploaderId(),
-            'HasLog'                  => $torrent->hasLog(),
-            'HasCue'                  => $torrent->hasCue(),
-            'LogScore'                => $torrent->logScore(),
-            'BadTags'                 => $torrent->hasBadTags(),
-            'BadFolders'              => $torrent->hasBadFolders(),
-            'BadFiles'                => $torrent->hasBadFiles(),
-            'MissingLineage'          => $torrent->hasMissingLineage(),
-            'CassetteApproved'        => $torrent->hasCassetteApproved(),
-            'LossymasterApproved'     => $torrent->hasLossymasterApproved(),
-            'LossywebApproved'        => $torrent->hasLossywebApproved(),
-        ],
-        $Err ?? false,
-        false
-    );
-    $uploadForm->setCategoryId($categoryId);
-    echo $uploadForm->head();
-    echo match($categoryName) {
-        'Audiobooks', 'Comedy'                                   => $uploadForm->audiobook_form(),
-        'Applications', 'Comics', 'E-Books', 'E-Learning Videos' => $uploadForm->simple_form(),
-        default                                                  => $uploadForm->music_form([]),
-    };
-    echo $uploadForm->foot(false);
-};
-if ($Viewer->permitted('torrents_edit') && ($Viewer->permitted('users_mod') || $isMusic)) {
 ?>
 <div class="thin">
-<?php if ($isMusic) { ?>
     <div class="header">
-        <h2><a name="group-change">Change group</a></h2>
+        <h2>Edit <a href="torrents.php?id=<?=$torrent->groupId()?>"><?=$torrent->group()->name();?></a> <?=$torrent->version();?></h2>
     </div>
-    <form class="edit_form" name="torrent_group" action="torrents.php" method="post">
-        <input type="hidden" name="action" value="editgroupid" />
-        <input type="hidden" name="auth" value="<?= $Viewer->auth() ?>" />
-        <input type="hidden" name="torrentid" value="<?= $torrentId ?>" />
-        <input type="hidden" name="oldgroupid" value="<?= $tgroupId ?>" />
-        <table class="layout">
-            <tr>
-                <td class="label">Group ID</td>
-                <td>
-                    <input type="text" name="groupid" value="<?= $tgroupId ?>" size="10" />
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" class="center">
+    <?php
+        $releasePlatform = (new \Gazelle\ReleasePlatform)->list();
+        $releaseIncludes = (new \Gazelle\ReleaseIncludes)->list();
+    ?>
+    <div class="box pad">
+        <form action="torrents.php" method="post">
+            <input type="hidden" name="action" value="changetorrent" />
+            <input type="hidden" name="auth" value="<?= $Viewer->auth() ?>" />
+            <input type="hidden" name="torrentid" value="<?= $torrentId ?>" />
+            <table style="border: 0px; background: transparent;">
+                <tr>
+                    <td class="label">Version:</td>
+                    <td><input type="text" id="version" name="version" size="20" value="<?= $torrent->info()['Version'] ?? '' ?>" /></td>
+                </tr>
+                <tr>
+                    <td class="label">Mac Platform:</td>
+                    <td>
+                        <select id="platform" name="platform">>
+    <?php       foreach ($releasePlatform as $Key => $Val) { ?>
+                            <option value="<?= $Val ?>"<?= $Val == $torrent->info()['Platform'] ? ' selected="selected"' : '' ?>><?= $Val ?></option>
+    <?php       } ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">Includes:</td>
+                    <td>
+                        <select id="includes" name="includes">
+    <?php       foreach ($releaseIncludes as $Key => $Val) { ?>
+                            <option value="<?= $Val ?>"<?= $Val == $torrent->info()['Includes'] ? ' selected="selected"' : '' ?>><?= $Val ?></option>
+    <?php       } ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">OS version (optional):</td>
+                    <td><input type="text" id="osversion" name="osversion" size="60" value="<?= $torrent->info()['OSVersion'] ?? '' ?>" /></td>
+                </tr>
+                <tr>
+                    <td class="label">CPU (optional):</td>
+                    <td><input type="text" id="processor" name="processor" size="60" value="<?= $torrent->info()['Processor'] ?? '' ?>" /></td>
+                </tr>
+                <tr>
+                    <td class="label">RAM (optional):</td>
+                    <td><input type="text" id="ram" name="ram" size="60" value="<?= $torrent->info()['RAM'] ?? '' ?>" /></td>
+                </tr>
+                <tr>
+                    <td class="label">Video RAM (optional):</td>
+                    <td><input type="text" id="vram" name="vram" size="60" value="<?= $torrent->info()['VRAM'] ?? '' ?>" /></td>
+                </tr>
+                <tr>
+                    <td class="label">Release description:</td>
+                    <td>
+                        <?= (new Gazelle\Util\Textarea('desc', display_str($torrent->info()['Description'] ?? ''), 60, 5))->emit() ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="center">
+                        <input type="submit" value="Change torrent" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <?php
+        if ($Viewer->permitted('edit_unknowns')) {
+            $uploadForm = new Gazelle\Util\UploadForm(
+                $Viewer,
+                [
+                    'ID'                      => $torrentId,
+                    'Media'                   => $torrent->media(),
+                    'Format'                  => $torrent->format(),
+                    'Bitrate'                 => $torrent->encoding(),
+                    'RemasterYear'            => $torrent->remasterYear(),
+                    'Remastered'              => $torrent->isRemastered(),
+                    'RemasterTitle'           => $torrent->remasterTitle(),
+                    'RemasterCatalogueNumber' => $torrent->remasterCatalogueNumber(),
+                    'RemasterRecordLabel'     => $torrent->remasterRecordLabel(),
+                    'Scene'                   => $torrent->isScene(),
+                    'FreeTorrent'             => $torrent->isFreeleech(),
+                    'FreeTorrentInt'          => $torrent->isFreeleechInt(),
+                    'FreeLeechType'           => $torrent->freeleechType(),
+                    'TorrentDescription'      => $torrent->description(),
+                    'CategoryID'              => $categoryId,
+                    'Title'                   => $torrent->group()->name(),
+                    'Year'                    => $torrent->group()->year(),
+                    'VanityHouse'             => $torrent->group()->isShowcase(),
+                    'GroupID'                 => $tgroupId,
+                    'UserID'                  => $torrent->uploaderId(),
+                    'HasLog'                  => $torrent->hasLog(),
+                    'HasCue'                  => $torrent->hasCue(),
+                    'LogScore'                => $torrent->logScore(),
+                    'BadTags'                 => $torrent->hasBadTags(),
+                    'BadFolders'              => $torrent->hasBadFolders(),
+                    'BadFiles'                => $torrent->hasBadFiles(),
+                    'MissingLineage'          => $torrent->hasMissingLineage(),
+                    'CassetteApproved'        => $torrent->hasCassetteApproved(),
+                    'LossymasterApproved'     => $torrent->hasLossymasterApproved(),
+                    'LossywebApproved'        => $torrent->hasLossywebApproved(),
+                ],
+                $Err ?? false,
+                false
+            );
+            $uploadForm->setCategoryId($categoryId);
+            ?>
+                <h3>Change freeleech</h3>
+                <div class="box pad" style="padding: 0px">
+                <?php
+                    echo $uploadForm->head();
+                    echo $uploadForm->foot(false);
+                ?>
+                </div>
+            <?php
+        };
+        if ($Viewer->permitted('torrents_edit') && $Viewer->permitted('users_mod')) {
+    ?>
+    <h3>Change group</h3>
+    <div class="box pad">
+        <form class="edit_form" name="torrent_group" action="torrents.php" method="post">
+            <input type="hidden" name="action" value="editgroupid" />
+            <input type="hidden" name="auth" value="<?= $Viewer->auth() ?>" />
+            <input type="hidden" name="torrentid" value="<?= $torrentId ?>" />
+            <input type="hidden" name="oldgroupid" value="<?= $tgroupId ?>" />
+            <div>
+                <h3>Group ID: </h3>
+                <input type="text" name="groupid" value="<?= $tgroupId ?>" size="10" />
+                <br>
+                <br>
+                <div style="text-align: center;">
                     <input type="submit" value="Change group ID" />
-                </td>
-            </tr>
-        </table>
-    </form>
-    <h2><a name="group-split">Split off into new group</a></h2>
-    <form class="split_form" name="torrent_group" action="torrents.php" method="post">
-        <input type="hidden" name="action" value="newgroup" />
-        <input type="hidden" name="auth" value="<?= $Viewer->auth() ?>" />
-        <input type="hidden" name="torrentid" value="<?= $torrentId ?>" />
-        <input type="hidden" name="oldgroupid" value="<?= $tgroupId ?>" />
-        <table class="layout">
-            <tr>
-                <td class="label">Artist</td>
-                <td>
-                    <input type="text" name="artist" value="<?= $artist?->name() ?>" size="50" />
-                </td>
-            </tr>
-            <tr>
-                <td class="label">Title</td>
-                <td>
-                    <input type="text" name="title" value="<?= $torrent->group()->name() ?>" size="50" />
-                </td>
-            </tr>
-            <tr>
-                <td class="label">Year</td>
-                <td>
-                    <input type="text" name="year" value="<?= $torrent->group()->year() ?>" size="10" />
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" class="center">
+                </div>
+            </div>
+        </form>
+    </div>
+    <h3>Split off into new group</h3>
+    <div class="box pad">
+        <form class="split_form" name="torrent_group" action="torrents.php" method="post">
+            <input type="hidden" name="action" value="newgroup" />
+            <input type="hidden" name="auth" value="<?= $Viewer->auth() ?>" />
+            <input type="hidden" name="torrentid" value="<?= $torrentId ?>" />
+            <input type="hidden" name="oldgroupid" value="<?= $tgroupId ?>" />
+            <div>
+                <h3>Title: </h3>
+                <input type="text" name="title" value="<?= $torrent->group()->name() ?>" size="50" />
+                <br>
+                <br>
+                <div style="text-align: center;">
                     <input type="submit" value="Split off into new group" />
-                </td>
-            </tr>
-        </table>
-    </form>
-    <br />
-<?php
-    } /* category == 1 */
-    if ($Viewer->permitted('users_mod')) { ?>
-    <h2><a name="category-change">Change category</a></h2>
-    <form action="torrents.php" method="post">
-        <input type="hidden" name="action" value="changecategory" />
-        <input type="hidden" name="auth" value="<?= $Viewer->auth() ?>" />
-        <input type="hidden" name="torrentid" value="<?= $torrentId ?>" />
-        <input type="hidden" name="oldgroupid" value="<?= $tgroupId ?>" />
-        <input type="hidden" name="oldartistid" value="<?= $artist?->id() ?>" />
-        <input type="hidden" name="oldcategoryid" value="<?= $categoryId ?>" />
-        <table>
-            <tr>
-                <td class="label">Change category</td>
-                <td>
-                    <select id="newcategoryid" name="newcategoryid" onchange="ChangeCategory(this.value);">
-<?php   foreach (CATEGORY as $CatID => $CatName) { ?>
-                        <option value="<?= $CatID + 1 ?>"<?= $categoryId == $CatID + 1 ? ' selected="selected"' : '' ?>><?= $CatName ?></option>
-<?php   } ?>
-                    </select>
-                </td>
-            <tr id="split_releasetype">
-                <td class="label">Release type</td>
-                <td>
-                    <select name="releasetype">
-<?php
-        foreach ($releaseTypes as $RTID => $ReleaseType) {
-?>
-                        <option value="<?= $RTID ?>"><?= $ReleaseType ?></option>
-<?php   } ?>
-                    </select>
-                </td>
-            </tr>
-            <tr id="split_artist">
-                <td class="label">Artist</td>
-                <td>
-                    <input type="text" name="artist" value="<?= $artist?->name() ?>" size="50" />
-                </td>
-            </tr>
-            <tr id="split_title">
-                <td class="label">Title</td>
-                <td>
-                    <input type="text" name="title" value="<?= $torrent->group()->name() ?>" size="50" />
-                </td>
-            </tr>
-            <tr id="split_year">
-                <td class="label">Year</td>
-                <td>
-                    <input type="text" name="year" value="<?= $torrent->group()->year() ?>" size="10" />
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" class="center">
-                    <input type="submit" value="Change category" />
-                </td>
-            </tr>
-        </table>
-        <script type="text/javascript">ChangeCategory($('#newcategoryid').raw().value);</script>
-    </form>
-<?php } ?>
+                </div>
+            </div>
+        </form>
+    </div>
+    <?php
+        }
+    ?>
 </div>
 <?php
-} // if $Viewer->permitted('torrents_edit')
+
 
 View::show_footer();

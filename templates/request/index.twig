@@ -81,7 +81,7 @@
     {% endfor %}
                 </td>
             </tr>
-
+<!--
             <tr id="release_list">
                 <td class="label">Release types</td>
                 <td>
@@ -150,6 +150,7 @@
     {% endfor %}
                 </td>
             </tr>
+-->
             <tr>
                 <td colspan="2" class="center">
                     <input type="submit" value="Search requests" />
@@ -195,45 +196,47 @@
             </td>
         </tr>
     {% endif %}
-    {% set request_id = request.id  %}
-        <tr class="row{{ cycle(['a', 'b'], loop.index0) }}">
-            <td>
-                {{ request.smartLink|raw }}
-                <div class="tags">{{ request.tagNameList|join(', ') }}</div>
-            </td>
-            <td class="m_td_right nobr">
-                <span id="vote_count_{{ request_id }}">{{ request.userVotedTotal|number_format }}</span>&nbsp;&nbsp;
-    {% set vote = request.userVote(viewer) %}
-    {% if vote %}
-                <span title="You {% if request.isFilled %}contributed {% else %}have voted {% endif -%}
-                {{ vote['bounty']|octet_size }} towards this request">&check;</span>
-    {% elseif not request.isFilled and viewer.permitted('site_vote') %}
-                <a href="javascript:Vote(0, {{ request_id }})" class="brackets"><strong>+</strong></a>
-    {% else %}
-                &nbsp;
-    {% endif %}
-            </td>
-            <td class="m_td_right number_column nobr">
-                {{ request.bountyTotal|octet_size }}
-            </td>
-            <td class="m_hidden nobr">
-    {% if request.isFilled %}
-                <a href="torrents.php?torrentid={{ request.torrentId }}"><strong>{{ request.fillDate|time_diff(1) }}</strong></a>
-    {% else %}
-                <strong>No</strong>
-    {% endif %}
-            </td>
-            <td>
-    {% if request.isFilled %}
-                {{ request.fillerId|user_url }}
-    {% else %}
-                &mdash;
-    {% endif %}
-            </td>
-            <td>{{ request.userId|user_url }}</td>
-            <td class="nobr">{{ request.created|time_diff(1) }}</td>
-            <td class="nobr">{{ request.lastVoteDate|time_diff(1) }}</td>
-        </tr>
+    {% if request.hasInfo %}
+        {% set request_id = request.id  %}
+            <tr class="row{{ cycle(['a', 'b'], loop.index0) }}">
+                <td>
+                    {{ request.smartLink|raw }}
+                    <div class="tags">{{ request.tagNameList|join(', ') }}</div>
+                </td>
+                <td class="m_td_right nobr">
+                    <span id="vote_count_{{ request_id }}">{{ request.userVotedTotal|number_format }}</span>&nbsp;&nbsp;
+        {% set vote = request.userVote(viewer) %}
+        {% if vote %}
+                    <span title="You {% if request.isFilled %}contributed {% else %}have voted {% endif -%}
+                    {{ vote['bounty']|octet_size }} towards this request">&check;</span>
+        {% elseif not request.isFilled and viewer.permitted('site_vote') %}
+                    <a href="javascript:Vote(0, {{ request_id }})" class="brackets"><strong>+</strong></a>
+        {% else %}
+                    &nbsp;
+        {% endif %}
+                </td>
+                <td class="m_td_right number_column nobr">
+                    {{ request.bountyTotal|octet_size }}
+                </td>
+                <td class="m_hidden nobr">
+        {% if request.isFilled %}
+                    <a href="torrents.php?torrentid={{ request.torrentId }}"><strong>{{ request.fillDate|time_diff(1) }}</strong></a>
+        {% else %}
+                    <strong>No</strong>
+        {% endif %}
+                </td>
+                <td>
+        {% if request.isFilled %}
+                    {{ request.fillerId|user_url }}
+        {% else %}
+                    &mdash;
+        {% endif %}
+                </td>
+                <td>{{ request.userId|user_url }}</td>
+                <td class="nobr">{{ request.created|time_diff(1) }}</td>
+                <td class="nobr">{{ request.lastVoteDate|time_diff(1) }}</td>
+            </tr>
+        {% endif %}
     {% if loop.last %}
     </table>
     {{ paginator.linkbox|raw }}

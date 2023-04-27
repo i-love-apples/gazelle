@@ -46,6 +46,14 @@ abstract class TorrentAbstract extends BaseObject {
             : $tgroup->name();
     }
 
+    public function isGrouped(): bool {
+        $tgroup = $this->group();
+        if ($tgroup->categoryName() === 'Applications' || $tgroup->categoryName() === 'Games' || $tgroup->categoryName() === 'IOS Applications' || $tgroup->categoryName() === 'IOS Games') {
+            return true;
+        }
+        return false;
+    }
+
     public function fullName(): string {
         $name = $this->group()->text();
         $edition = $this->edition();
@@ -149,6 +157,18 @@ abstract class TorrentAbstract extends BaseObject {
     }
     public function includes(): string {
         return (string)$this->info()['Includes'];
+    }
+    public function osversion(): string {
+        return (string)$this->info()['OSVersion'];
+    }
+    public function processor(): string {
+        return (string)$this->info()['Processor'];
+    }
+    public function ram(): string {
+        return (string)$this->info()['RAM'];
+    }
+    public function vram(): string {
+        return (string)$this->info()['VRAM'];
     }
 
     /**
@@ -335,6 +355,10 @@ abstract class TorrentAbstract extends BaseObject {
 
     public function isFreeleech(): bool {
         return $this->info()['FreeTorrent'] == '1';
+    }
+
+    public function isFreeleechInt(): int {
+        return $this->info()['FreeTorrent'];
     }
 
     public function isFreeleechPersonal(): bool {
@@ -619,13 +643,20 @@ abstract class TorrentAbstract extends BaseObject {
         if ($short_extra == "[/]") {
             $short_extra = "";
         }
+        $info = $this->info();
+        $fl_label = "";
+        if ($info['FreeTorrent'] == '1') {
+            $fl_label = $this->labelElement('tl_free', 'Freeleech!');
+        } elseif ($info['FreeTorrent'] == '2') {
+            $fl_label = $this->labelElement('tl_free tl_neutral', 'Neutral Leech!');
+        }
         // deal with nested log link
         // we have "....<a href="x">....</a>...."
         // we want "<a href="y">....</a><a href="x">....</a><a href="y">....</a>"
         if (str_contains($short, '<a href=')) {
             $short = preg_replace('#(<a href=.*</a>)#', "</a>\\1<a href=\"{$this->url()}\">", $short);
         }
-        return "<a href=\"{$this->url()}\">$short $short_extra</a>";
+        return "<a href=\"{$this->url()}\">$short $short_extra $fl_label</a>";
     }
 
     public function labelList(): array {

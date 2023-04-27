@@ -20,7 +20,7 @@ $new = $tgMan->findById((int)($_POST['groupid'] ?? 0));
 if (is_null($new)) {
     error('The destination torrent group does not exist!');
 }
-if ($new->categoryName() !== 'Music') {
+if ($new->categoryName() !== 'Applications' && $new->categoryName() !== 'Games' && $new->categoryName() !== 'IOS Applications' && $new->categoryName() !== 'IOS Games') {
     error('Destination torrent group must be in the "Music" category.');
 }
 

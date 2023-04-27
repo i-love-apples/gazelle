@@ -6,6 +6,7 @@ class Request extends BaseObject {
     protected const CACHE_REQUEST = "request_%d";
     protected const CACHE_ARTIST  = "request_artists_%d";
     protected const CACHE_VOTE    = "request_votes_%d";
+    protected const REQUEST_ID_KEY = 'zz_r_%d';
 
     public function flush(): Request {
         if ($this->tgroupId()) {
@@ -51,6 +52,13 @@ class Request extends BaseObject {
     /**
      * Display the title of a request, with all fields linkified where it makes sense.
      */
+    public function hasInfo(): bool {
+        if (is_null($this->info())) {
+            return false;
+        }
+        return true;
+    }
+
     public function smartLink(): string {
         return match($this->categoryName()) {
             'Music'                => "{$this->artistRole()->link()} – {$this->link()} [{$this->year()}]",
@@ -215,7 +223,8 @@ class Request extends BaseObject {
     }
 
     public function categoryName(): string {
-        return $this->info()['category_name'];
+        return CATEGORY[$this->info()['category_id']-1];
+        // return $this->info()['category_name'];
     }
 
     public function created(): string {
@@ -844,6 +853,8 @@ class Request extends BaseObject {
         foreach ($artisIds as $artistId) {
             self::$cache->delete_value("artists_requests_$artistId");
         }
+        $key = sprintf(self::REQUEST_ID_KEY, $this->id);
+        self::$cache->delete_value($key);
         $this->flush();
         return $affected != 0;
     }
