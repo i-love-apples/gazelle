@@ -172,7 +172,7 @@ class TGroup extends BaseObject {
                         SELECT t.ID
                         FROM torrents t
                         WHERE t.GroupID = ?
-                        ORDER BY t.Version DESC, t.Remastered, (t.RemasterYear != 0) DESC, t.RemasterYear, t.RemasterTitle,
+                        ORDER BY INET_ATON(SUBSTRING_INDEX(CONCAT(t.Version,'.0.0.0'),'.',4)) DESC, t.Remastered, (t.RemasterYear != 0) DESC, t.RemasterYear, t.RemasterTitle,
                             t.RemasterRecordLabel, t.RemasterCatalogueNumber, t.Media, t.Format, t.Encoding, t.ID
                         ", $this->id
                     );
@@ -257,7 +257,7 @@ class TGroup extends BaseObject {
             SELECT t.ID
             FROM torrents t
             WHERE t.GroupID = ?
-            ORDER BY t.Version DESC, t.Remastered, (t.RemasterYear != 0) DESC, t.RemasterYear, t.RemasterTitle,
+            ORDER BY INET_ATON(SUBSTRING_INDEX(CONCAT(t.Version,'.0.0.0'),'.',4)) DESC, t.Remastered, (t.RemasterYear != 0) DESC, t.RemasterYear, t.RemasterTitle,
                 t.RemasterRecordLabel, t.RemasterCatalogueNumber, t.Media, t.Format, t.Encoding, t.ID
             ", $this->id
         );
