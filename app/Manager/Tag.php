@@ -426,6 +426,16 @@ class Tag extends \Gazelle\BaseManager {
         return self::$db->affected_rows();
     }
 
+    public function removeGroupTorrentTags(int $groupId): int {
+        self::$db->prepared_query("
+            DELETE 
+            FROM torrents_tags 
+            WHERE GroupID = ?
+            ", $groupId
+        );
+        return self::$db->affected_rows();
+    }
+
     public function createTorrentTagVote(int $tagId, int $groupId, int $userId, string $vote): int {
         self::$db->prepared_query("
             INSERT INTO torrents_tags_votes

@@ -417,6 +417,10 @@ class TGroup extends BaseObject {
         return $this->info()['tags'];
     }
 
+    public function tags(): string {
+        return implode(", ", $this->tagNameList());
+    }
+
     public function primaryTag(): string {
         $tagList = $this->tagList();
         return $tagList ? ucfirst(current($tagList)['name']) : '';
