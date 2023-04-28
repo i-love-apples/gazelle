@@ -16,6 +16,8 @@ class Twig {
                 'cache' => __DIR__ . '/../../cache/twig'
         ]);
 
+	$twig->addGlobal('GIT_VERSION', substr(file_get_contents('../.git/refs/heads/master'),0,7));
+
         $twig->addFilter(new \Twig\TwigFilter(
             'article',
             function ($word) {
