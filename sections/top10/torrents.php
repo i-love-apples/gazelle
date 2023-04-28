@@ -236,7 +236,6 @@ foreach ($context as $c) {
                     'viewer'  => $Viewer,
                 ]) ?>
                 <strong><?= $tgroup->link() ?></strong> <?= $torrent->shortLabelLink() ?>
-                <br />[<?= $torrent->edition() ?>]
 <?php   if ($torrent->hasReport($Viewer)) { ?>
                 - <strong class="torrent_label tl_reported">Reported</strong>
 <?php   } ?>
