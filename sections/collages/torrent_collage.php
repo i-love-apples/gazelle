@@ -244,7 +244,7 @@ foreach ($entryList as $tgroupId) {
                         'torrent' => $torrent,
                         'viewer'  => $Viewer,
                     ]) ?>
-                    &nbsp;&nbsp;&raquo;&nbsp;<?= $torrent->shortLabelLink() ?>
+                    &nbsp;&nbsp;&raquo;&nbsp;<?= $torrent->versionLink() ?>
 <?php   } else { ?>
             <tr class="torrent torrent_row<?= ($snatcher->showSnatch($torrent->id()) ? ' snatched_torrent' : '')
                 . $SnatchedGroupClass ?>" id="group_<?= $tgroupId ?>">
