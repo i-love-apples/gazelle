@@ -23,31 +23,67 @@ class ForumPost extends BaseObject {
         if (isset($this->info) && !empty($this->info)) {
             return $this->info;
         }
+
         $key = sprintf(self::CACHE_KEY, $this->id);
         $info = self::$cache->get_value($key);
+
         if ($info === false) {
             $info = self::$db->rowAssoc("
                 SELECT f.ID                 AS forum_id,
-                    f.MinClassWrite         AS min_class_write,
-                    t.ID                    AS thread_id,
-                    t.Islocked = '1'        AS thread_locked,
-                    ceil(t.NumPosts / ?)    AS thread_page_total,
-                    cast((SELECT ceil(sum(if(fp.ID <= p.ID, 1, 0)) / ?) FROM forums_posts fp WHERE fp.TopicID = t.ID) AS signed)
-                                            AS page,
-                    p.AuthorID              AS user_id,
-                    (p.ID = t.StickyPostID) AS is_sticky,
-                    p.Body                  AS body,
-                    p.AddedTime             AS created,
-                    p.EditedUserID          AS edit_user_id,
-                    p.EditedTime            AS edit_time
+                       f.MinClassWrite         AS min_class_write,
+                       t.ID                    AS thread_id,
+                       t.Islocked = '1'        AS thread_locked,
+                       ceil(t.NumPosts / ?)    AS thread_page_total,
+                       cast((SELECT ceil(sum(if(fp.ID <= p.ID, 1, 0)) / ?) FROM forums_posts fp WHERE fp.TopicID = t.ID) AS signed)
+                                                AS page,
+                       p.AuthorID              AS user_id,
+                       (p.ID = t.StickyPostID) AS is_sticky,
+                       p.Body                  AS body,
+                       p.AddedTime             AS created,
+                       p.EditedUserID          AS edit_user_id,
+                       p.EditedTime            AS edit_time
                 FROM forums_topics      t
                 INNER JOIN forums       f ON (t.forumid = f.id)
                 INNER JOIN forums_posts p ON (p.topicid = t.id)
                 WHERE p.ID = ?
                 ", POSTS_PER_PAGE, POSTS_PER_PAGE, $this->id
             );
+
+            // Check if the post is deleted
+            if (!$info) {
+                $last_post = self::$db->rowAssoc("
+                    SELECT f.ID                 AS forum_id,
+                           f.MinClassWrite         AS min_class_write,
+                           t.ID                    AS thread_id,
+                           t.Islocked = '1'        AS thread_locked,
+                           ceil(t.NumPosts / ?)    AS thread_page_total,
+                           cast((SELECT ceil(sum(if(fp.ID <= p.ID, 1, 0)) / ?) FROM forums_posts fp WHERE fp.TopicID = t.ID) AS signed)
+                                                    AS page,
+                           p.AuthorID              AS user_id,
+                           (p.ID = t.StickyPostID) AS is_sticky,
+                           p.Body                  AS body,
+                           p.AddedTime             AS created,
+                           p.EditedUserID          AS edit_user_id,
+                           p.EditedTime            AS edit_time
+                    FROM forums_topics      t
+                    INNER JOIN forums       f ON (t.forumid = f.id)
+                    INNER JOIN forums_posts p ON (p.topicid = t.id)
+                    WHERE t.ID = ?
+                    ORDER BY p.ID DESC
+                    LIMIT 1
+                ", POSTS_PER_PAGE, POSTS_PER_PAGE, $this->threadId());
+
+                if ($last_post) {
+                    $info = $last_post;
+                } else {
+                    // If the thread has no posts, return an empty array
+                    return [];
+                }
+            }
+
             self::$cache->cache_value($key, $info, 86400);
         }
+
         $this->info = $info;
         return $this->info;
     }
