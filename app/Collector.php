@@ -69,7 +69,7 @@ abstract class Collector extends Base  {
         protected readonly string $title,
         protected readonly int $orderBy,
     ) {
-        self::$cache->disableLocalCache(); // The internal cache is almost completely useless for this
+        //self::$cache->disableLocalCache(); // The internal cache is almost completely useless for this
         $this->startTime = microtime(true);
 
         $options = new \ZipStream\Option\Archive;
