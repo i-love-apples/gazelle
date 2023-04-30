@@ -30,7 +30,7 @@ if (!isset($Properties)) {
                 'CatalogueNumber'  => $tgroup->catalogueNumber(),
                 'VanityHouse'      => $tgroup->isShowcase(),
                 'Artists'          => $tgroup->artistRole()?->idList() ?? [],
-                'TagList'          => implode(', ', $tgroup->tagNameList()),
+                'Tags'             => implode(', ', $tgroup->tagNameList()),
             ];
             if ($requestId) {
                 $Properties['RequestID'] = $requestId;
@@ -50,7 +50,7 @@ if (!isset($Properties)) {
                 'RecordLabel'      => $request->recordLabel(),
                 'CatalogueNumber'  => $request->catalogueNumber(),
                 'Artists'          => $request->artistRole()?->idList() ?? [],
-                'TagList'          => implode(', ', $request->tagNameList()),
+                'Tags'             => implode(', ', $request->tagNameList()),
             ];
         }
     }

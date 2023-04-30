@@ -421,21 +421,19 @@ if (!$IsNewGroup) {
 //******************************************************************************//
 //---------------IRC announce and feeds ---------------------------------------//
 
-$Announce = '';
-if ($isMusicUpload) {
-    $Announce .= $tgroup->artistName() . ' - ';
+$Announce = $Properties['Title'];
+if ($isApplicationsUpload) {
+    $Announce .= ' ' . $Properties['Version'] . ' [' . $Properties['Platform'] . "/" . $Properties['Includes'] . ']';
 }
-$Announce .= $Properties['Title'] . ' ';
-$Details = "";
-
+$Announce .= ' (' . $categoryName . ') ';
 $Title = $Announce;
-if ($Details !== "") {
-    $Title .= " - ".$Details;
-    $Announce .= "\003 - \00310" . $Details . "\003";
+$AnnounceFreeleech = '';
+if ($isFreeTorrent == 1) {
+    $AnnounceFreeleech = 'freeleech,';
 }
 
 $AnnounceSSL = "\002TORRENT:\002 \00303{$Announce}\003"
-    . " - \00312" . implode(',', $tagList) . "\003"
+    . " - \00312" . $AnnounceFreeleech . implode(',', $tagList) . "\003"
     . " - \00304".SITE_URL."/torrents.php?id=$GroupID\003 / \00304".SITE_URL."/torrents.php?action=download&id=$TorrentID\003";
 
 // ENT_QUOTES is needed to decode single quotes/apostrophes

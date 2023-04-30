@@ -16,12 +16,20 @@ $key = 'autocomplete_torrents_' . $keySize . '_' . str_replace(' ', '%20', $lett
 $autoSuggest = $Cache->get($key);
 if ($autoSuggest === false) {
     $DB->prepared_query("
-
-
         SELECT a.ID,
-            a.Name
+            a.Name,
+            a.TagList,
+            a.WikiImage,
+            a.Wikibody
         FROM torrents_group AS a
+        LEFT JOIN
+            torrents AS b
+        ON
+            a.ID = b.GroupID
         WHERE a.Name LIKE ?
+        AND b.ID IS NOT NULL
+        GROUP BY
+            a.Name, a.TagList, a.WikiImage, a.Wikibody
         ORDER BY a.Name ASC
         LIMIT ?",
         str_replace('\\','\\\\',$letters) . '%', $maxRows

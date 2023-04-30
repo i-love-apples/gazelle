@@ -940,9 +940,7 @@ class TGroup extends BaseObject {
     }
 
     public function remove(User $user): bool {
-        if ($this->categoryName() === 'Music') {
-            self::$cache->decrement('stats_album_count');
-        }
+        self::$cache->decrement('stats_album_count');
         self::$cache->decrement('stats_group_count');
 
         // Artists
