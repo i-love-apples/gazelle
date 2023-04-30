@@ -30,6 +30,8 @@ __MACOSX/
 /mix.js.map
 /yarn-error.log
 
+/ocelot
+
 .docker/mysql-home/.mysql_history
 !.docker/mysql-home/.my.cnf
 
