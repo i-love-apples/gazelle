@@ -4,7 +4,7 @@ services:
   web:
     build: .
     ports:
-      - 127.0.0.1:7001:80
+      - 80:80
     depends_on:
       - memcached
       - mysql
@@ -24,7 +24,7 @@ services:
   pg:
     image: postgres:14.5
     ports:
-      - 127.0.0.1:54321:5432
+      - 5432:5432
     volumes:
       - ./.docker/data/pg:/var/lib/postgresql/data
     environment:
@@ -33,7 +33,7 @@ services:
   mysql:
     image: percona:ps-8.0
     ports:
-      - 127.0.0.1:36000:3306
+      - 3306:3306
     volumes:
       - ./.docker/data/mysql:/var/lib/mysql
       - ./.docker/mysql-home:/home/mysql
@@ -65,9 +65,9 @@ services:
       - MYSQL_PASSWORD=password
 
   ocelot:
-    image: ocelot
+    build: ocelot/.
     ports:
-      - 127.0.0.1:34000:34000
+      - 34000:34000
     depends_on:
       - mysql
     volumes:
