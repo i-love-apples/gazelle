@@ -327,7 +327,7 @@ class TGroup extends \Gazelle\BaseManager {
             ) F ON (F.GroupID = g.ID)
             LEFT JOIN torrents mp3__v0 ON (mp3__v0.GroupID = F.GroupID and mp3__v0.Format = 'MP3' AND mp3__v0.Encoding = 'V0 (VBR)')
             LEFT JOIN torrents mp3_320 ON (mp3_320.GroupID = F.GroupID and mp3_320.Format = 'MP3' AND mp3_320.Encoding = '320')
-            WHERE g.CategoryID = 1
+            WHERE g.CategoryID = 6
                 AND (mp3__v0.ID IS NULL OR mp3_320.ID IS NULL)
         ");
         $affected = self::$db->affected_rows();

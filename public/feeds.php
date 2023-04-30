@@ -18,19 +18,15 @@ if (!$user?->isEnabled()
 }
 
 switch ($_GET['feed']) {
-    case 'torrents_abooks':
     case 'torrents_all':
     case 'torrents_apps':
-    case 'torrents_comedy':
-    case 'torrents_comics':
-    case 'torrents_ebooks':
-    case 'torrents_evids':
-    case 'torrents_flac':
-    case 'torrents_lossless':
-    case 'torrents_lossless24':
-    case 'torrents_mp3':
-    case 'torrents_music':
-    case 'torrents_vinyl':
+    case 'torrents_games':
+    case 'torrents_iosapps':
+    case 'torrents_iosgames':
+    case 'torrents_graphics':
+    case 'torrents_audio':
+    case 'torrents_tutorials':
+    case 'torrents_other':
         echo $feed->byFeedName($user, $_GET['feed']);
         break;
     case 'feed_news':
