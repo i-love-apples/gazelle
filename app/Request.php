@@ -462,38 +462,6 @@ class Request extends BaseObject {
             $error[] = 'This torrent is of a different category than the request. If the request is actually miscategorized, please contact staff.';
         }
 
-        if ($torrent->media() === 'CD' && $torrent->format() === 'FLAC') {
-            if ($this->needLog()) {
-                if (!$torrent->hasLogDb()) {
-                    $error[] = 'This request requires a log.';
-                } else {
-                    if ($torrent->logScore() < $this->needLogScore()) {
-                        $error[] = 'This torrent\'s log score (' . $torrent->logScore() . ') is too low.';
-                    }
-                    if (!$torrent->logChecksum() && $this->needLogChecksum()) {
-                        $error[] = 'The ripping log for this torrent does not have a valid checksum.';
-                    }
-                }
-            }
-            if ($this->needCue() && !$torrent->hasCue()) {
-                $error[] = 'This request requires a cue file.';
-            }
-        }
-
-        if (!$this->needMedia('Any') && !$this->needMedia($torrent->media())) {
-            $error[] = $torrent->media() . " is not a permitted media for this request.";
-        }
-        if (!$this->needFormat('Any') && !$this->needFormat($torrent->format())) {
-            $error[] = $torrent->format() . " is not an allowed format for this request.";
-        }
-        if ($this->needEncoding('Other')) {
-            if (in_array($torrent->encoding(), ['24bit Lossless', 'Lossless', 'V0 (VBR)', 'V1 (VBR)', 'V2 (VBR)', 'APS (VBR)', 'APX (VBR)', '256', '320'])) {
-                $error[] = $torrent->encoding() . " is not an allowed encoding for this request.";
-            }
-        } elseif (!$this->needEncoding('Any') && !$this->needEncoding($torrent->encoding())) {
-            $error[] = $torrent->encoding() . " is not an allowed encoding for this request.";
-        }
-
         return $error;
     }
 

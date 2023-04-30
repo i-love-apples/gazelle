@@ -21,7 +21,7 @@ if (is_null($new)) {
     error('The destination torrent group does not exist!');
 }
 if ($new->categoryName() !== 'Applications' && $new->categoryName() !== 'Games' && $new->categoryName() !== 'IOS Applications' && $new->categoryName() !== 'IOS Games') {
-    error('Destination torrent group must be in the "Music" category.');
+    error('This selected category cannot be grouped.');
 }
 
 if ($old->id() === $new->id()) {

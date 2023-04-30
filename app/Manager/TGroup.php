@@ -6,7 +6,7 @@ class TGroup extends \Gazelle\BaseManager {
     protected const ID_KEY             = 'zz_tg_%d';
     protected const CACHE_KEY_FEATURED = 'featured_%d';
     protected const VOTE_SIMILAR       = 'vote_similar_albums_%d';
-
+    
     const FEATURED_AOTM     = 0;
     const FEATURED_SHOWCASE = 1;
 
@@ -168,11 +168,13 @@ class TGroup extends \Gazelle\BaseManager {
         // GroupIDs
         self::$db->prepared_query("SELECT ID FROM torrents WHERE GroupID = ?", $old->id());
         $cacheKeys = [];
+        $torrents = [];
         while ([$TorrentID] = self::$db->next_row()) {
             $cacheKeys[] = 'torrent_download_' . $TorrentID;
             $cacheKeys[] = 'tid_to_group_' . $TorrentID;
             $cacheKeys[] = 'zz_t_' . $TorrentID;
             $cacheKeys[] = 'tg_' . $TorrentID;
+            $torrents[] = (new \Gazelle\Manager\Torrent)->findById((int)($TorrentID ?? 0));
         }
         self::$cache->delete_multi($cacheKeys);
         unset($cacheKeys);
@@ -183,6 +185,7 @@ class TGroup extends \Gazelle\BaseManager {
             WHERE GroupID = ?
             ", $new->id(), $old->id()
         );
+
         self::$db->prepared_query("
             UPDATE wiki_torrents SET
                 PageID = ?
@@ -232,21 +235,27 @@ class TGroup extends \Gazelle\BaseManager {
             WHERE GroupID = ?
             ", $new->id(), $old->id()
         );
+        $affected = self::$db->affected_rows();
 
-        $old->remove($user);
+        $old->remove($user, $affected);
         self::$db->commit();
 
+        $new->flush();
         $new->refresh();
+        
+        foreach ($torrents as $torrent) {
+            $torrent->flush();
+        }
 
         self::$cache->delete_multi([
+            "torrents_details_" . $oldId,
             "requests_group_" . $new->id(),
             "torrent_collages_" . $new->id(),
             "torrent_collages_personal_" . $new->id(),
             "votes_" . $new->id(),
         ]);
 
-        $old->flush();
-        $new->flush();
+        // $old->flush();
         return true;
     }
 

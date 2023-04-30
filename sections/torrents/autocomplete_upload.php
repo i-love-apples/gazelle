@@ -22,7 +22,14 @@ if ($autoSuggest === false) {
             a.WikiImage,
             a.Wikibody
         FROM torrents_group AS a
+        LEFT JOIN
+            torrents AS b
+        ON
+            a.ID = b.GroupID
         WHERE a.Name LIKE ?
+        AND b.ID IS NOT NULL
+        GROUP BY
+            a.Name, a.TagList, a.WikiImage, a.Wikibody
         ORDER BY a.Name ASC
         LIMIT ?",
         str_replace('\\','\\\\',$letters) . '%', $maxRows

@@ -495,12 +495,13 @@ class Torrent extends TorrentAbstract {
         );
 
         // Tells Sphinx that the group is removed
-        self::$db->prepared_query("
-            REPLACE INTO sphinx_delta
-                (ID, Time)
-            VALUES (?, now())
-            ", $this->id
-        );
+        // Alignment bug
+        // self::$db->prepared_query("
+        //     REPLACE INTO sphinx_delta
+        //         (ID, Time)
+        //     VALUES (?, now())
+        //     ", $this->id
+        // );
 
         self::$db->prepared_query("
             UPDATE reportsv2 SET
