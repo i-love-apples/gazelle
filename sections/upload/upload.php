@@ -65,19 +65,18 @@ if (empty($Err)) {
 
 $dnu     = new Gazelle\Manager\DNU;
 $dnuNew  = $dnu->hasNewForUser($Viewer);
-$hideDnu = !$dnuNew && $Viewer->permitted('torrents_hide_dnu');
 
 View::show_header('Upload', ['js' => 'upload,validate_upload,valid_tags,musicbrainz,bbcode']);
 ?>
-<div class="<?= $Viewer->permitted('torrents_hide_dnu') ? 'box pad' : '' ?>" style="margin: 0px auto; width: 700px;">
+<div class="torrents_hide_dnu" style="margin: 0px auto; width: 700px;">
     <h3 id="dnu_header">Do Not Upload List</h3>
     <p><?= $dnuNew ? '<strong class="important_text">' : '' ?>Last updated: <?= time_diff($dnu->latest()) ?><?= $dnuNew ? '</strong>' : '' ?></p>
     <p>The following releases are currently forbidden from being uploaded to the site. Do not upload them unless your torrent meets a condition specified in the comment.
-<?php if ($hideDnu) { ?>
+
     <span id="showdnu"><a href="#" onclick="$('#dnulist').gtoggle(); this.innerHTML = (this.innerHTML == 'Hide' ? 'Show' : 'Hide'); return false;" class="brackets">Show</a></span>
-<?php } ?>
+
     </p>
-    <table id="dnulist" class="<?= $hideDnu ? 'hidden' : '' ?>">
+    <table id="dnulist" class="hidden">
         <tr class="colhead">
             <td width="30%"><strong>Name</strong></td>
             <td><strong>Reason</strong></td>
