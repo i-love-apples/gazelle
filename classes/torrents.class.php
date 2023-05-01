@@ -134,7 +134,14 @@ class Torrents {
                         ml.TorrentID AS MissingLineage,
                         ca.TorrentID AS CassetteApproved,
                         lma.TorrentID AS LossymasterApproved,
-                        lwa.TorrentID AS LossywebApproved
+                        lwa.TorrentID AS LossywebApproved,
+                        t.Version,
+                        t.Platform,
+                        t.Includes,
+                        t.OSVersion,
+                        t.Processor,
+                        t.RAM,
+                        t.VRAM
                     FROM torrents t
                     INNER JOIN torrents_leech_stats tls ON (tls.TorrentID = t.ID)
                         LEFT JOIN torrents_bad_tags AS tbt ON (tbt.TorrentID = t.ID)

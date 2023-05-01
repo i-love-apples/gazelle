@@ -20,7 +20,8 @@ if ($autoSuggest === false) {
             a.Name,
             a.TagList,
             a.WikiImage,
-            a.Wikibody
+            a.Wikibody,
+            a.CategoryID
         FROM torrents_group AS a
         LEFT JOIN
             torrents AS b
@@ -29,7 +30,7 @@ if ($autoSuggest === false) {
         WHERE a.Name LIKE ?
         AND b.ID IS NOT NULL
         GROUP BY
-            a.Name, a.TagList, a.WikiImage, a.Wikibody
+            a.Name, a.TagList, a.WikiImage, a.Wikibody, a.CategoryID
         ORDER BY a.Name ASC
         LIMIT ?",
         str_replace('\\','\\\\',$letters) . '%', $maxRows
@@ -44,9 +45,9 @@ $response = [
     'suggestions' => []
 ];
 foreach ($autoSuggest as $suggestion) {
-    [$id, $name, $taglist, $wikiimage, $wikibody] = $suggestion;
+    [$id, $name, $taglist, $wikiimage, $wikibody, $categoryid] = $suggestion;
     if (stripos($name, $fullName) === 0) {
-        $response['suggestions'][] = ['id' => $id, 'value' => $name, 'taglist' => $taglist, 'wikiimage' => $wikiimage, 'wikibody' => $wikibody];
+        $response['suggestions'][] = ['id' => $id, 'value' => $name, 'taglist' => $taglist, 'wikiimage' => $wikiimage, 'wikibody' => $wikibody, 'categoryid' => $categoryid];
         if (++$matched > $maxRows) {
             break;
         }

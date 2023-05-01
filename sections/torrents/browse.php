@@ -72,7 +72,7 @@ $paginator->setTotal($NumResults);
  */
 $AdvancedSearch = $Viewer->permitted('site_advanced_search')
     && ($_GET['action'] ?? ['basic ', 'advanced'][$Viewer->option('SearchType') ?? 0]) == 'advanced';
-
+    
 if ($AdvancedSearch) {
     $hideAdvanced = '';
     $searchMode = 'advanced';
@@ -91,6 +91,9 @@ echo $Twig->render('torrent/browse-header.twig', [
         ? '' : ' hidden',
     'hide_advanced' => $hideAdvanced,
     'release_type'  => (new Gazelle\ReleaseType)->list(),
+    'release_tags'  => (new Gazelle\ReleaseTags)->list(),
+    'release_platform'  => (new Gazelle\ReleasePlatform)->list(),
+    'release_includes'  => (new Gazelle\ReleaseIncludes)->list(),
     'results_total' => $RealNumResults,
     'results_shown' => $NumResults,
     'search_plus'   => $AdvancedSearch,
@@ -202,8 +205,8 @@ foreach ($Results as $GroupID) {
                 $EditionID++;
 
 ?>
-    <!-- <tr class="group_torrent groupid_<?=$tgroup->id()?> edition<?=$SnatchedGroupClass . ($groupsClosed ? ' hidden' : '')?>">
-        <td colspan="9" class="edition_info"><strong><a href="#" onclick="toggle_edition(<?=$tgroup->id()?>, <?=$EditionID?>, this, event);" class="tooltip" title="Collapse this edition. Hold [Command] <em>(Mac)</em> or [Ctrl] <em>(PC)</em> while clicking to collapse all editions in this torrent group.">&minus;</a> <?= $torrent->edition() ?></strong></td>
+    <!-- <tr class="group_torrent groupid_< ?=$tgroup->id()?> edition< ?=$SnatchedGroupClass . ($groupsClosed ? ' hidden' : '')?>">
+        <td colspan="9" class="edition_info"><strong><a href="#" onclick="toggle_edition(< ?=$tgroup->id()?>, < ?=$EditionID?>, this, event);" class="tooltip" title="Collapse this edition. Hold [Command] <em>(Mac)</em> or [Ctrl] <em>(PC)</em> while clicking to collapse all editions in this torrent group.">&minus;</a> <?= $torrent->edition() ?></strong></td>
     </tr> -->
 <?php
             }

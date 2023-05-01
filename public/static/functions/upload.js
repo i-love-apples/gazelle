@@ -67,8 +67,8 @@ function Categories() {
             $('#title_search_group').autocomplete({
                 deferRequestBy: 300,
                 onSelect : function(suggestion) {
-                    $("#categories").val(suggestion['id']);
                     $("#groupid").val(suggestion['id']);
+                    $("#categories").val(suggestion['categoryid']);
                     $("#tags").val(suggestion['taglist']);
                     $("#image").val(suggestion['wikiimage']);
                     $("#album_desc").val(suggestion['wikibody']);
@@ -94,8 +94,8 @@ function SetAutocomplete() {
     $('#title_search_group').autocomplete({
         deferRequestBy: 300,
         onSelect : function(suggestion) {
-            $("#categories").val(suggestion['id']);
             $("#groupid").val(suggestion['id']);
+            $("#categories").val(suggestion['categoryid']);
             $("#tags").val(suggestion['taglist']);
             $("#image").val(suggestion['wikiimage']);
             $("#album_desc").val(suggestion['wikibody']);
@@ -357,11 +357,12 @@ function getUsedPairs() {
 }
 
 function add_tag() {
-    if ($('#tags').raw().value == "") {
-        $('#tags').raw().value = $('#genre_tags').raw().options[$('#genre_tags').raw().selectedIndex].value;
-    } else if ($('#genre_tags').raw().options[$('#genre_tags').raw().selectedIndex].value === '---') {
-    } else {
-        $('#tags').raw().value = $('#tags').raw().value + ', ' + $('#genre_tags').raw().options[$('#genre_tags').raw().selectedIndex].value;
+    if ($('#genre_tags').raw().options[$('#genre_tags').raw().selectedIndex].value !== '') {
+        if ($('#tags').raw().value == "") {
+            $('#tags').raw().value = $('#genre_tags').raw().options[$('#genre_tags').raw().selectedIndex].value;
+        } else {
+            $('#tags').raw().value = $('#tags').raw().value + ', ' + $('#genre_tags').raw().options[$('#genre_tags').raw().selectedIndex].value;
+        }
     }
 }
 

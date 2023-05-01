@@ -13,7 +13,7 @@
                 <h3>Category:</h3>
                 <select id="categories" name="type" {% if not viewer.permitted('torrents_edit') %} disabled="disabled" {% endif %}>
 {%- for name in constant('CATEGORY') %}
-                    <option value="{{ loop.index0 }}"{{ selected(name == tgroup.categoryName) }}>{{ name }}</option>
+                    <option value="{{ loop.index0+1 }}"{{ selected(name == tgroup.categoryName) }}>{{ name }}</option>
 {%- endfor %}
                 </select>
                 <h3>Tags:</h3>

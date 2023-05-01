@@ -78,7 +78,7 @@ if ($_POST['tags'] != $tgroup->tags()) {
     }
 }
 
-$tgroup->setUpdate('CategoryID', $categoryID+1)
+$tgroup->setUpdate('CategoryID', $categoryID)
     ->setUpdate('WikiImage', $Image)
     ->setUpdate('WikiBody', $Body)
     ->setUpdate('TagList', $tagMan->normalize(str_replace(',', ' ', $_POST['tags'])))
@@ -87,6 +87,9 @@ $tgroup->setUpdate('CategoryID', $categoryID+1)
 if ($imageFlush) {
     $tgroup->imageFlush();
 }
+
+$tgroup->refresh();
+$tgroup->flush();
 
 $noCoverArt = isset($_POST['no_cover_art']);
 if ($noCoverArt != $tgroup->hasNoCoverArt()) {

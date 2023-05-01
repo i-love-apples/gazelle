@@ -145,12 +145,18 @@ function show_reported(TorrentID) {
     $('#reported_' + TorrentID).gtoggle();
 }
 
-function add_tag(tag) {
-    if ($('#tags').raw().value == "") {
-        $('#tags').raw().value = tag;
-    } else {
-        $('#tags').raw().value = $('#tags').raw().value + ", " + tag;
+function add_tag() {
+    if ($('#genre_tags').raw().options[$('#genre_tags').raw().selectedIndex].value !== '') {
+        if ($('#tags').raw().value == "") {
+            $('#tags').raw().value = $('#genre_tags').raw().options[$('#genre_tags').raw().selectedIndex].value;
+        } else {
+            $('#tags').raw().value = $('#tags').raw().value + ', ' + $('#genre_tags').raw().options[$('#genre_tags').raw().selectedIndex].value;
+        }
     }
+}
+
+function clear_tag() {
+    $('#tags').raw().value = "";
 }
 
 /**
@@ -296,6 +302,7 @@ function toggleTorrentSearch(mode) {
         $('.ftr_basic').gshow();
         $('#ft_type').attr('onclick', "return toggleTorrentSearch('advanced')");
         $('#ft_type').raw().innerHTML = 'Switch to advanced';
+        $('#ft_type_action').raw().value = 'basic';
     } else if (mode == 'advanced') {
         $('.fti_advanced').enable();
         $('.fti_basic').disable();
@@ -303,6 +310,7 @@ function toggleTorrentSearch(mode) {
         $('.ftr_basic').ghide();
         $('#ft_type').attr('onclick', "return toggleTorrentSearch('basic')");
         $('#ft_type').raw().innerHTML = 'Switch to basic';
+        $('#ft_type_action').raw().value = 'advanced';
     }
     return false;
 }
