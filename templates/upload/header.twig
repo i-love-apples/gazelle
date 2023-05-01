@@ -40,6 +40,11 @@
             <tr>
                 <td class="label">Type:</td>
                 <td>
+                    <span id="categories_hidden_container">
+                        {% if is_disabled %}
+                            <input id="categories_hidden" type="hidden" name="type" value="{{ info.CategoryID }}" />
+                        {% endif %}
+                    </span>
                     <select id="categories" name="type" onchange="Categories()"{{ disabled(is_disabled) }}>
     {%- for name in constant('CATEGORY') %}
                         <option value="{{ loop.index0+1 }}"{{ selected(loop.index0+1 == info.CategoryID) }}>{{ name }}</option>

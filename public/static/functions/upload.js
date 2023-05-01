@@ -73,6 +73,7 @@ function Categories() {
                     $("#image").val(suggestion['wikiimage']);
                     $("#album_desc").val(suggestion['wikibody']);
 
+                    $('#categories_hidden_container').append('<input id="categories_hidden" type="hidden" name="type" value="'+suggestion['categoryid']+'" />');
                     $("#categories").prop( "disabled", true );
                     $("#title_search_group").prop( "disabled", true );
                     $("#genre_tags").prop( "disabled", true );
@@ -99,7 +100,8 @@ function SetAutocomplete() {
             $("#tags").val(suggestion['taglist']);
             $("#image").val(suggestion['wikiimage']);
             $("#album_desc").val(suggestion['wikibody']);
-
+            
+            $('#categories_hidden_container').append('<input id="categories_hidden" type="hidden" name="type" value="'+suggestion['categoryid']+'" />');
             $("#categories").prop( "disabled", true );
             $("#title_search_group").prop( "readonly", true );
             $("#genre_tags").prop( "disabled", true );
