@@ -481,7 +481,7 @@ if (!$torrentList) {
             ],
         ]);
 ?>
-                    <a href="#" onclick="$('#torrent_<?=$TorrentID?>').gtoggle(); return false;">&#x25B6; <?php echo($torrent->versionLink()); ?></a>
+                    <a href="#" onclick="$('#torrent_<?=$TorrentID?>').gtoggle(); return false;">&#x25B6; <?php echo($torrent->versionName()); ?></a>
                 </td>
                 <?= $Twig->render('torrent/stats.twig', ['torrent' => $torrent]) ?>
             </tr>

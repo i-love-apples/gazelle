@@ -24,16 +24,22 @@
 
     <div id="ft_container" class="pad{% if not show_search %} hidden{% endif %}">
     <table class="layout">
+        <tr id="groupname" class="ftr_advanced{{ hide_advanced }}">
+            <td class="label">Torrent name:</td>
+            <td colspan="3" class="ft_groupname">
+                <input type="search" spellcheck="false" size="40" name="groupname" class="inputtext smaller fti_advanced" value="{{ input.groupname }}" />
+            </td>
+        </tr>
         <tr id="version" class="ftr_advanced{{ hide_advanced }}">
             <td class="label">Version:</td>
-            <td colspan="3" class="ft_artistname">
+            <td colspan="3" class="ft_version">
                 <input type="search" spellcheck="false" size="40" name="version" class="inputtext smaller fti_advanced" value="{{ input.version }}" />
             </td>
         </tr>
         <tr id="platform" class="ftr_advanced{{ hide_advanced }}">
             <td class="label">Platform:</td>
-            <td colspan="3" class="ft_groupname">
-                <select name="platform" class="ft_releasetype fti_advanced">
+            <td colspan="3" class="ft_platform">
+                <select name="platform" class="ft_platform fti_advanced">
                     <option value=""></option>
 {% for id, name in release_platform %}
                     <option value="{{ name }}"{{ selected(name == input.platform) }}>{{ name }}</option>
@@ -43,8 +49,8 @@
         </tr>
         <tr id="includes" class="ftr_advanced{{ hide_advanced }}">
             <td class="label">Includes:</td>
-            <td colspan="3" class="ft_recordlabel">
-                <select name="includes" class="ft_releasetype fti_advanced">
+            <td colspan="3" class="ft_includes">
+                <select name="includes" class="ft_includes fti_advanced">
                     <option value=""></option>
 {% for id, name in release_includes %}
                     <option value="{{ name }}"{{ selected(name == input.includes) }}>{{ name }}</option>
@@ -54,25 +60,25 @@
         </tr>
         <tr id="osversion" class="ftr_advanced{{ hide_advanced }}">
             <td class="label">OS Version:</td>
-            <td colspan="3" class="ft_artistname">
+            <td colspan="3" class="ft_osversion">
                 <input type="search" spellcheck="false" size="40" name="osversion" class="inputtext smaller fti_advanced" value="{{ input.osversion }}" />
             </td>
         </tr>
         <tr id="processor" class="ftr_advanced{{ hide_advanced }}">
             <td class="label">Processor:</td>
-            <td colspan="3" class="ft_artistname">
+            <td colspan="3" class="ft_processor">
                 <input type="search" spellcheck="false" size="40" name="processor" class="inputtext smaller fti_advanced" value="{{ input.processor }}" />
             </td>
         </tr>
         <tr id="ram" class="ftr_advanced{{ hide_advanced }}">
             <td class="label">Ram:</td>
-            <td colspan="3" class="ft_artistname">
+            <td colspan="3" class="ft_ram">
                 <input type="search" spellcheck="false" size="40" name="ram" class="inputtext smaller fti_advanced" value="{{ input.ram }}" />
             </td>
         </tr>
         <tr id="vram" class="ftr_advanced{{ hide_advanced }}">
             <td class="label">VRam:</td>
-            <td colspan="3" class="ft_artistname">
+            <td colspan="3" class="ft_vram">
                 <input type="search" spellcheck="false" size="40" name="vram" class="inputtext smaller fti_advanced" value="{{ input.vram }}" />
             </td>
         </tr>
