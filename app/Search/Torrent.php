@@ -72,7 +72,14 @@ class Torrent {
         'remastertitle' => 1,
         'remasteryear' => 1,
         'searchstr' => 1,
-        'taglist' => 1];
+        'taglist' => 1,
+        'version' => 1,
+        'platform' => 1,
+        'includes' => 1,
+        'osversion' => 1,
+        'processor' => 1,
+        'ram' => 1,
+        'vram' => 1];
 
     /**
      * List of torrent-specific fields that can be used for filtering
@@ -102,6 +109,10 @@ class Torrent {
         'encoding' => self::SPH_BOOL_OR,
         'format' => self::SPH_BOOL_OR,
         'media' => self::SPH_BOOL_OR];
+
+    private static $FieldMatchMode = [
+        'platform' => 1,
+        'includes' => 1];
 
     /**
      * Specify the separator character to use for fields. Empty key sets the default
@@ -317,7 +328,11 @@ class Torrent {
                     $Operator = self::$FieldOperators[''];
                 }
                 if (!empty($QueryParts['include'])) {
-                    $SearchString .= '( ' . implode($Operator, $QueryParts['include']) . ' ) ';
+                    if(isset(self::$FieldMatchMode[$Field])) {
+                        $SearchString .= '^' . implode($Operator, $QueryParts['include']) . '$';
+                    } else {
+                        $SearchString .= '( ' . implode($Operator, $QueryParts['include']) . ' ) ';
+                    }
                 }
                 if (!empty($QueryParts['exclude'])) {
                      $SearchString .= implode(' ', $QueryParts['exclude']);

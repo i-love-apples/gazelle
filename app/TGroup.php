@@ -787,7 +787,8 @@ class TGroup extends BaseObject {
                 (ID, GroupID, GroupName, Year, CategoryID, Time, ReleaseType, RecordLabel,
                 CatalogueNumber, VanityHouse, Size, Snatched, Seeders, Leechers, LogScore, Scene, HasLog,
                 HasCue, FreeTorrent, Media, Format, Encoding, Description, RemasterYear, RemasterTitle,
-                RemasterRecordLabel, RemasterCatalogueNumber, FileList, TagList, VoteScore, ArtistName)
+                RemasterRecordLabel, RemasterCatalogueNumber, FileList, TagList, VoteScore, ArtistName,
+                Version, Platform, Includes, OSVersion, Processor, RAM, VRAM)
             SELECT
                 t.ID, g.ID, g.Name, g.Year, g.CategoryID, t.Time, g.ReleaseType,
                 g.RecordLabel, g.CatalogueNumber, g.VanityHouse, t.Size, tls.Snatched, tls.Seeders,
@@ -795,7 +796,8 @@ class TGroup extends BaseObject {
                 cast(t.FreeTorrent AS CHAR), t.Media, t.Format, t.Encoding, t.Description,
                 coalesce(t.RemasterYear, 0), t.RemasterTitle, t.RemasterRecordLabel, t.RemasterCatalogueNumber,
                 replace(replace(t.FileList, '_', ' '), '/', ' ') AS FileList,
-                replace(group_concat(coalesce(t2.Name, '') SEPARATOR ' '), '.', '_'), ?, ?
+                replace(group_concat(coalesce(t2.Name, '') SEPARATOR ' '), '.', '_'), ?, ?,
+                t.Version, t.Platform, t.Includes, t.OSVersion, t.Processor, t.RAM, t.VRAM
             FROM torrents t
             INNER JOIN torrents_leech_stats tls ON (tls.TorrentID = t.ID)
             INNER JOIN torrents_group g ON (g.ID = t.GroupID)

@@ -17,10 +17,7 @@ $autoSuggest = $Cache->get($key);
 if ($autoSuggest === false) {
     $DB->prepared_query("
         SELECT a.ID,
-            a.Name,
-            a.TagList,
-            a.WikiImage,
-            a.Wikibody
+            a.Name
         FROM torrents_group AS a
         LEFT JOIN
             torrents AS b

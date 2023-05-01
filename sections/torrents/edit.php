@@ -135,7 +135,7 @@ View::show_header('Edit torrent', ['js' => 'upload,torrent']);
                 $Err ?? false,
                 false
             );
-            $uploadForm->setCategoryId($categoryId);
+            // $uploadForm->setCategoryId($categoryId);
             ?>
                 <h3>Change freeleech</h3>
                 <div class="box pad" style="padding: 0px">

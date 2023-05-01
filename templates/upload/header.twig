@@ -21,9 +21,8 @@
 {% else %}
     {% if info.GroupID %}
             <input type="hidden" name="groupid" value="{{ info.GroupID }}" />
-            <input type="hidden" name="type" value="{{ category_id }}" />
     {% else %}
-            <input type="hidden" id="groupid" name="groupid" value="{{ category_id }}" placeholder="groupid" />
+            <input type="hidden" id="groupid" name="groupid" value="{{ info.GroupID }}" placeholder="groupid" />
     {% endif %}
     {% if info.RequestID %}
             <input type="hidden" name="requestid" value="{{ info.RequestID }}" />
@@ -43,7 +42,7 @@
                 <td>
                     <select id="categories" name="type" onchange="Categories()"{{ disabled(is_disabled) }}>
     {%- for name in constant('CATEGORY') %}
-                        <option value="{{ loop.index0 }}"{{ selected(name == info.CategoryName) }}>{{ name }}</option>
+                        <option value="{{ loop.index0+1 }}"{{ selected(loop.index0+1 == info.CategoryID) }}>{{ name }}</option>
     {%- endfor %}
                     </select>
                 </td>

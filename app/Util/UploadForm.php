@@ -19,8 +19,6 @@ use \OrpheusNET\Logchecker\Logchecker;
 class UploadForm extends \Gazelle\Base {
     var $user;
 
-    protected int $categoryId = 0;
-
     var $NewTorrent = false;
     var $Torrent = [];
     var $Error = false;
@@ -46,11 +44,11 @@ class UploadForm extends \Gazelle\Base {
         }
     }
 
-    public function setCategoryId(int $categoryId): UploadForm {
-        // FIXME: the upload form counts categories from zero
-        $this->categoryId = $categoryId - 1;
-        return $this;
-    }
+    // public function setCategoryId(int $categoryId): UploadForm {
+    //     // FIXME: the upload form counts categories from zero
+    //     $this->categoryId = $categoryId - 1;
+    //     return $this;
+    // }
 
     /**
      * This is an awful hack until something better can be figured out.
@@ -72,7 +70,6 @@ class UploadForm extends \Gazelle\Base {
         return self::$twig->render('upload/header.twig', [
             'announce'    => $this->user->announceUrl(),
             'auth'        => $this->user->auth(),
-            'category_id' => $this->categoryId,
             'error'       => $this->Error,
             'is_disabled' => $this->DisabledFlag,
             'is_new'      => (int)$this->NewTorrent,

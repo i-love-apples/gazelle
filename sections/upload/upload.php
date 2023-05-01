@@ -18,9 +18,9 @@ if (!isset($Properties)) {
         if (is_null($tgroup)) {
             unset($_GET['groupid']);
         } else {
-            $categoryId = $tgroup->categoryId();
             $Properties = [
                 'GroupID'          => $tgroup->id(),
+                'CategoryID'       => $tgroup->categoryId(),
                 'ReleaseType'      => $tgroup->releaseType(),
                 'Title'            => $tgroup->name(),
                 'Year'             => $tgroup->year(),
@@ -39,9 +39,9 @@ if (!isset($Properties)) {
     } elseif ($requestId) {
         $request = (new Gazelle\Manager\Request)->findById($requestId);
         if ($request) {
-            $categoryId = $request->categoryId();
             $Properties = [
                 'RequestID'        => $requestId,
+                'CategoryID'       => $request->categoryId(),
                 'ReleaseType'      => $request->releaseType(),
                 'Title'            => $request->title(),
                 'Year'             => $request->year(),
@@ -54,10 +54,6 @@ if (!isset($Properties)) {
             ];
         }
     }
-}
-
-if (!empty($ArtistForm)) {
-    $Properties['Artists'] = $ArtistForm;
 }
 
 if (empty($Properties)) {
@@ -101,12 +97,12 @@ View::show_header('Upload', ['js' => 'upload,validate_upload,valid_tags,musicbra
 </div><?= $dnuHide ? '<br />' : '' ?>
 <?php
 $uploadForm = new Gazelle\Util\UploadForm($Viewer, $Properties, $Err);
-if (isset($categoryId)) {
-    // we have been require'd from upload_handle
-    $uploadForm->setCategoryId($categoryId);
-}
+// if (isset($categoryId)) {
+//     // we have been require'd from upload_handle
+//     $uploadForm->setCategoryId($categoryId);
+// }
 echo $uploadForm->head();
-echo match (CATEGORY[($categoryId ?? 1) - 1]) {
+echo match (CATEGORY[($Properties['CategoryID'] ?? 1) - 1]) {
     'Applications', 'Games', 'IOS Applications', 'IOS Games' => $uploadForm->simple_group_form(),
     default                                                  => $uploadForm->simple_form(),
 };
