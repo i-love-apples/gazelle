@@ -45,6 +45,8 @@ class Text {
         'u'          => 0,
         'url'        => 1,
         'user'       => 0,
+        'youtube'    => 1,
+        'yt'         => 1,
     ];
 
     /**
@@ -782,6 +784,10 @@ class Text {
             }
             if (self::$Levels < self::$MaximumNests) {
             switch ($Block['Type']) {
+                case 'youtube':
+                case 'yt':
+                    $Str .= '<iframe width="560" height="315" src="https://www.youtube.com/embed/'.$Block['Val'].'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
+                    break;
                 case 'b':
                     $Str .= '<strong>'.self::to_html($Block['Val'], $Rules).'</strong>';
                     break;
@@ -1079,6 +1085,8 @@ class Text {
             switch ($Block['Type']) {
                 case 'headline':
                     break;
+                case 'youtube':
+                case 'yt':
                 case 'b':
                 case 'u':
                 case 'i':
