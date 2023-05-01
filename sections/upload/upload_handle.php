@@ -20,6 +20,7 @@ $Err = null;
 $Properties = [];
 $categoryId = (int)$_POST['type'];
 $categoryName = CATEGORY[$categoryId-1];
+$Properties['CategoryID'] = $categoryId;
 $Properties['CategoryName'] = $categoryName;
 $Properties['Title'] = isset($_POST['title']) ? trim($_POST['title']) : null;
 // Remastered is an Enum in the DB
