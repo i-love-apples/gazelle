@@ -786,7 +786,7 @@ class Text {
             switch ($Block['Type']) {
                 case 'youtube':
                 case 'yt':
-                    $Str .= '<iframe width="560" height="315" src="https://www.youtube.com/embed/'.$Block['Val'][0].'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
+                    $Str .= '<iframe width="560" height="315" src="https://www.youtube.com/embed/'.self::to_html($Block['Val'], $Rules).'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
                     break;
                 case 'b':
                     $Str .= '<strong>'.self::to_html($Block['Val'], $Rules).'</strong>';
