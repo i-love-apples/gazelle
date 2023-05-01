@@ -111,7 +111,6 @@ class Torrent {
         'media' => self::SPH_BOOL_OR];
 
     private static $FieldMatchMode = [
-        'platform' => 1,
         'includes' => 1];
 
     /**

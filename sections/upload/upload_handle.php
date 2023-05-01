@@ -18,8 +18,8 @@ if (!defined('AJAX')) {
 
 $Err = null;
 $Properties = [];
-$categoryId = (int)$_POST['type'] + 1;
-$categoryName = CATEGORY[$categoryId - 1];
+$categoryId = (int)$_POST['type'];
+$categoryName = CATEGORY[$categoryId-1];
 $Properties['CategoryName'] = $categoryName;
 $Properties['Title'] = isset($_POST['title']) ? trim($_POST['title']) : null;
 // Remastered is an Enum in the DB
@@ -51,8 +51,10 @@ $isApplicationsUpload = ($categoryName === 'Applications' || $categoryName === '
 
 // common to all types
 $Validate = new Gazelle\Util\Validator;
+if (is_null($categoryName)) {
+    $Err = 'Please select a valid category.';
+}
 $Validate->setFields([
-    ['type', '1', 'inarray', 'Please select a valid category.', ['inarray' => array_keys(CATEGORY)]],
     ['release_desc', '0','string','The release description you entered is too long.', ['maxlength'=>1_000_000]],
     ['rules', '1','require','Your torrent must abide by the rules.'],
 ]);
@@ -425,7 +427,7 @@ $Announce = $Properties['Title'];
 if ($isApplicationsUpload) {
     $Announce .= ' ' . $Properties['Version'] . ' [' . $Properties['Platform'] . "/" . $Properties['Includes'] . ']';
 }
-$Announce .= ' (' . $categoryName . ') ';
+$Announce .= ' (' . $categoryName . ')';
 $Title = $Announce;
 $AnnounceFreeleech = '';
 if ($isFreeTorrent == 1) {
