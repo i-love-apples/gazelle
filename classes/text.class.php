@@ -786,7 +786,7 @@ class Text {
             switch ($Block['Type']) {
                 case 'youtube':
                 case 'yt':
-                    $Str .= '<iframe width="560" height="315" src="https://www.youtube.com/embed/'.self::to_html($Block['Val'], $Rules).'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
+                    $Str .= '<iframe src="https://www.youtube.com/embed/'.self::to_html($Block['Val'], $Rules).'" style="width: 560px; max-width: 100%; max-height: 315px; aspect-ratio: 16/9;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
                     break;
                 case 'b':
                     $Str .= '<strong>'.self::to_html($Block['Val'], $Rules).'</strong>';
@@ -1037,13 +1037,13 @@ class Text {
                             if ($resolved = self::resolve_url($Block['Val'])) {
                                 $Str .= $resolved;
                             } else {
-                                $Str .= '<a href="' . $LocalURL . '">' . $Block['Val'] . '</a>';
+                                $Str .= '<a rel="noreferrer" target="_blank" href="' . $Block['Attr'] . '">' . $Block['Val'] . '</a>';
                             }
                         } else {
                             if ($resolved = self::resolve_url($Block['Val'])) {
                                 $Str .= $resolved;
                             } else {
-                                $Str .= '<a rel="noreferrer" target="_blank" href="' . $Block['Attr'] . '">' . $Block['Val'] . '</a>';
+                                $Str .= '<a rel="noreferrer" target="_blank" href="https://href.li/?' . $Block['Attr'] . '">' . $Block['Val'] . '</a>';
                             }
                         }
                     }
@@ -1062,7 +1062,7 @@ class Text {
                                 ?? ('<a href="' . $LocalURL . '">' . substr($LocalURL, 1) . '</a>');
                         } else {
                             $Str .= self::resolve_url($Block['Attr'])
-                                ?? sprintf('<a rel="noreferrer" target="_blank" href="%s">%s</a>', $Block['Attr'], $Block['Attr']);
+                                ?? sprintf('<a rel="noreferrer" target="_blank" href="https://href.li/?%s">%s</a>', $Block['Attr'], $Block['Attr']);
                         }
                     }
 
