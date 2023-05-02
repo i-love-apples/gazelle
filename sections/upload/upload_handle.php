@@ -428,7 +428,7 @@ $Announce = $Properties['Title'];
 if ($isApplicationsUpload) {
     $Announce .= ' ' . $Properties['Version'] . ' [' . $Properties['Platform'] . "/" . $Properties['Includes'] . ']';
 }
-$Announce .= ' (' . $categoryName . ')';
+$Announce .= ' (' . $categoryName . ') ';
 $Title = $Announce;
 $AnnounceFreeleech = '';
 if ($isFreeTorrent == 1) {
