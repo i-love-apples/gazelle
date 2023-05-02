@@ -397,13 +397,13 @@ $DeletedTag = $Cache->get_value("deleted_tags_$tgroupId" . '_' . $Viewer->id());
 <?php
 echo $Twig->render('collage/summary.twig', [
     'class'   => 'collage_rows',
-    'object'  => 'album',
+    'object'  => 'group',
     'summary' => $collageMan->tgroupGeneralSummary($tgroupId),
 ]);
 
 echo $Twig->render('collage/summary.twig', [
     'class'   => 'personal_rows',
-    'object'  => 'album',
+    'object'  => 'group',
     'summary' => $collageMan->tgroupPersonalSummary($tgroupId),
 ]);
 ?>
