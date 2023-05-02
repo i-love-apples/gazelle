@@ -292,15 +292,13 @@ if ($NoRevision) {
 // Tags
 $tagMan = new Gazelle\Manager\Tag;
 $tagList = [];
-if (!$Properties['GroupID']) {
-    foreach ($Properties['TagList'] as $tag) {
-        $tag = $tagMan->resolve($tagMan->sanitize($tag));
-        if (!empty($tag)) {
-            $TagID = $tagMan->create($tag, $Viewer->id());
-            $tagMan->createTorrentTag($TagID, $GroupID, $Viewer->id(), 10);
-        }
-        $tagList[] = $tag;
+foreach ($Properties['TagList'] as $tag) {
+    $tag = $tagMan->resolve($tagMan->sanitize($tag));
+    if (!empty($tag) && !$Properties['GroupID']) {
+        $TagID = $tagMan->create($tag, $Viewer->id());
+        $tagMan->createTorrentTag($TagID, $GroupID, $Viewer->id(), 10);
     }
+    $tagList[] = $tag;
 }
 
 // Torrent

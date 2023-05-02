@@ -47,7 +47,7 @@ $response = [
 foreach ($autoSuggest as $suggestion) {
     [$id, $name, $taglist, $wikiimage, $wikibody, $categoryid] = $suggestion;
     if (stripos($name, $fullName) === 0) {
-        $response['suggestions'][] = ['id' => $id, 'value' => $name, 'taglist' => $taglist, 'wikiimage' => $wikiimage, 'wikibody' => $wikibody, 'categoryid' => $categoryid];
+        $response['suggestions'][] = ['id' => $id, 'value' => $name, 'taglist' => str_replace(' ', ', ', $taglist), 'wikiimage' => $wikiimage, 'wikibody' => $wikibody, 'categoryid' => $categoryid];
         if (++$matched > $maxRows) {
             break;
         }
