@@ -195,9 +195,9 @@ foreach ($Results as $GroupID) {
         <td></td>
         <td class="td_time nobr"><?=time_diff($tgroup->mostRecentUpload(), 1)?></td>
         <td class="td_size number_column nobr"><?=Format::get_size($tgroup->maxTorrentSize())?> (Max)</td>
-        <td class="td_snatched number_column m_td_right"><?=number_format($tgroup->stats()->snatchTotal())?></td>
-        <td class="td_seeders number_column<?= $tgroup->stats()->seedingTotal() == 0 ? ' r00' : '' ?> m_td_right"><?=number_format($tgroup->stats()->seedingTotal())?></td>
-        <td class="td_leechers number_column m_td_right"><?=number_format($tgroup->stats()->leechTotal())?></td>
+        <td class="td_snatched number_column m_td_right"><?=number_format($tgroup->snatchedTotal())?></td>
+        <td class="td_seeders number_column<?= $tgroup->seederTotal() == 0 ? ' r00' : '' ?> m_td_right"><?=number_format($tgroup->seederTotal())?></td>
+        <td class="td_leechers number_column m_td_right"><?=number_format($tgroup->leecherTotal())?></td>
     </tr>
 <?php
         $prev = '';
