@@ -230,9 +230,13 @@ class View {
             }
         }
 
+        $userMan = new Gazelle\Stats\Users;
+        $users = $userMan->findOnline();
+
         global $Cache, $DB, $Debug, $SessionID;
         return $Twig->render('index/private-footer.twig', [
             'cache'        => $Cache,
+            'users'        => $users,
             'db_time'      => $DB->Time,
             'debug'        => $Debug,
             'disclaimer'   => isset($Options['disclaimer']),

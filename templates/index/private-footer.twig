@@ -27,6 +27,19 @@ in any way and cannot be held responsible for what its users post, or any other
 actions of it.</div>
 {% endif %}
 
+<div id="online_users" style="width: 95%; text-align: center; margin: 20px auto;">
+    <p>
+        <b>Online users:</b>
+        {% if users is empty %}
+            <span>no users online</span>
+        {% else %}
+            {% for user in users %}
+                <a href="user.php?id={{ user.id }}">{{ user.username }}</a>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        {% endif %}
+    </p>
+</div>
+
 {% if last_active %}
 <p><a href="user.php?action=sessions">
     <span class="tooltip" title="Manage sessions">Last activity: {{ last_active.LastUpdate|time_diff }}</span>
@@ -40,8 +53,7 @@ actions of it.</div>
 <strong>Load:</strong> <span>{{ load.0|number_format(2) }} {{ load.1|number_format(2) }} {{ load.2|number_format(2) }}</span>
 <strong>Date:</strong> <span id="site_date">{{ date }}</span> <span id="site_time">{{ time }}</span>
 </p>
-<p>Site and design &copy; {{ launch }} {{ constant('SITE_NAME') }} | <a href='https://github.com/ianonapp/gazelle'>Project Gazelle</a>
-| {{ GIT_VERSION }}</p>
+<p>Site and design &copy; {{ launch }} {{ constant('SITE_NAME') }} | <a href='https://github.com/ianonapp/gazelle'>Project Gazelle</a></p>
 </div>
 
 </div>
