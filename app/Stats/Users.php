@@ -75,7 +75,8 @@ class Users extends \Gazelle\Base {
                 SELECT um.id, um.username
                 FROM users_sessions AS us
                 INNER JOIN users_main AS um ON (us.UserID = um.ID)
-                WHERE us.LastUpdate >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)"
+                WHERE us.LastUpdate >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)
+                GROUP BY um.id, um.username"
             );
             $users = self::$db->to_array(false, MYSQLI_ASSOC, false);
             self::$cache->cache_value('online_users', $users, 60);
