@@ -179,6 +179,22 @@ class TGroup extends BaseObject {
                     $cached['torrent_list'] = self::$db->collect(0, false);
                     $refresh = true;
                 }
+                if (!isset($info['Seeders']) || !isset($info['Leechers']) || !isset($info['Snatched'])) {
+                    self::$db->prepared_query("
+                        SELECT
+                            SUM(tls.Seeders) as Seeders,
+                            SUM(tls.Leechers) as Leechers,
+                            SUM(tls.Snatched) as Snatched
+                        FROM torrents AS t
+                        LEFT JOIN torrents_leech_stats AS tls ON (t.ID = tls.TorrentID)
+                        WHERE t.GroupID = ?
+                        ", $this->id
+                    );
+                    $leech_stats = self::$db->to_array(false, MYSQLI_ASSOC, false);
+                    $cached['Seeders'] = $leech_stats[0]['Seeders'] ?? 0;
+                    $cached['Leechers'] = $leech_stats[0]['Leechers'] ?? 0;
+                    $cached['Snatched'] = $leech_stats[0]['Snatched'] ?? 0;
+                }
                 if ($refresh) {
                     self::$cache->cache_value($key, $cached, 0);
                 }
@@ -198,6 +214,7 @@ class TGroup extends BaseObject {
                 tg.CategoryID,
                 tg.Time,
                 tg.VanityHouse,
+                t.FreeTorrent,
                 group_concat(tag.Name ORDER BY tt.PositiveVotes - tt.NegativeVotes DESC, tag.Name)         AS tagNames,
                 group_concat(tag.ID ORDER BY tt.PositiveVotes - tt.NegativeVotes DESC, tag.Name)           AS tagIds,
                 group_concat(tag.UserID ORDER BY tt.PositiveVotes - tt.NegativeVotes DESC, tag.Name)       AS tagVoteUserIds,
@@ -262,6 +279,21 @@ class TGroup extends BaseObject {
             ", $this->id
         );
         $info['torrent_list'] = self::$db->collect(0, false);
+
+        self::$db->prepared_query("
+            SELECT
+                SUM(tls.Seeders) as Seeders,
+                SUM(tls.Leechers) as Leechers,
+                SUM(tls.Snatched) as Snatched
+            FROM torrents AS t
+            LEFT JOIN torrents_leech_stats AS tls ON (t.ID = tls.TorrentID)
+            WHERE t.GroupID = ?
+            ", $this->id
+        );
+        $leech_stats = self::$db->to_array(false, MYSQLI_ASSOC, false);
+        $info['Seeders'] = $leech_stats[0]['Seeders'] ?? 0;
+        $info['Leechers'] = $leech_stats[0]['Leechers'] ?? 0;
+        $info['Snatched'] = $leech_stats[0]['Snatched'] ?? 0;
 
         if (!$this->revisionId) {
             self::$cache->cache_value($key, $info, 0);
@@ -386,6 +418,18 @@ class TGroup extends BaseObject {
 
     public function recordLabel(): ?string {
         return $this->info()['RecordLabel'];
+    }
+
+    public function seederTotal(): int {
+        return $this->info()['Seeders'] ?? 0;
+    }
+
+    public function leecherTotal(): int {
+        return $this->info()['Leechers'] ?? 0;
+    }
+
+    public function snatchedTotal(): int {
+        return $this->info()['Snatched'] ?? 0;
     }
 
     /**
