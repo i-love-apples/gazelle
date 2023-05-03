@@ -104,6 +104,16 @@
                 <input type="radio" name="tags_type" id="tags_type1" value="1"{{ checked(input.tags_type == 1) }} /><label for="tags_type1"> All</label>
             </td>
         </tr>
+        <tr id="freetorrent">
+            <td class="label">Leech type:</td>
+            <td colspan="3" class="ft_order">
+                <select name="freetorrent" style="width: auto;" class="ft_order_by">
+                    <option value="0" {{ selected(input.freetorrent == '0') }}>Any</option>
+                    <option value="1" {{ selected(input.freetorrent == '1') }}>Free</option>
+                    <option value="2" {{ selected(input.freetorrent == '2') }}>Neutral</option>
+                </select>
+            </td>
+        </tr>
         <tr id="order">
             <td class="label">Order by:</td>
             <td colspan="3" class="ft_order">
@@ -136,7 +146,7 @@
 {% for key, name in constant('CATEGORY') %}
             <td style="width:{{ (100 / constant('CATEGORY')|length)|round(1) }}%; padding-left: 1.6em; text-indent:-1.6em">
                 <input type="checkbox" name="filter_cat[{{ key + 1 }}]" id="cat_{{ key + 1 }}" value="1"{{ checked(input.filter_cat[key + 1]) }} />
-                <label for="{{ key + 1 }}">{{ name }}</label>
+                <label for="cat_{{ key + 1 }}" style="cursor: pointer;">{{ name }}</label>
             </td>
 {% endfor %}
         </tr>
