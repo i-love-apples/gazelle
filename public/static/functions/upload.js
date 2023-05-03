@@ -95,6 +95,7 @@ function SetAutocomplete() {
     $('#title_search_group').autocomplete({
         deferRequestBy: 300,
         onSelect : function(suggestion) {
+            $("#clean_tags").hide();
             $("#groupid").val(suggestion['id']);
             $("#categories").val(suggestion['categoryid']);
             $("#tags").val(suggestion['taglist']);

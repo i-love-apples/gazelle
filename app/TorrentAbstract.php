@@ -659,6 +659,31 @@ abstract class TorrentAbstract extends BaseObject {
         return "<a href=\"{$this->url()}\">$short $short_extra $fl_label</a>";
     }
 
+    public function fullVersionLink(): string {
+        $short = $this->group()->name();
+        $short .= " " . $this->version();
+        $platform = $this->platform();
+        $includes = $this->includes();
+        $short_extra = "[$platform/$includes]";
+        if ($short_extra == "[/]") {
+            $short_extra = "";
+        }
+        $info = $this->info();
+        $fl_label = "";
+        if ($info['FreeTorrent'] == '1') {
+            $fl_label = $this->labelElement('tl_free', 'Freeleech!');
+        } elseif ($info['FreeTorrent'] == '2') {
+            $fl_label = $this->labelElement('tl_free tl_neutral', 'Neutral Leech!');
+        }
+        // deal with nested log link
+        // we have "....<a href="x">....</a>...."
+        // we want "<a href="y">....</a><a href="x">....</a><a href="y">....</a>"
+        if (str_contains($short, '<a href=')) {
+            $short = preg_replace('#(<a href=.*</a>)#', "</a>\\1<a href=\"{$this->url()}\">", $short);
+        }
+        return "<a href=\"{$this->url()}\">$short $short_extra $fl_label</a>";
+    }
+
     public function versionName(): string {
         $short = $this->version();
         if (!$short) {
