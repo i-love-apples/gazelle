@@ -139,13 +139,25 @@ $snatcher = new Gazelle\User\Snatch($Viewer);
 
 $groupsClosed = (bool)$Viewer->option('TorrentGrouping');
 foreach ($Results as $GroupID) {
-    $tgroup = $tgMan->findById($GroupID);
-    if (is_null($tgroup)) {
-        continue;
-    }
-    $torrentList = $tgroup->torrentIdList();
-    if (empty($torrentList)) {
-        continue;
+    if ($GroupResults) {
+        $tgroup = $tgMan->findById($GroupID);
+        if (is_null($tgroup)) {
+            continue;
+        }
+        $torrentList = $tgroup->torrentIdList();
+        if (empty($torrentList)) {
+            continue;
+        }
+    } else {
+        $torrentRow = $torMan->findById($GroupID);
+        $torrentList = [$torrentRow->id()];
+        if (is_null($torrentList)) {
+            continue;
+        }
+        $tgroup = $torrentRow->group();
+        if (empty($tgroup)) {
+            continue;
+        }
     }
 
     $SnatchedGroupClass = $tgroup->isSnatched($Viewer->id()) ? ' snatched_group' : '';
@@ -174,7 +186,8 @@ foreach ($Results as $GroupID) {
                 ]) ?>
                 </span>
                 <br />
-                <div class="tags"><?= implode(', ',
+                <div class="tags">
+                    <small><a href="torrents.php?action=<?= $searchMode ?>&amp;filter_cat=<?= $tgroup->categoryName() ?>"><?= $tgroup->categoryName() ?></a></small> - <?= implode(', ',
                     array_map(fn($name) => "<a href=\"torrents.php?action={$searchMode}&amp;taglist=$name\">$name</a>", $tgroup->tagNameList())
                     ) ?></div>
             </div>
@@ -256,8 +269,9 @@ foreach ($Results as $GroupID) {
                     'torrent' => $torrent,
                     'viewer'  => $Viewer,
                 ]) ?>
-                <?= $torrent->fullLink() ?>
-                <div class="tags"><?= implode(', ',
+                <? if ($GroupResults) { echo($torrent->fullLink()); } else { echo($torrent->fullVersionLink()); } ?><br>
+                <div class="tags">
+                    <small><a href="torrents.php?action=<?= $searchMode ?>&amp;filter_cat=<?= $tgroup->categoryName() ?>"><?= $tgroup->categoryName() ?></a></small> - <?= implode(', ',
                     array_map(fn($name) => "<a href=\"torrents.php?action={$searchMode}&amp;taglist=$name\">$name</a>", $tgroup->tagNameList())
                     ) ?></div>
             </div>

@@ -114,9 +114,10 @@ class UploadForm extends \Gazelle\Base {
                         <option value="<?= $Val ?>"<?= !$this->NewTorrent && $Key == $Torrent['ReleaseTags'] ? ' selected="selected"' : '' ?>><?= $Val ?></option>
 <?php       } ?>
                     </select>
-                    <input type="text" id="tags" name="tags" size="40" value="<?= display_str($Torrent['Tags'] ?? '') ?>"<?=
-                        $this->user->hasAutocomplete('other') ? ' data-gazelle-autocomplete="true"' : '' ?> readonly />
-                    <input type="button" onclick="clear_tag()" value="Clean tags" title="Clean tags">
+                    <input type="text" id="tags" name="tags" size="40" value="<?= display_str($Torrent['Tags'] ?? '') ?>"<?= $this->user->hasAutocomplete('other') ? ' data-gazelle-autocomplete="true"' : '' ?> readonly />
+                    <?php if (!$this->DisabledFlag) { ?>
+                        <input id="clean_tags" type="button" onclick="clear_tag()" value="Clean tags" title="Clean tags">
+                    <?php } ?>
                 </td>
             </tr>
             <tr>

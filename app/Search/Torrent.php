@@ -282,7 +282,8 @@ class Torrent {
             if ($this->GroupResults) {
                 $this->SphResults = $SphQLResult->collect('groupid');
             } else {
-                $this->SphResults = $SphQLResult->to_pair('id', 'groupid');
+                $this->SphResults = $SphQLResult->collect('id');
+                // $this->SphResults = $SphQLResult->to_pair('id', 'groupid');
             }
         }
     }
