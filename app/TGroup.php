@@ -172,9 +172,7 @@ class TGroup extends BaseObject {
                         SELECT t.ID
                         FROM torrents t
                         WHERE t.GroupID = ?
-                        ORDER BY REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(t.Version, '[A-z]', ''), '(^|\\.)(\\d+)','$100000$2'),'0+(\\d{5})(\\.|$)','$1\$2') DESC,
-			    t.Remastered, (t.RemasterYear != 0) DESC, t.RemasterYear, t.RemasterTitle,
-                            t.RemasterRecordLabel, t.RemasterCatalogueNumber, t.Media, t.Format, t.Encoding, t.ID
+                        ORDER BY REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REPLACE(t.Version,' ', '.'),'[^0-9.]',''),'(^|\\\\.)(\\\\d+)','\\\\100000\\\\2'),'0+(\\\\d{5})(\\\\.|$)','\\\\1') DESC, t.ID DESC
                         ", $this->id
                     );
                     $cached['torrent_list'] = self::$db->collect(0, false);
@@ -270,14 +268,12 @@ class TGroup extends BaseObject {
                 'score'     => $tagUpvotes[$n] - $tagDownvotes[$n],
             ];
         }
-
+        
         self::$db->prepared_query("
             SELECT t.ID
             FROM torrents t
             WHERE t.GroupID = ?
-            ORDER BY REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(t.Version, '[A-z]', ''), '(^|\\.)(\\d+)','$100000$2'),'0+(\\d{5})(\\.|$)','$1\$2') DESC,
-		t.RemasterYear, t.RemasterTitle,
-                t.RemasterRecordLabel, t.RemasterCatalogueNumber, t.Media, t.Format, t.Encoding, t.ID
+            ORDER BY REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REPLACE(t.Version,' ', '.'),'[^0-9.]',''),'(^|\\\\.)(\\\\d+)','\\\\100000\\\\2'),'0+(\\\\d{5})(\\\\.|$)','\\\\1') DESC, t.ID DESC
             ", $this->id
         );
         $info['torrent_list'] = self::$db->collect(0, false);
