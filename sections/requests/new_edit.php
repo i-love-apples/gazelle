@@ -20,9 +20,10 @@ if ($isRequestVersion) {
 }
 
 $releasePlatform = (new \Gazelle\ReleasePlatform)->list();
+$categoryName = "";
 
 if ($newRequest) {
-    if ($Viewer->uploadedSize() < 250 * 1024 * 1024 || !$Viewer->permitted('site_submit_requests')) {
+    if ($Viewer->uploadedSize() < (REQUEST_MIN+1) * 1024 * 1024 || !$Viewer->permitted('site_submit_requests')) {
         error('You have not enough upload to make a request.');
     }
     $request         = null;
@@ -72,7 +73,7 @@ if ($newRequest) {
 }
 
 $isGroupOnStart = false;
-if ($categoryName == "Applications" || $categoryName == "Games" || $categoryName == "IOS Applications" || $categoryName == "IOS Games" ) {
+if ($categoryName == "Applications" || $categoryName == "Games" || $categoryName == "IOS Applications" || $categoryName == "IOS Games" || $categoryName == "" ) {
     $isGroupOnStart = true;
 }
 
