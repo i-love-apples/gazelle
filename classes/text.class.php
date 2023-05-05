@@ -44,6 +44,7 @@ class Text {
         'torrent'    => 1,
         'u'          => 0,
         'url'        => 1,
+        'btn'        => 1,
         'user'       => 0,
         'youtube'    => 1,
         'yt'         => 1,
@@ -215,7 +216,7 @@ class Text {
         self::$Headlines = [];
 
         //Inline links
-        $URLPrefix = '(\[url\]|\[url\=|\[img\=|\[img\])';
+        $URLPrefix = '(\[url\]|\[url\=|\[img\=|\[img\]|\[btn\=|\[btn\])';
         $Str = preg_replace('/'.$URLPrefix.'\s+/i', '$1', $Str);
         $Str = preg_replace('/(?<!'.$URLPrefix.')http(s)?:\/\//i', '$1[inlineurl]http$2://', $Str);
         // For anonym.to and archive.org links, remove any [inlineurl] in the middle of the link
@@ -245,7 +246,7 @@ class Text {
         $Str = display_str($Str);
 
         //Inline links
-        $Str = preg_replace('/(?<!(\[url\]|\[url\=|\[img\=|\[img\]))http(s)?:\/\//i', '$1[inlineurl]http$2://', $Str);
+        $Str = preg_replace('/(?<!(\[url\]|\[url\=|\[img\=|\[img\]|\[btn\=|\[btn\]))http(s)?:\/\//i', '$1[inlineurl]http$2://', $Str);
 
         return nl2br(self::raw_text(self::parse($Str)));
     }
@@ -272,7 +273,20 @@ class Text {
     }
 
     private static function relative_url($str) {
-        return !preg_match('~^https?://~', $str);
+        $relativeurl = false;
+        $relativeurl = preg_match('~^https?://~', $str);
+        if ($relativeurl) {
+            return !$relativeurl;
+        }
+        $relativeurl = preg_match('~^http?://~', $str);
+        if ($relativeurl) {
+            return !$relativeurl;
+        }
+        $relativeurl = preg_match('~^www?\.~', $str);
+        if ($relativeurl) {
+            return !$relativeurl;
+        }
+        return true;
     }
 
     public static function local_url($Str) {
@@ -551,6 +565,14 @@ class Text {
                         $Array[$ArrayPos] = ['Type'=>'url', 'Attr'=>$Block, 'Val'=>''];
                     } else {
                         $Array[$ArrayPos] = ['Type'=>'url', 'Attr'=>$Attrib, 'Val'=>self::parse($Block)];
+                    }
+                    break;
+                case 'btn':
+                    $Array[$ArrayPos] = ['Type'=>'btn', 'Attr'=>$Attrib, 'Val'=>$Block];
+                    if (empty($Attrib)) { // [url]http://...[/url] - always set URL to attribute
+                        $Array[$ArrayPos] = ['Type'=>'btn', 'Attr'=>$Block, 'Val'=>''];
+                    } else {
+                        $Array[$ArrayPos] = ['Type'=>'btn', 'Attr'=>$Attrib, 'Val'=>self::parse($Block)];
                     }
                     break;
                 case 'quote':
@@ -1048,6 +1070,41 @@ class Text {
                         }
                     }
                     break;
+                case 'btn':
+                    // Make sure the URL has a label
+                    if (empty($Block['Val'])) {
+                        $Block['Val'] = $Block['Attr'];
+                        $NoName = true; // If there isn't a Val for this
+                    } else {
+                        $Block['Val'] = self::to_html($Block['Val'], $Rules);
+                        $NoName = false;
+                    }
+                    if (!self::valid_url($Block['Attr'])) {
+                        if (self::relative_url($Block['Attr'])) {
+                            $Str .= '<input onclick="window.open(\'' . $Block['Attr'] . '\', \'_blank\');" type="submit" value="' . $Block['Val'] . '" />';
+                        } else {
+                            $Str .= '[btn=' . $Block['Attr'] . ']' . $Block['Val'] . '[/btn]';
+                        }
+                    } else {
+                        $LocalURL = self::local_url($Block['Attr']);
+                        if ($LocalURL) {
+                            if ($NoName) {
+                                $Block['Val'] = substr($LocalURL, 1);
+                            }
+                            if ($resolved = self::resolve_url($Block['Val'])) {
+                                $Str .= $resolved;
+                            } else {
+                                $Str .= '<input onclick="window.open(\'' . $Block['Attr'] . '\', \'_blank\');" type="submit" value="' . $Block['Val'] . '" />';
+                            }
+                        } else {
+                            if ($resolved = self::resolve_url($Block['Val'])) {
+                                $Str .= $resolved;
+                            } else {
+                                $Str .= '<input onclick="window.open(\'' . $Block['Attr'] . '\', \'_blank\');" type="submit" value="' . $Block['Val'] . '" />';
+                            }
+                        }
+                    }
+                    break;
 
                 case 'inlineurl':
                     if (!self::valid_url($Block['Attr'], '', true)) {
@@ -1115,6 +1172,7 @@ class Text {
                     }
                     break;
 
+                case 'btn':
                 case 'url':
                     // Make sure the URL has a label
                     if (empty($Block['Val'])) {
