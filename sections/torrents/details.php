@@ -90,7 +90,7 @@ View::show_header(display_str($title), ['js' => 'browse,comments,torrent,bbcode,
 <?php if ($Viewer->permitted('site_edit_wiki') && ($Viewer->permitted('torrents_edit') || $Viewer->permitted('users_mod')) ) { ?>
             <a href="<?= $tgroup->url() ?>&amp;action=editgroup" class="brackets">Edit group</a>
 <?php } ?>
-            <a href="<?= $tgroup->url() ?>&amp;action=editrequest" class="brackets">Request an Edit</a>
+            <a href="<?= $tgroup->url() ?>&amp;action=editrequest" class="brackets">Request an edit</a>
 <?php if ($RevisionID && $Viewer->permitted('site_edit_wiki')) { ?>
             <a href="<?= $tgroup->url() ?>&amp;action=revert&amp;revisionid=<?=$RevisionID ?>&amp;auth=<?=$Viewer->auth()?>" class="brackets">Revert to this revision</a>
 <?php
