@@ -11,6 +11,16 @@
  */
 
 $newRequest = $_GET['action'] === 'new';
+$isRequestVersion = $_GET['requestversion'];
+$disabledTag = "";
+$readonlyTag = "";
+if ($isRequestVersion) {
+    $disabledTag = " disabled=\"disabled\" ";
+    $readonlyTag = " readonly ";
+}
+
+$releasePlatform = (new \Gazelle\ReleasePlatform)->list();
+
 if ($newRequest) {
     if ($Viewer->uploadedSize() < 250 * 1024 * 1024 || !$Viewer->permitted('site_submit_requests')) {
         error('You have not enough upload to make a request.');
@@ -34,6 +44,7 @@ if ($newRequest) {
             $title       = $tgroup->name();
             $image       = $tgroup->image();
             $tags        = implode(', ', $tgroup->tagNameList());
+            $categoryName = $tgroup->categoryName();
         }
     }
 } else {
@@ -63,7 +74,11 @@ if ($newRequest) {
 $releaseTypes = (new Gazelle\ReleaseType)->list();
 $releaseTags = (new \Gazelle\ReleaseTags)->list();
 // $GenreTags    = (new Gazelle\Manager\Tag)->genreList();
-$pageTitle    = $newRequest ? 'Create a request' : 'Edit request &rsaquo; ' . $request->selfLink();
+if ($isRequestVersion) {
+    $pageTitle    = 'Request version';
+} else {
+    $pageTitle    = $newRequest ? 'Create a request' : 'Edit request &rsaquo; ' . $request->selfLink();
+}
 View::show_header($pageTitle, ['js' => 'requests,form_validate']);
 ?>
 <div class="thin">
@@ -104,10 +119,14 @@ if (!$newRequest && $CanEdit && !$ownRequest && $Viewer->permitted('site_edit_re
                         Type
                     </td>
                     <td>
-                        <!-- <select id="categories" name="type" onchange="Categories();"> -->
-                        <select id="categories" name="type">
+                        <div id="categories_hidden_container">
+                            <?php if ($isRequestVersion) { ?>
+                                <input id="categories_hidden_container" type="hidden" name="type" value="<?= $categoryName ?>">
+                            <?php } ?>
+                        </div>
+                        <select id="categories" name="type" onchange="Categories();" <?= $disabledTag ?>>
 <?php    foreach (CATEGORY as $Cat) { ?>
-                            <option value="<?=$Cat?>"<?= $categoryName === $Cat ? ' selected="selected"' : '' ?>><?=$Cat?></option>
+                            <option value="<?=$Cat?>"<?= $categoryName === $Cat ? ' selected="selected"' : '' ?> ><?=$Cat?></option>
 <?php    } ?>
                         </select>
                     </td>
@@ -115,7 +134,7 @@ if (!$newRequest && $CanEdit && !$ownRequest && $Viewer->permitted('site_edit_re
                 <tr>
                     <td class="label">Title</td>
                     <td>
-                        <input type="text" name="title" size="45" value="<?= $title ?>" />
+                        <input id="title_search_group" type="text" name="title" size="45" value="<?= $title ?>" <?= $readonlyTag ?> />
                     </td>
                 </tr>
 <?php } ?>
@@ -123,7 +142,7 @@ if (!$newRequest && $CanEdit && !$ownRequest && $Viewer->permitted('site_edit_re
                 <tr id="image_tr">
                     <td class="label">Image</td>
                     <td>
-                        <input type="text" name="image" size="45" value="<?= $image ?>" />
+                        <input id="image" type="text" name="image" size="45" value="<?= $image ?>" <?= $readonlyTag ?> />
 <?php       if (IMAGE_HOST_BANNED) { ?>
                         <br /><b>Images hosted on <strong class="important_text"><?= implode(', ', IMAGE_HOST_BANNED)
                             ?> are not allowed</strong>, please rehost first on one of <?= implode(', ', IMAGE_HOST_RECOMMENDED) ?>.</b>
@@ -134,14 +153,31 @@ if (!$newRequest && $CanEdit && !$ownRequest && $Viewer->permitted('site_edit_re
                 <tr>
                     <td class="label">Tags</td>
                     <td>
-                        <select id="genre_tags" name="genre_tags" onchange="add_tag();" >
+                        <select id="genre_tags" name="genre_tags" onchange="add_tag();" <?= $disabledTag ?> >
                             <option></option>
     <?php       foreach ($releaseTags as $Key => $Val) { ?>
                             <option value="<?= $Val ?>"><?= $Val ?></option>
     <?php       } ?>
                         </select>
                         <input type="text" id="tags" name="tags" size="40" value="<?= display_str($tags ?? '') ?>" data-gazelle-autocomplete="true" readonly />
-                        <input type="button" onclick="clear_tag()" value="Clean tags" title="Clean tags">
+                        <input id="clean_tags" type="button" onclick="clear_tag()" value="Clean tags" title="Clean tags" <?php if ($isRequestVersion) { echo("style=\"display: none;\""); } ?>>
+                    </td>
+                </tr>
+                <tr id="version_row">
+                    <td class="label">Version</td>
+                    <td>
+                        <input id="version" type="text" name="version" size="20" value="<?= $version ?>" />
+                    </td>
+                </tr>
+                <tr id="platform_row">
+                    <td class="label">Mac Platform:</td>
+                    <td>
+                        <select id="platform" name="platform">>
+                            <option></option>
+    <?php       foreach ($releasePlatform as $Key => $Val) { ?>
+                            <option value="<?= $Val ?>"<?= $Val == $platform ? ' selected="selected"' : '' ?>><?= $Val ?></option>
+    <?php       } ?>
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -154,7 +190,7 @@ if (!$newRequest && $CanEdit && !$ownRequest && $Viewer->permitted('site_edit_re
                 <tr>
                     <td class="label">Torrent group</td>
                     <td>
-                        <?=SITE_URL?>/torrents.php?id=<input type="text" name="groupid" value="<?=$GroupID?>" size="15" /><br />
+                        <?=SITE_URL?>/torrents.php?id=<input id="groupid" type="text" name="groupid" value="<?=$GroupID?>" size="15" <?= $readonlyTag ?> /><br />
                         If this request matches a torrent group <span style="font-weight: bold;">already existing</span> on the site, please indicate that here.
                     </td>
                 </tr>
@@ -167,7 +203,7 @@ if (!$newRequest && $CanEdit && !$ownRequest && $Viewer->permitted('site_edit_re
 <?php        if (!$newRequest) {    ?>
                         If this is incorrect, please <a href="reports.php?action=report&amp;type=request&amp;id=<?=$requestId?>">report this request</a> so that staff can fix it.
 <?php         }    ?>
-                        <input type="hidden" name="groupid" value="<?=$GroupID?>" />
+                        <input id="groupid" type="hidden" name="groupid" value="<?=$GroupID?>" />
                     </td>
                 </tr>
 <?php    }
@@ -215,7 +251,7 @@ if (!$newRequest && $CanEdit && !$ownRequest && $Viewer->permitted('site_edit_re
             </table>
         </form>
         <script type="text/javascript">ToggleLogCue();<?=$newRequest ? " Calculate();" : '' ?></script>
-        <script type="text/javascript">Categories();</script>
+        <script type="text/javascript">SetAutocomplete();</script>
     </div>
 </div>
 <?php

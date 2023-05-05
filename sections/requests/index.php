@@ -15,5 +15,6 @@ require_once(match ($_REQUEST['action'] ?? null) {
     'takeunfill'          => 'take_unfill.php',
     'takevote'            => 'take_vote.php',
     'view', 'viewrequest' => 'request.php',
+    'autocomplete_request'=> 'autocomplete_requests.php',
     default               => 'requests.php',
 });

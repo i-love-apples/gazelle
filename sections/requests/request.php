@@ -384,7 +384,13 @@ if ($request->canVote($Viewer)) {
         </table>
         <div class="box box2 box_request_desc">
             <div class="head"><strong>Description</strong></div>
-            <div class="pad"><?= Text::full_format( $request->description()) ?></div>
+            <blockquote>
+                Version: <b><?= $request->version(); ?></b><br>
+                Mac Platform: <b><?= $request->platform(); ?></b>
+            </blockquote>
+            <div class="pad">
+                <?= Text::full_format( $request->description()) ?><br><br>
+            </div>
         </div>
     <div id="request_comments">
 <?= $Twig->render('comment/thread.twig', [

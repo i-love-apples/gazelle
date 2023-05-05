@@ -127,6 +127,8 @@ class Request extends BaseObject {
                 r.FormatList      AS format_list,
                 r.MediaList       AS media_list,
                 r.OCLC            AS oclc,
+                r.Version         AS version,
+                r.Platform        AS platform,
                 group_concat(t.Name ORDER BY t.Name)
                                   AS tagList
             FROM requests r
@@ -198,6 +200,8 @@ class Request extends BaseObject {
             'fillerId'        => (int)$info['filler_id'],
             'torrentId'       => $info['torrent_id'],
             'timeFilled'      => (string)$info['fill_date'],
+            'version'         => $info['version'],
+            'platform'        => $info['platform'],
             'tags'            => $this->tagNameList(),
         ];
     }
@@ -220,6 +224,14 @@ class Request extends BaseObject {
 
     public function categoryId(): int {
         return $this->info()['category_id'];
+    }
+
+    public function version(): string {
+        return $this->info()['version'];
+    }
+
+    public function platform(): string {
+        return $this->info()['platform'];
     }
 
     public function categoryName(): string {

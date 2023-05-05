@@ -165,43 +165,37 @@ function RemoveArtistField() {
 
 function Categories() {
     var cat = $('#categories').raw().options[$('#categories').raw().selectedIndex].value;
-    // if (cat == "Music") {
-    //     $('#artist_tr').gshow();
-    //     $('#releasetypes_tr').gshow();
-    //     $('#formats_tr').gshow();
-    //     $('#bitrates_tr').gshow();
-    //     $('#media_tr').gshow();
-    //     ToggleLogCue();
-    //     $('#year_tr').gshow();
-    //     $('#cataloguenumber_tr').gshow();
-    // } else if (cat == "Applications") {
-    //     $('#recordlabel_tr').ghide();
-    //     $('#oclc_tr').ghide();
-    //     $('#genre_tags').ghide();
-    //     $('#artist_tr').ghide();
-    //     $('#releasetypes_tr').ghide();
-    //     $('#formats_tr').ghide();
-    //     $('#bitrates_tr').ghide();
-    //     $('#media_tr').ghide();
-    //     $('#year_tr').ghide();
-    //     $('#cataloguenumber_tr').ghide();
-    //     $('#toggle_formats').prop("checked", true);
-    //     Toggle('formats', 1);
-    //     $('#toggle_bitrates').prop("checked", true);
-    //     Toggle('bitrates', 1);
-    //     $('#toggle_media').prop("checked", true);
-    //     Toggle('media', 1);
-    //     $('#logcue_tr').ghide();
-    // } else {
-    //     $('#year_tr').gshow();
-    //     $('#artist_tr').ghide();
-    //     $('#releasetypes_tr').ghide();
-    //     $('#formats_tr').ghide();
-    //     $('#bitrates_tr').ghide();
-    //     $('#media_tr').ghide();
-    //     $('#logcue_tr').ghide();
-    //     $('#cataloguenumber_tr').ghide();
-    // }
+    if (cat == "Applications" || cat == "Games" || cat == "IOS Applications" || cat == "IOS Games") {
+        $("#version_row").show();
+        $("#platform_row").show();
+    } else {
+        $("#version_row").hide();
+        $("#version").val("");
+        $("#platform").val("");
+    }
+}
+    
+function SetAutocomplete() {
+    var TORRENTS_AUTOCOMPLETE_UPLOAD_URL    = 'requests.php?action=autocomplete_request';
+    $('#title_search_group').autocomplete({
+        deferRequestBy: 300,
+        onSelect : function(suggestion) {
+            $("#clean_tags").hide();
+            $("#groupid").val(suggestion['id']);
+            $("#categories").val(suggestion['categoryname']);
+            $("#tags").val(suggestion['taglist']);
+            $("#image").val(suggestion['wikiimage']);
+            
+            $('#categories_hidden_container').append('<input id="categories_hidden" type="hidden" name="type" value="'+suggestion['categoryname']+'" />');
+            $("#categories").prop( "disabled", true );
+            $("#title_search_group").prop( "readonly", true );
+            $("#genre_tags").prop( "disabled", true );
+            $("#tags").prop( "readonly", true );
+            $("#image").prop( "readonly", true );
+            $("#groupid").prop( "readonly", true );
+        },
+        serviceUrl : TORRENTS_AUTOCOMPLETE_UPLOAD_URL,
+    });
 }
 
 function add_tag() {

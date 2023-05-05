@@ -103,13 +103,10 @@ echo $Twig->render('bookmark/action.twig', [
 ?>
             <a href="#" id="subscribelink_torrents<?=$tgroupId?>" class="brackets" onclick="SubscribeComments('torrents', <?=$tgroupId?>); return false;"><?=
                 $isSubscribed ? 'Unsubscribe' : 'Subscribe'?></a>
-<?php if ($musicRelease) { ?>
-            <a href="upload.php?groupid=<?=$tgroupId?>" class="brackets">Add format</a>
-<?php
-}
-if ($Viewer->permitted('site_submit_requests')) {
+<?php 
+    if (($tgroup->categoryName() == 'Applications' || $tgroup->categoryName() == 'Games' || $tgroup->categoryName() == 'IOS Applications' || $tgroup->categoryName() == 'IOS Games') && $Viewer->permitted('site_submit_requests')) {
 ?>
-            <a href="requests.php?action=new&amp;groupid=<?=$tgroupId?>" class="brackets">Request format</a>
+            <a href="requests.php?action=new&amp;groupid=<?=$tgroupId?>&amp;requestversion=1" class="brackets">Request version</a>
 <?php } ?>
             <a href="<?= $tgroup->url() ?>&amp;action=history" class="brackets">View history</a>
             <a href="<?= $tgroup->url() ?>&amp;action=grouplog" class="brackets">View log</a>
@@ -397,13 +394,13 @@ $DeletedTag = $Cache->get_value("deleted_tags_$tgroupId" . '_' . $Viewer->id());
 <?php
 echo $Twig->render('collage/summary.twig', [
     'class'   => 'collage_rows',
-    'object'  => 'group',
+    'object'  => 'album',
     'summary' => $collageMan->tgroupGeneralSummary($tgroupId),
 ]);
 
 echo $Twig->render('collage/summary.twig', [
     'class'   => 'personal_rows',
-    'object'  => 'group',
+    'object'  => 'album',
     'summary' => $collageMan->tgroupPersonalSummary($tgroupId),
 ]);
 ?>

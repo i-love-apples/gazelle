@@ -69,6 +69,9 @@ if (empty($_POST['image'])) {
     }
 }
 
+$version = trim($_POST['version'] ?? '');
+$platform = $_POST['platform'] ?? '';
+
 // optional
 $MinLogScore  = 0;
 
@@ -97,10 +100,10 @@ if (!empty($Err)) {
 if ($newRequest) {
     $DB->prepared_query('
         INSERT INTO requests (
-            TimeAdded, LastVote, Visible, UserID, CategoryID, Title, Image, Description, GroupID, CatalogueNumber)
+            TimeAdded, LastVote, Visible, UserID, CategoryID, Title, Image, Description, GroupID, CatalogueNumber, Version, Platform)
         VALUES (
-            now(), now(), 1, ?, ?, ?, ?, ?, ?, ?)',
-        $Viewer->id(), $categoryId, $title, $image, $description,  $GroupID ?? null, ''
+            now(), now(), 1, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        $Viewer->id(), $categoryId, $title, $image, $description,  $GroupID ?? null, '', $version, $platform
     );
     $request = new Gazelle\Request($DB->inserted_id());
     $RequestID = $request->id();
@@ -108,17 +111,17 @@ if ($newRequest) {
     if ($onlyMetadata) {
         $DB->prepared_query("
             UPDATE requests SET
-                CategoryID = ?, Title = ?, Image = ?, Description = ?, GroupID = ?
+                CategoryID = ?, Title = ?, Image = ?, Description = ?, GroupID = ?, Version = ?, Platform = ?
             WHERE ID = ?
-            ", $categoryId, $title, $image, $description, $GroupID ?? null,
+            ", $categoryId, $title, $image, $description, $GroupID ?? null, $version, $platform,
             $RequestID
         );
     } else {
         $DB->prepared_query('
             UPDATE requests SET
-                CategoryID = ?, Title = ?, Image = ?, Description = ?, GroupID = ?
+                CategoryID = ?, Title = ?, Image = ?, Description = ?, GroupID = ?, Version = ?, Platform = ?
             WHERE ID = ?',
-            $categoryId, $title, $image, $description, $GroupID ?? null,
+            $categoryId, $title, $image, $description, $GroupID ?? null, $version, $platform,
             $RequestID
         );
     }
