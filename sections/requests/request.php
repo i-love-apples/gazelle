@@ -384,12 +384,14 @@ if ($request->canVote($Viewer)) {
         </table>
         <div class="box box2 box_request_desc">
             <div class="head"><strong>Description</strong></div>
-            <blockquote>
-                Version: <b><?= $request->version(); ?></b><br>
-                Mac Platform: <b><?= $request->platform(); ?></b>
-            </blockquote>
+            <?php if ($request->version() != "" || $request->platform() != "") { ?>
+                <blockquote>
+                    <?php if ($request->version() != "") { ?>Version: <b><?= $request->version(); ?></b><br> <?php } ?>
+                    <?php if ($request->platform() != "") { ?>Mac Platform: <b><?= $request->platform(); ?></b> <?php } ?>
+                </blockquote>
+            <?php } ?>
             <div class="pad">
-                <?= Text::full_format( $request->description()) ?><br><br>
+                <?= Text::full_format( $request->description()) ?><br>
             </div>
         </div>
     <div id="request_comments">

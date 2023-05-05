@@ -71,6 +71,11 @@ if ($newRequest) {
     }
 }
 
+$isGroupOnStart = false;
+if ($categoryName == "Applications" || $categoryName == "Games" || $categoryName == "IOS Applications" || $categoryName == "IOS Games" ) {
+    $isGroupOnStart = true;
+}
+
 $releaseTypes = (new Gazelle\ReleaseType)->list();
 $releaseTags = (new \Gazelle\ReleaseTags)->list();
 // $GenreTags    = (new Gazelle\Manager\Tag)->genreList();
@@ -163,13 +168,13 @@ if (!$newRequest && $CanEdit && !$ownRequest && $Viewer->permitted('site_edit_re
                         <input id="clean_tags" type="button" onclick="clear_tag()" value="Clean tags" title="Clean tags" <?php if ($isRequestVersion) { echo("style=\"display: none;\""); } ?>>
                     </td>
                 </tr>
-                <tr id="version_row">
+                <tr id="version_row" <?php if (!$isGroupOnStart) { ?>style="display: none;"<?php } ?>>
                     <td class="label">Version</td>
                     <td>
                         <input id="version" type="text" name="version" size="20" value="<?= $version ?>" />
                     </td>
                 </tr>
-                <tr id="platform_row">
+                <tr id="platform_row" <?php if (!$isGroupOnStart) { ?>style="display: none;"<?php } ?>>
                     <td class="label">Mac Platform:</td>
                     <td>
                         <select id="platform" name="platform">>

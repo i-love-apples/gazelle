@@ -170,6 +170,7 @@ function Categories() {
         $("#platform_row").show();
     } else {
         $("#version_row").hide();
+        $("#platform_row").hide();
         $("#version").val("");
         $("#platform").val("");
     }
