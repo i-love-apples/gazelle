@@ -114,7 +114,7 @@ abstract class TorrentAbstract extends BaseObject {
                         AND r.TorrentID = ?
                     ", $this->id
                 );
-                self::$cache->cache_value($key, $info, ($info['Seeders'] ?? 0) > 0 ? 600 : 3600);
+                self::$cache->cache_value($key, $info, ($info['Seeders'] ?? 0) > 0 ? 60 : 300);
             }
         }
 
