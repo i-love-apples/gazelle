@@ -67,8 +67,8 @@ echo $Twig->render('admin/notification-sandbox.twig', [
     'release'  => $release,
 
     'tags'  => implode(', ', $tags),
-    'label' => $torrent['RemasterRecordLabel'] ?? $group['RecordLabel'],
-    'year'  => $torrent['RemasterYear'] ?? $group['Year'],
+    //'label' => $torrent['RemasterRecordLabel'] ?? $group['RecordLabel'],
+    //'year'  => $torrent['RemasterYear'] ?? $group['Year'],
 
     'result' => $result,
     'sql'    => $sql,
