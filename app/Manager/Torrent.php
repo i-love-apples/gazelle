@@ -423,7 +423,7 @@ class Torrent extends \Gazelle\BaseManager {
     }
 
     public function updatePeerlists(): array {
-        self::$cache->disableLocalCache();
+        //self::$cache->disableLocalCache();
         self::$db->prepared_query("
             DELETE FROM xbt_files_users
             WHERE mtime < unix_timestamp(NOW() - INTERVAL ? SECOND)
