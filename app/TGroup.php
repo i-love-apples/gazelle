@@ -153,7 +153,7 @@ class TGroup extends BaseObject {
             return $this->info;
         }
         $key = sprintf(self::CACHE_KEY, $this->id);
-        $this->revisionId = $revisionId;
+            $this->revisionId = $revisionId;
         if (!$revisionId) {
             $cached = self::$cache->get_value($key);
             if (is_array($cached)) {
@@ -195,7 +195,7 @@ class TGroup extends BaseObject {
                     $cached['Snatched'] = $leech_stats[0]['Snatched'] ?? 0;
                 }
                 if ($refresh) {
-                    self::$cache->cache_value($key, $cached, 0);
+                    self::$cache->cache_value($key, $cached, 300);
                 }
                 $this->info = $cached;
                 $this->info['from_cache'] = true;
@@ -294,7 +294,7 @@ class TGroup extends BaseObject {
         $info['Snatched'] = $leech_stats[0]['Snatched'] ?? 0;
 
         if (!$this->revisionId) {
-            self::$cache->cache_value($key, $info, 0);
+            self::$cache->cache_value($key, $info, 300);
         }
         if (!$info['Image']) {
             $info['Image'] = $this->showFallbackImage
