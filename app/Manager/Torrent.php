@@ -603,7 +603,7 @@ class Torrent extends \Gazelle\BaseManager {
                 $latest[] = $row['torrentId'];
                 ++$nr;
             }
-            self::$cache->cache_value($key, $latest, 86400);
+            self::$cache->cache_value($key, $latest, 300);
         }
         return array_map(fn($id) => $this->findById($id), $latest);
     }
