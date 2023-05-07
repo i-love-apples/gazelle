@@ -276,8 +276,8 @@ class Donation extends \Gazelle\Base {
                 FROM donations
                 WHERE time >= CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE) - INTERVAL ? MONTH
                 ", $month - 1
-            );
-            self::$cache->cache_value($key, $donations, 3600 * 36);
+	    );
+            self::$cache->cache_value($key, $donations, 300);
         }
         return abs($donations); // https://github.com/php-memcached-dev/php-memcached/issues/500
     }
