@@ -344,6 +344,9 @@ class TGroup extends BaseObject {
     }
 
     public function categoryId(): int {
+        if ($this->info()['CategoryID'] === null) {
+                return 0;
+            }
         return $this->info()['CategoryID'];
     }
 
