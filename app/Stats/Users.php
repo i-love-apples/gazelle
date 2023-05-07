@@ -72,11 +72,12 @@ class Users extends \Gazelle\Base {
     public function findOnline(): array {
         if (($users = self::$cache->get_value('online_users')) === false) {
             self::$db->prepared_query("
-                SELECT um.id, um.username
-                FROM users_sessions AS us
-                INNER JOIN users_main AS um ON (us.UserID = um.ID)
-                WHERE us.LastUpdate >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)
-                GROUP BY um.id, um.username"
+		SELECT um.id, um.username
+		FROM users_sessions AS us
+		INNER JOIN users_main AS um ON (us.UserID = um.ID)
+		WHERE (us.LastUpdate >= DATE_SUB(NOW(), INTERVAL 15 MINUTE)
+		and LOCATE('lastseen',um.paranoia) = 0)
+		GROUP BY um.id, um.username"
             );
             $users = self::$db->to_array(false, MYSQLI_ASSOC, false);
             self::$cache->cache_value('online_users', $users, 60);
