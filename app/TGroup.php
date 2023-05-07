@@ -411,6 +411,9 @@ class TGroup extends BaseObject {
     }
 
     public function name(): string {
+        if (empty($this->info()['Name'])) {
+            return '';
+        }
         return $this->info()['Name'];
     }
 
