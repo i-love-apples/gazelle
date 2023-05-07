@@ -57,4 +57,16 @@
 </div>
 <div class="linkbox"><a href="forums.php?action=catchup&amp;forumid=all&amp;auth={{ viewer.auth }}" class="brackets">Catch up</a></div>
 </div>
+<div id="online_users" style="width: 95%; text-align: center; margin: 20px auto;">
+    <p>
+        <b>Online users:</b>
+        {% if users is empty %}
+            <span>no users online</span>
+        {% else %}
+            {% for user in users %}
+                <a href="user.php?id={{ user.id }}">{{ user.username }}</a>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        {% endif %}
+    </p>
+</div>
 {{ footer() }}
