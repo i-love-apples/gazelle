@@ -276,14 +276,14 @@ foreach ($slice as $Key => $Post) {
                 <span style="float: left;"><a class="post_id" href="forums.php?action=viewthread&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>#post<?=$PostID?>">#<?=$PostID?></a>
                     <?=Users::format_username($AuthorID, true, true, true, true, true, $IsDonorForum) ?>
                     <?=time_diff($AddedTime, 2); ?>
-
-                    
+                </span>
+                <span style="float: right;">Votes: <span id="votes_<?=$PostID?>"><?=$Votes; ?></span></span>
         </td>
     </tr>
     <tr>
 <?php   if ($Viewer->showAvatars()) { ?>
         <td class="avatar" valign="top">
-            <?= $userMan->avatarMarkup($Viewer, $author) ?>
+            <?= $userMan->avatarMarkup($Viewer, $author) ?> 
         </td>
 <?php   } ?>
         <td class="body" valign="top"<?php if (!$Viewer->showAvatars()) { echo ' colspan="2"'; } ?>>
@@ -299,8 +299,9 @@ foreach ($slice as $Key => $Post) {
                     <a href="#content<?=$PostID?>" onclick="LoadEdit('forums', <?=$PostID?>, 1); return false;">&laquo;</a>
     <?php       } ?>
                     Last edited by
-                    <?=Users::format_username($EditedUserID, false, false, false, false, false, $IsDonorForum) ?> <?=time_diff($EditedTime, 2)?> <span style="float: right;">Votes: <span id="votes_<?=$PostID?>"><?=$Votes; ?></span></span>
+                    <?=Users::format_username($EditedUserID, false, false, false, false, false, $IsDonorForum) ?> <?=time_diff($EditedTime, 2)?>
                     </span>
+    <?php    } else { ?>
     <?php    } ?>
                 
 

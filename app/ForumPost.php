@@ -41,7 +41,7 @@ class ForumPost extends BaseObject {
                     p.AddedTime             AS created,
                     p.EditedUserID          AS edit_user_id,
                     p.EditedTime            AS edit_time,
-                    p.Votes                 AS votes,
+                    p.Votes                 AS votes
                 FROM forums_topics      t
                 INNER JOIN forums       f ON (t.forumid = f.id)
                 INNER JOIN forums_posts p ON (p.topicid = t.id)
@@ -90,7 +90,6 @@ class ForumPost extends BaseObject {
         $key = sprintf(self::CACHE_KEY_USER_VOTE, $userId, $this->id);
         $userVotesTotal = self::$cache->get_value($key);
         if ($userVotesTotal === false) {
-            var_dump("asd");
             $userVotesTotal = self::$db->scalar("
                 SELECT COUNT(PostID)
                 FROM forums_posts_votes
