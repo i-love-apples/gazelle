@@ -359,6 +359,9 @@ class TGroup extends BaseObject {
     }
 
     public function categoryName(): string {
+        if (empty($this->categoryId())) {
+            return '';
+        }
         return CATEGORY[$this->categoryId() - 1];
     }
 
