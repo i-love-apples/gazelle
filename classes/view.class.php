@@ -42,10 +42,10 @@ class View {
             'global.css',
             'fontawesome.min.css',
             'brands.min.css',
-            'all.min.css',
             'solid.min.css',
             'regular.min.css',
             'sharp-regular.min.css',
+            'sharp-solid.min.css',
         ];
         if (!empty($option['css'])) {
             array_push($Style, ...array_map(fn($s) => "$s/style.css", explode(',', $option['css'])));
