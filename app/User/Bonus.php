@@ -211,7 +211,8 @@ class Bonus extends \Gazelle\BaseUser {
                 AND ub.user_id = ?
             ', $price, $price, $this->user->id()
         );
-        if (self::$db->affected_rows() != 2) {
+        $rows = self::$db->affected_rows();
+        if (($price > 0 && $rows !== 2) || ($price === 0 && $rows !== 1)) {
             return false;
         }
         $this->addPurchaseHistory($item['ID'], $price);
@@ -302,6 +303,7 @@ class Bonus extends \Gazelle\BaseUser {
         }
         $amount = (int)$item['Amount'];
         $price  = $item['Price'];
+        var_dump($price);
         self::$db->prepared_query('
             UPDATE user_bonus ub
             INNER JOIN user_flt uf USING (user_id) SET
@@ -311,7 +313,8 @@ class Bonus extends \Gazelle\BaseUser {
                 AND ub.points >= ?
             ', $price, $amount, $this->user->id(), $price
         );
-        if (self::$db->affected_rows() != 2) {
+        $rows = self::$db->affected_rows();
+        if (($price > 0 && $rows !== 2) || ($price === 0 && $rows !== 1)) {
             return false;
         }
         $this->addPurchaseHistory($item['ID'], $price);
@@ -319,6 +322,33 @@ class Bonus extends \Gazelle\BaseUser {
         return true;
     }
 
+    public function purchaseUpload(string $label): bool {
+        $item = $this->items()[$label];
+        if (!$item) {
+            return false;
+        }
+        $amount = (int)$item['Amount'];
+        $amountGB = (int)$item['Amount']*1024*1024;
+        $price  = $item['Price'];
+        var_dump($price);
+        self::$db->prepared_query('
+            UPDATE user_bonus ub
+            INNER JOIN users_leech_stats uls ON uls.UserID = ub.user_id SET
+                ub.points = ub.points - ?,
+                uls.Uploaded = uls.Uploaded + ?
+            WHERE ub.user_id = ?
+                AND ub.points >= ?
+            ', $price, $amountGB, $this->user->id(), $price
+        );
+        $rows = self::$db->affected_rows();
+        if (($price > 0 && $rows !== 2) || ($price === 0 && $rows !== 1)) {
+            return false;
+        }
+        $this->addPurchaseHistory($item['ID'], $price);
+        $this->flush();
+        return true;
+    }
+    
     /**
      * This method does not return a boolean success, but rather the number of
      * tokens purchased (for use in a response to the receiver).
@@ -356,8 +386,9 @@ class Bonus extends \Gazelle\BaseUser {
                 AND ub.points >= ?
             ", $price, $amount, $toID, $this->user->id(), $price
         );
-        if (self::$db->affected_rows() != 2) {
-            return 0;
+        $rows = self::$db->affected_rows();
+        if (($price > 0 && $rows !== 2) || ($price === 0 && $rows !== 1)) {
+            return false;
         }
         $this->addPurchaseHistory($item['ID'], $price, $toID);
 
