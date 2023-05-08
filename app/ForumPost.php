@@ -104,6 +104,11 @@ class ForumPost extends BaseObject {
         }
         return false;
     }
+    
+    public function flushVote($userId) {
+        $key = sprintf(self::CACHE_KEY_USER_VOTE, $userId, $this->id);
+        self::$cache->delete_value($key);
+    }
 
     public function priorPostTotal(): int {
         return self::$db->scalar("

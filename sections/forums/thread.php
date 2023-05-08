@@ -277,7 +277,7 @@ foreach ($slice as $Key => $Post) {
                     <?=Users::format_username($AuthorID, true, true, true, true, true, $IsDonorForum) ?>
                     <?=time_diff($AddedTime, 2); ?>
                 </span>
-                <span style="float: right;">Votes: <span id="votes_<?=$PostID?>"><?=$Votes; ?></span></span>
+                <span style="float: right;">Upvotes: <span id="votes_<?=$PostID?>"><?=$Votes; ?></span></span>
         </td>
     </tr>
     <tr>
@@ -313,7 +313,7 @@ foreach ($slice as $Key => $Post) {
                     $userHasVoted = $forumPost->hasUserVote($Viewer->id());
                     if (!$userHasVoted) {
                 ?>
-                    <a id="upvote_<?=$PostID?>" onclick="Upvote('<?=$threadId?>','<?=$PostID?>');" title="Upvote this post" class="btn">Upvote</a>
+                    <a id="upvote_<?=$PostID?>" onclick="Upvote('<?=$threadId?>','<?=$PostID?>');" title="Upvote this post" class="btn"><i class="fa-sharp fa-solid fa-heart"></i>Upvote</a>
                 <?php } ?>
                 <?php if (!$thread->isLocked() && !$Viewer->disablePosting()) { ?>
                                 <a href="#quickpost" id="quote_<?=$PostID?>" onclick="Quote('<?=$PostID?>', '<?= $author->username() ?>', true);" title="Select text to quote" class="btn"><span class="s-icon"><i class="fa-solid fa-quote-left"></i></span>Quote</a>

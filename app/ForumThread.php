@@ -368,6 +368,7 @@ class ForumThread extends BaseObject {
             $this->flushCatalog(0, $this->lastPage());
     
             if (self::$db->affected_rows() > 0) {
+                $forumPost->flushVote($userId);
                 return true;
             }
             return false;
