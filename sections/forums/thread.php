@@ -316,15 +316,15 @@ foreach ($slice as $Key => $Post) {
                     <?php if ($userHasVoted) { ?><?php } ?><i id="upvote_<?=$PostID?>_icon" class="fa-sharp <?php if ($userHasVoted) { ?> fa-solid <?php } else { ?> fa-regular <?php } ?> fa-heart"></i>
                 </a>
                 <?php if (!$thread->isLocked() && !$Viewer->disablePosting()) { ?>
-                                <a href="#quickpost" id="quote_<?=$PostID?>" onclick="Quote('<?=$PostID?>', '<?= $author->username() ?>', true);" title="Select text to quote" class="btn"><span class="s-icon"><i class="fa-solid fa-quote-left"></i></span>Quote</a>
+                                <a href="#quickpost" id="quote_<?=$PostID?>" onclick="Quote('<?=$PostID?>', '<?= $author->username() ?>', true);" title="Select text to quote" class="btn"><i class="fa-sharp fa-solid fa-quote-left"></i></a>
                 <?php
                     }
                     if ((!$thread->isLocked() && $Viewer->writeAccess($forum) && $AuthorID == $Viewer->id()) && !$Viewer->disablePosting() || $Viewer->permitted('site_moderate_forums')) {
                 ?>
-                                <a href="#post<?=$PostID?>" onclick="Edit_Form('<?=$PostID?>', '<?=$Key?>');" class="btn"><span class="s-icon"><i class="fa-solid fa-pencil"></i></span>Edit</a>
+                                <a href="#post<?=$PostID?>" onclick="Edit_Form('<?=$PostID?>', '<?=$Key?>');" class="btn"><i class="fa-solid fa-pencil"></i></a>
                 <?php } ?>
                 <?php if ($Viewer->permitted('site_forum_post_delete') && $thread->postTotal() > 1) { ?>
-                                <a href="#post<?=$PostID?>" onclick="Delete('<?=$PostID?>');" class="btn"><span class="s-icon"><i class="fa-solid fa-trash-can"></i></span>Delete</a>
+                                <a href="#post<?=$PostID?>" onclick="Delete('<?=$PostID?>');" class="btn"><i class="fa-solid fa-trash-can"></i></a>
                 <?php
                     }
                     if ($PostID == $thread->pinnedPostId()) { ?>
