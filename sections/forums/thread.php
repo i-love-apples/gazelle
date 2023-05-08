@@ -244,7 +244,7 @@ if ($thread->pinnedPostId()) {
 Text::$TOC = true;
 
 foreach ($slice as $Key => $Post) {
-    [$PostID, $AuthorID, $AddedTime, $Body, $EditedUserID, $EditedTime] = array_values($Post);
+    [$PostID, $AuthorID, $AddedTime, $Body, $EditedUserID, $EditedTime, $Votes] = array_values($Post);
     $author = new Gazelle\User($AuthorID);
     $tableClass = ['forum_post', 'wrap_overflow', 'box vertical_margin'];
     if (
@@ -299,14 +299,21 @@ foreach ($slice as $Key => $Post) {
                     <a href="#content<?=$PostID?>" onclick="LoadEdit('forums', <?=$PostID?>, 1); return false;">&laquo;</a>
     <?php       } ?>
                     Last edited by
-                    <?=Users::format_username($EditedUserID, false, false, false, false, false, $IsDonorForum) ?> <?=time_diff($EditedTime, 2)?>
+                    <?=Users::format_username($EditedUserID, false, false, false, false, false, $IsDonorForum) ?> <?=time_diff($EditedTime, 2)?> <span style="float: right;">Votes: <span id="votes_<?=$PostID?>"><?=$Votes; ?></span></span>
                     </span>
     <?php    } ?>
                 
 
             </div>
             <div class="post-controls">
-                                <span id="postcontrol-<?= $PostID ?>">
+                <span id="postcontrol-<?= $PostID ?>">
+                <?php 
+                    $forumPost = (new Gazelle\Manager\ForumPost)->findById($PostID);
+                    $userHasVoted = $forumPost->hasUserVote($Viewer->id());
+                    if (!$userHasVoted) {
+                ?>
+                    <a id="upvote_<?=$PostID?>" onclick="Upvote('<?=$threadId?>','<?=$PostID?>');" title="Upvote this post" class="btn">Upvote</a>
+                <?php } ?>
                 <?php if (!$thread->isLocked() && !$Viewer->disablePosting()) { ?>
                                 <a href="#quickpost" id="quote_<?=$PostID?>" onclick="Quote('<?=$PostID?>', '<?= $author->username() ?>', true);" title="Select text to quote" class="btn"><span class="s-icon"><i class="fa-solid fa-quote-left"></i></span>Quote</a>
                 <?php

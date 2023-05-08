@@ -223,6 +223,15 @@ function Delete(post) {
     }
 }
 
+function Upvote(threadid, postid) {
+    ajax.get("ajax.php?action=post_upvote&threadid=" + threadid + "&postid=" + postid, function(response) {
+        if (response == "success") {
+            $('#votes_'+postid).raw().innerHTML = parseInt($('#votes_'+postid).raw().innerHTML)+1;
+        }
+        $('#upvote_'+postid).hide();
+    });
+}
+
 function Quick_Preview() {
     var quickreplybuttons;
     $('#post_preview').raw().value = "Make changes";

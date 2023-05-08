@@ -179,7 +179,8 @@ class ForumThread extends BaseObject {
                     p.AddedTime,
                     p.Body,
                     p.EditedUserID,
-                    p.EditedTime
+                    p.EditedTime,
+                    p.Votes
                 FROM forums_posts AS p
                 WHERE p.TopicID = ?
                     AND p.ID != ?
@@ -344,6 +345,35 @@ class ForumThread extends BaseObject {
         $this->flush();
         $this->flushCatalog(0, $this->lastPage());
         return self::$db->affected_rows();
+    }
+
+    public function upvotePost(int $userId, int $postId): bool {
+        $forumPost = (new Manager\ForumPost)->findById($postId);
+        if (!$forumPost->hasUserVote($userId)) {
+            self::$db->prepared_query("
+                INSERT INTO forums_posts_votes
+                       (PostID, UserID, Vote)
+                VALUES (?,    ?,      ?)
+                ", $postId, $userId, 1
+            );
+            self::$db->commit();
+    
+            self::$db->prepared_query("
+                UPDATE forums_posts SET
+                    Votes = Votes+1
+                WHERE ID = ?
+                ", $postId
+            );
+            $this->flush();
+            $this->flushCatalog(0, $this->lastPage());
+    
+            if (self::$db->affected_rows() > 0) {
+                return true;
+            }
+            return false;
+        } else {
+            return false;
+        }
     }
 
     protected function updateThread(int $userId, int $postId): int {

@@ -4,6 +4,7 @@ namespace Gazelle;
 
 class ForumPost extends BaseObject {
     const CACHE_KEY     = 'fpost_%d';
+    const CACHE_KEY_USER_VOTE     = 'fpost_vote_%d_%d';
 
     public function flush(): ForumPost {
         self::$cache->delete_value(sprintf(self::CACHE_KEY, $this->id));
@@ -39,7 +40,8 @@ class ForumPost extends BaseObject {
                     p.Body                  AS body,
                     p.AddedTime             AS created,
                     p.EditedUserID          AS edit_user_id,
-                    p.EditedTime            AS edit_time
+                    p.EditedTime            AS edit_time,
+                    p.Votes                 AS votes,
                 FROM forums_topics      t
                 INNER JOIN forums       f ON (t.forumid = f.id)
                 INNER JOIN forums_posts p ON (p.topicid = t.id)
@@ -82,6 +84,26 @@ class ForumPost extends BaseObject {
 
     public function threadPageTotal(): int {
         return $this->info()['thread_page_total'];
+    }
+
+    public function hasUserVote($userId): bool {
+        $key = sprintf(self::CACHE_KEY_USER_VOTE, $userId, $this->id);
+        $userVotesTotal = self::$cache->get_value($key);
+        if ($userVotesTotal === false) {
+            var_dump("asd");
+            $userVotesTotal = self::$db->scalar("
+                SELECT COUNT(PostID)
+                FROM forums_posts_votes
+                WHERE PostID = ?
+                    AND UserID = ?
+                ", $this->id, $userId
+            );
+            self::$cache->cache_value($key, $userVotesTotal, 0);
+        }
+        if ($userVotesTotal > 0) {
+            return true;
+        }
+        return false;
     }
 
     public function priorPostTotal(): int {
