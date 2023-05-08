@@ -328,7 +328,7 @@ class Bonus extends \Gazelle\BaseUser {
             return false;
         }
         $amount = (int)$item['Amount'];
-        $amountGB = (int)$item['Amount']*1024*1024;
+        $amountGB = (int)$item['Amount']*1024*1024*1024;
         $price  = $item['Price'];
         var_dump($price);
         self::$db->prepared_query('
