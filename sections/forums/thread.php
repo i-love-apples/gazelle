@@ -311,10 +311,10 @@ foreach ($slice as $Key => $Post) {
                 <?php 
                     $forumPost = (new Gazelle\Manager\ForumPost)->findById($PostID);
                     $userHasVoted = $forumPost->hasUserVote($Viewer->id());
-                    if (!$userHasVoted) {
-                ?>
-                    <a id="upvote_<?=$PostID?>" onclick="Upvote('<?=$threadId?>','<?=$PostID?>');" title="Upvote this post" class="btn"><i class="fa-sharp fa-solid fa-heart"></i>Upvote</a>
-                <?php } ?>
+                ?> 
+                <a id="upvote_<?=$PostID?>" onclick="Upvote('<?=$threadId?>','<?=$PostID?>');" title="Upvote this post" class="btn <?php if ($userHasVoted) { ?> green-btn <?php } ?>" <?php if ($userHasVoted) { ?>disabled="disabled"<?php } ?>>
+                    <?php if ($userHasVoted) { ?><?php } ?><i id="upvote_<?=$PostID?>_icon" class="fa-sharp <?php if ($userHasVoted) { ?> fa-solid <?php } else { ?> fa-regular <?php } ?> fa-heart"></i>
+                </a>
                 <?php if (!$thread->isLocked() && !$Viewer->disablePosting()) { ?>
                                 <a href="#quickpost" id="quote_<?=$PostID?>" onclick="Quote('<?=$PostID?>', '<?= $author->username() ?>', true);" title="Select text to quote" class="btn"><span class="s-icon"><i class="fa-solid fa-quote-left"></i></span>Quote</a>
                 <?php

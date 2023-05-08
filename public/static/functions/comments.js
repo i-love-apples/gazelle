@@ -228,7 +228,11 @@ function Upvote(threadid, postid) {
         if (response == "success") {
             $('#votes_'+postid).raw().innerHTML = parseInt($('#votes_'+postid).raw().innerHTML)+1;
         }
-        $('#upvote_'+postid).hide();
+        $('#upvote_'+postid+'_icon').removeClass('fa-regular');
+        $('#upvote_'+postid+'_icon').addClass('fa-solid');
+        $('#upvote_'+postid).addClass('green-btn'); 
+        $('#upvote_'+postid).addClass('btn-disabled'); 
+        $('#upvote_'+postid).prop( "disabled", true );
     });
 }
 
