@@ -1046,6 +1046,12 @@ input[type="search"] {
     -moz-opacity: .5;
     filter: alpha(opacity=50);
 }
+.to-top {
+    user-select: auto;
+    line-height: 28px;
+    vertical-align: bottom;
+    padding: 0 6px;
+}
 @media (min-width: 480px) {
   input#mobile_main_menu,
   .hiden_mobile_menu,

@@ -360,8 +360,7 @@ foreach ($slice as $Key => $Post) {
                                 </form>
                                 <a href="#" onclick="$('#warn<?=$PostID?>').raw().submit(); return false;" class="btn"><i class="fa-solid fa-circle-exclamation"></i></a>
                 <?php } ?>
-                                &nbsp;
-                                <a href="#">&uarr;</a>
+                                <a class="to-top" href="#"><i class="fa-sharp fa-solid fa-up-to-line"></i></a>
                             </span>
             </div>
         </div>
