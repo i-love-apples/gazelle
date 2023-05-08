@@ -14,6 +14,17 @@ function ChangeCategory(catid) {
     }
 }
 
+function toggle_torrent(torrent_id) {
+    $('#torrent_'+torrent_id).gtoggle();
+    if ($('#torrent_'+torrent_id).hasClass('hidden')) {
+        $('#torrent_'+torrent_id+'_down').ghide();
+        $('#torrent_'+torrent_id+'_right').gshow();
+    } else {
+        $('#torrent_'+torrent_id+'_right').ghide();
+        $('#torrent_'+torrent_id+'_down').gshow();
+    }
+}
+
 function ArtistManager() {
     var GroupID = window.location.search.match(/[?&]id=(\d+)/);
     if (typeof GroupID == 'undefined') {

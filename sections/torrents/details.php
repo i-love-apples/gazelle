@@ -478,7 +478,11 @@ if (!$torrentList) {
             ],
         ]);
 ?>
-                    <a href="#" onclick="$('#torrent_<?=$TorrentID?>').gtoggle(); return false;">&#x25B6; <?php echo($torrent->versionName()); ?></a>
+                    <a href="#" onclick="toggle_torrent(<?=$TorrentID?>); return false;">
+                        <span id="torrent_<?=$TorrentID?>_right" <?php if ($_GET['torrentid'] == $TorrentID) { ?>class="hidden"<?php } ?>>&#x25B6;</span>
+                        <span id="torrent_<?=$TorrentID?>_down" <?php if (!isset($_GET['torrentid']) || $_GET['torrentid'] != $TorrentID) { ?>class="hidden"<?php } ?>>&#x25BC;</span>
+                        <?php echo($torrent->versionName()); ?>
+                    </a>
                 </td>
                 <?= $Twig->render('torrent/stats.twig', ['torrent' => $torrent]) ?>
             </tr>
