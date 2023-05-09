@@ -340,10 +340,15 @@ form {
     border-radius: 6px;
 }
 
+.cats_col {
+    height: auto !important;
+}
 .cats_applications, .cats_games, .cats_iosapplications, .cats_iosgames, .cats_graphics, .cats_audio, .cats_tutorials, .cats_other {
     right: 0px;
-    width: 4px;
-    border-right: 2px solid #211f25;
+    margin: 8px 0px;
+    border-radius: 2px;
+    width: 3px;
+    border-right: 0px;
     bottom: 0;
     left: auto;
     opacity: 0.35;
@@ -469,6 +474,9 @@ table td.td_forum h4 {
     }
     .torrent_table tr:not(.colhead):not(.colhead_dark).group, .torrent_table tr:not(.colhead):not(.colhead_dark).torrent {
         height: 56px;
+    }
+    .group_torrent:not(.edition) td:first-child {
+        padding-left: 34px;
     }
 }
 @media (min-width: 481px) and (max-width: 639px) {
