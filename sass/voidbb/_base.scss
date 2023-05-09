@@ -128,7 +128,7 @@ form.edit_form .main_columnm, form.edit_form .sidebar {
 #content > .thin, .box, .box2, .main_column, .sidebar, form table {
     overflow: visible;
 }
-#main_site_menu, .forum_list > table, .box:not(.filter_torrents), .collage_table, .forum_index, #content .search_form {
+#main_site_menu, .forum_list > table, .box:not(.filter_torrents), .collage_table, .forum_index {
     box-shadow: inset rgba(255,255,255,0.1) 0px 1px 0px, rgba(0,0,0,0.12) 0px 2px 2px, rgba(0,0,0,0.2) 0px 4px 14px;
 }
 #content .box.pad .search_form, #content .box .pad form {
