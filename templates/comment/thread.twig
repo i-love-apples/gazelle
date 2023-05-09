@@ -38,15 +38,15 @@
                     </div>
                 <div class="post-controls">
                         <span id="postcontrol-{{ post.ID }}">
-                       <a href="#quickpost" onclick="Quote('{{ post.ID }}','{{ post.author_name }}', true);" class="btn"><span class="s-icon"><i class="fa-solid fa-quote-left"></i></span>Quote</a>
+                       <a href="#quickpost" onclick="Quote('{{ post.ID }}','{{ post.author_name }}', true);" class="btn"><i class="fa-sharp fa-solid fa-quote-left"></i></a>
         {% if (viewer.permitted('site_moderate_forums')) or (post.AuthorID == viewer.Id) %}
-                       <a href="#post{{ post.ID }}" onclick="Edit_Form('{{ post.ID }}','{{ key }}');" class="btn"><span class="s-icon"><i class="fa-solid fa-pencil"></i></span>Edit</a>
+                       <a href="#post{{ post.ID }}" onclick="Edit_Form('{{ post.ID }}','{{ key }}');" class="btn"><i class="fa-solid fa-pencil"></i></a>
         {% endif %}
                         </span>
                     
                     <span id="bar{{ post.ID }}">
                         {% if viewer.permitted('site_forum_post_delete') %}
-                                   <a href="#post{{ post.ID }}" onclick="Delete('{{ post.ID }}');" class="btn"><span class="s-icon"><i class="fa-solid fa-trash-can"></i></span>Delete</a>
+                                   <a href="#post{{ post.ID }}" onclick="Delete('{{ post.ID }}');" class="btn"><i class="fa-solid fa-trash-can"></i></a>
                         {% endif %}
                         <a href="reports.php?action=report&amp;type=comment&amp;id={{ post.ID }}" class="btn"><i class="fa-solid fa-triangle-exclamation"></i></a>
         {% if viewer.permitted('site_admin_forums') %}
