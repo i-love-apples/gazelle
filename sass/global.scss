@@ -1052,6 +1052,9 @@ input[type="search"] {
     vertical-align: bottom;
     padding: 0 6px;
 }
+.fa-arrow-rotate-left {
+    transform: rotate(90deg);
+}
 @media (min-width: 480px) {
   input#mobile_main_menu,
   .hiden_mobile_menu,
