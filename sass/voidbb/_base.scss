@@ -1,0 +1,575 @@
+@namespace url(http://www.w3.org/1999/xhtml);
+@namespace svg url(http://www.w3.org/2000/svg);
+
+.tooltipster-default .tooltipster-content, body, button, h1, h2, h3, h4, h5, h6, input, select, textarea {
+    font-family: "Proxima Nova", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Symbol";
+}
+
+/****************/
+/* TEXTS COLORS */
+/****************/
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a,
+.linkbox > strong,
+.alertbar,
+.tooltipster-default .tooltipster-content a:hover,
+#musicbrainz_popup a:hover {
+    color: #fed360;
+}
+.poll .graph span {
+    background-color: #fed360;
+}
+a:hover,
+.tags a:hover,
+#userform #settings_sections h2 a:hover {
+    color: #ffe9af;
+}
+svg|a:hover {
+    fill: #ffe9af;
+}
+.autocomplete-suggestions .autocomplete-suggestion.autocomplete-selected,
+#menu > ul a:hover,
+#userinfo_minor:hover a:hover,
+#userinfo_username:hover a:hover {
+    background-color: #ffe9af;
+}
+#noty_bottomRight_layout_container .noty_buttons a:hover {
+    color: #ffe9af !important;
+}
+/* doesn't work with inset box shadow
+.forum_post.forum_unread {
+    border-top: 2px solid #ffe9af;
+}
+*/
+.forum_post.forum_unread {
+    border-top: unset;
+}
+/***********/
+/* BUTTONS */
+/***********/
+input[type=button], input[type=reset], input[type=submit] {
+    background: linear-gradient(#f4f4f4, #b8b8b8);
+    border-color: rgba(255, 255, 255, 0.05);
+    color: #333333;
+    font-weight: 600;
+}
+input[type=button]:hover, input[type=reset]:hover, input[type=submit]:hover {
+    background: linear-gradient(#cccccc, #999999);
+    border-color: rgba(255, 255, 255, 0.05);
+    color: #000000;
+}
+
+/***************/
+/* MENU COLORS */
+/***************/
+#menu li {
+    background: rgb(180,180,180);
+    background: linear-gradient(0deg, rgb(180, 180, 180) 0%, rgb(250, 250, 250) 100%);
+}
+#menu li:nth-child(10) {
+    background: transparent;
+}
+#menu li:nth-child(10) a {
+    color: #ffffff;
+}
+@media (min-width: 480px) {
+    #menu > ul > #nav_staff > a:hover {
+        color: #dddddd;
+    }
+}
+#userinfo_username, #userinfo_minor {
+    background: rgb(180,180,180);
+    background: linear-gradient(0deg, rgb(180, 180, 180) 0%, rgb(250, 250, 250) 100%);
+}
+@media screen and (min-width: 481px) {
+    #menu li, #userinfo_username, #userinfo_minor {
+        text-shadow: 0px 1px 2px rgba(255,255,255,0.5);
+    }
+    #menu a, #menu > ul a:hover {
+        color: #363636;
+    }
+    #menu > ul li.active a {
+        color: #363636;
+    }
+    #userinfo_username li a, #userinfo_username:hover li a, #userinfo_username li a:hover,
+    #userinfo_minor li a, #userinfo_minor:hover li a, #userinfo_minor li a:hover {
+        color: #363636;
+    }
+}
+
+
+/***************/
+/* PAGE COLORS */
+/***************/
+body {
+    background: #161616 url('data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABGAAD/4QMtaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA2LjAtYzAwNiA3OS5kYWJhY2JiLCAyMDIxLzA0LzE0LTAwOjM5OjQ0ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgMjIuNCAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NkU4QTYzOENFOUYxMTFFREFCNEM5MTMwNTU1OEQ2OTgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NkU4QTYzOERFOUYxMTFFREFCNEM5MTMwNTU1OEQ2OTgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo2RThBNjM4QUU5RjExMUVEQUI0QzkxMzA1NTU4RDY5OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo2RThBNjM4QkU5RjExMUVEQUI0QzkxMzA1NTU4RDY5OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pv/uAA5BZG9iZQBkwAAAAAH/2wCEAAQDAwMDAwQDAwQGBAMEBgcF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') repeat;
+}
+
+table {
+    margin: 10px 0px 20px 0;
+}
+.btn.green-btn {
+    background: rgba(0, 255, 0, 0.2);
+}
+
+/***********/
+/* SHADOWS */
+/***********/
+form.search_form {
+    overflow: visible;
+}
+form.edit_form .main_columnm, form.edit_form .sidebar {
+    overflow: hidden;
+}
+#content > .thin, .box, .box2, .main_column, .sidebar, form table {
+    overflow: visible;
+}
+#main_site_menu, .forum_list > table, .box:not(.filter_torrents), .collage_table, .forum_index, #content .search_form {
+    box-shadow: inset rgba(255,255,255,0.1) 0px 1px 0px, rgba(0,0,0,0.12) 0px 2px 2px, rgba(0,0,0,0.2) 0px 4px 14px;
+}
+#content .box.pad .search_form, #content .box .pad form {
+    box-shadow: none;
+}
+.colhead, .colhead_dark, .head {
+    box-shadow: inset rgba(0, 0, 0, 0.1) 0px -1px 0px, #353535 0px 1px 0px;
+}
+@media screen and (min-width: 481px) {
+    .colhead td, .colhead_dark td, .head {
+        box-shadow: inset rgba(255,255,255,0.1) 0px 1px 0px,inset rgba(0,0,0,0.1) 0px -1px 0px, #353535 0px 1px 0px;
+    }
+}
+body #content .search_form {
+    padding: 0.1px;
+}
+.message_table tr:nth-child(odd) {
+    background-color: #232323 !important;
+}
+.message_table tr:nth-child(even) {
+    background-color: #262626 !important;
+}
+.torrent_table tr.group {
+    background-color: #262626 !important;
+}
+.torrent_table tr.group_torrent {
+    background-color: #1a1a1a !important;
+}
+.torrent_table tr.group_torrent:not(.colhead):not(.colhead_dark) {
+    border-top: 1px solid rgba(0,0,0,0.3);
+}
+.torrent_table tr.torrent:not(.group_torrent) {
+    background-color: #262626 !important;
+}
+
+.box.pad {
+    border: 0px !important;
+}
+
+/***************/
+/* OBJS COLORS */
+/***************/
+table .rowa:nth-child(odd),
+table .rowb:nth-child(odd),
+table .a:nth-child(odd),
+table .b:nth-child(odd),
+.colhead,
+.colhead_dark,
+.head,
+#searchbars > ul,
+.torrent_table .group,
+#discog_table > div.box.center,
+.filelist_table td,
+.reportinfo_table,
+.torrentdetails,
+blockquote {
+    background-color: #232323;
+}
+input[type=email],
+input[type=password],
+input[type=text],
+input[type=search],
+select,
+textarea {
+    background-color: #1e1e1e;
+}
+table,
+table .rowa:nth-child(even),
+table .rowb:nth-child(even),
+table .a:nth-child(even),
+table .b:nth-child(even),
+form,
+.box,
+.box2,
+#searchbars > ul input,
+#noty_bottomRight_layout_container .noty_buttons,
+.group_torrent {
+    background-color: #262626;
+}
+.group_torrent.edition,
+.torrent,
+#dnulist tr:not(.colhead):not(.colhead_dark):nth-child(odd),
+blockquote {
+    background-color: #262626;
+}
+table .a,
+table .b,
+table .rowa,
+table .rowb,
+.torrent_table tr:not(.colhead):not(.colhead_dark),
+.box table:not(.layout),
+.box2 table:not(.layout) {
+    border-top: 1px solid rgba(255,255,255,0.01);
+}
+
+.torrent_table .group td:first-child {
+    padding: 4px 12px 4px 8px;
+}
+.torrent_table,
+#searchbars .search_form input:focus {
+    background-color: #363636;
+}
+.hide_torrents > a::after {
+    content: "\25BC";
+}
+.show_torrents > a::after {
+    content: "\25B6";
+}
+
+/***************/
+/* CATS COLORS */
+/***************/
+.cats_applications {
+    background-color: #54d1f1;
+}
+.cats_games {
+    background-color: #c7ca76;
+}
+.cats_iosapplications {
+    background-color: #eaa067;
+}
+.cats_iosgames {
+    background-color: #a265ed;
+}
+.cats_graphics {
+    background-color: #94ca76;
+}
+.cats_audio {
+    background-color: #ef8be9;
+}
+.cats_tutorials {
+    background-color: #df6464;
+}
+.cats_other {
+    background-color: #8c9196;
+}
+
+
+/*************/
+/* CONTAINER */
+/*************/
+#main_site_menu {
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+#wrapper {
+    max-width: 1400px;
+}
+
+img {
+    border-radius: 6px;
+}
+.avatar {
+    background-color: #232323;
+    right: 1px solid #292929;
+}
+.avatar_container img {
+    border-radius: 0px;
+}
+
+button, input[type=button], input[type=submit], input[type=email], input[type=password], input[type=text], input[type=search], select, textarea {
+    border-radius: 6px;
+}
+
+#menu {
+    border-radius: 6px;
+}
+
+#menu > ul li.active a, #menu > ul a:hover, #userinfo_username:hover a:hover, #userinfo_minor:hover a:hover, #userinfo_major:hover a:hover, #userinfo_stats:hover a:hover {
+    background-color: rgba(0, 0, 0, 0.07);
+}
+
+#menu li:nth-child(1), #menu li:nth-child(2), #menu li:nth-child(3), #menu li:nth-child(4), #menu li:nth-child(5), #menu li:nth-child(6), #menu li:nth-child(7), #menu li:nth-child(8), #menu li:nth-child(9) {
+    text-transform: uppercase;
+}
+
+#userinfo_minor::before {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+
+#nav_userinfo {
+    border-radius: 0 6px 0 0;
+}
+
+#userinfo_minor {
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+}
+
+#searchbars > ul {
+    background-color: transparent;
+}
+
+#searchbars .search_form input {
+    border-radius: 6px;
+}
+
+form {
+    border-radius: 6px;
+}
+
+.box {
+    padding-bottom: 12px;
+}
+
+.box.pad .search_form, .search_form .filter_torrents, .search_form .filter_torrents div.submit, .searchbars .search_form, .sidebar .search_form {
+    border-radius: 6px;
+}
+
+.cats_applications, .cats_games, .cats_iosapplications, .cats_iosgames, .cats_graphics, .cats_audio, .cats_tutorials, .cats_other {
+    right: 0px;
+    width: 4px;
+    border-right: 2px solid #211f25;
+    bottom: 0;
+    left: auto;
+    opacity: 0.35;
+    position: absolute;
+    top: 0;
+    opacity: 1;
+}
+
+#top10 .cats_col .cats_applications, #top10 .cats_col .cats_games, #top10 .cats_col .cats_iosapplications, #top10 .cats_col .cats_iosgames, #top10 .cats_col .cats_graphics, #top10 .cats_col .cats_audio, #top10 .cats_col .cats_tutorials, #top10 .cats_col .cats_other {
+    right: 0px;
+    width: 4px;
+}
+
+#top10 td:not(.cats_col) .cats_applications, #top10 td:not(.cats_col) .cats_games, #top10 td:not(.cats_col) .cats_iosapplications, #top10 td:not(.cats_col) .cats_iosgames, #top10 td:not(.cats_col) .cats_graphics, #top10 td:not(.cats_col) .cats_audio, #top10 td:not(.cats_col) .cats_tutorials, #top10 td:not(.cats_col) .cats_other {
+    width: 0px;
+}
+
+table {
+    border-radius: 6px;
+    overflow: hidden !important;
+}
+.box, #more_news .head {
+    border-radius: 6px;
+}
+
+.head {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.req-choice {
+    vertical-align: top;
+}
+
+form input {
+    vertical-align: baseline;
+}
+
+table.forum_index tr td, table.message_table tr td {
+    line-height: 26px;
+}
+
+table td.td_forum h4 {
+    font-weight: bold;
+}
+
+.wrap_overflow, .wrap_overflow a, .filelist_table td, .reportinfo_table, .torrentdetails blockquote {
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+
+.sidebar .box #covers {
+    padding: 20px;
+}
+
+.tl_free:before {
+    z-index: -1;
+    position: absolute;
+    top: -2px;
+    content: "";
+    border-radius: 3px;
+    background-color: #fed360;
+    width: 100%;
+    height: 18px;
+    display: block;
+    padding: 0px 8px;
+	box-shadow: inset rgba(255,255,255,0.6) 0px 1px 1px,rgba(0,0,0,0.6) 0px 1px 2px;
+}
+.tl_free:before {
+    left: -8px;
+}
+.tl_free:after {
+    right: -8px;
+}
+.tl_free {
+    margin-left: 14px;
+    font-size: 12px;
+    display: inline-block;
+    background-color: transparent;
+    padding: 0px;
+    z-index: 1;
+	color: #232323;
+    position: relative;
+    vertical-align: bottom;
+	text-shadow: 0px 1px 2px rgba(255,255,255,0.6);
+}
+
+.poll .graph {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+#index ul.collage_images li, #collage ul.collage_images li {
+    width: 18%;
+    margin: 1%;
+}
+#index ul.collage_images li a img, #collage ul.collage_images li a img {
+    border-radius: 14px;
+}
+
+#upload #content > div {
+    min-width: 100%;
+}
+
+@media screen and (min-width: 481px) {
+    #menu > ul, #inbox .body, #userinfo_username #nav_userinfo > a {
+        font-size: 16px;
+    }
+    #menu li:nth-child(1), #menu li:nth-child(2), #menu li:nth-child(3), #menu li:nth-child(4), #menu li:nth-child(5), #menu li:nth-child(6), #menu li:nth-child(7), #menu li:nth-child(8), #menu li:nth-child(9) {
+        border-right: 1px solid #afafaf;
+    }
+    #userinfo_username, #userinfo_minor {
+        border-left: 1px solid #afafaf;
+    }
+    .torrent_table tr:not(.colhead):not(.colhead_dark) {
+        height: 36px;
+    }
+    .torrent_table tr:not(.colhead):not(.colhead_dark).group, .torrent_table tr:not(.colhead):not(.colhead_dark).torrent {
+        height: 56px;
+    }
+}
+@media (min-width: 481px) and (max-width: 639px) {
+    #menu > ul, #inbox .body, #userinfo_username #nav_userinfo > a, .forum_post td.body, .box.news_post {
+        font-size: 10px;
+    }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+    #menu > ul, #inbox .body, #userinfo_username #nav_userinfo > a {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    #forums input {
+        padding: 0 8px;
+        font-size: 14px;
+    }
+    div .forum_post .body img {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    #searchbars {
+        margin-bottom: 8px;
+    }
+    #searchbars > ul {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    #searchbars > ul li {
+        margin: 0px 0px 0px 0px;
+        flex: 0 0 31.5%;
+    }
+    #searchbars > ul li:last-child {
+        margin: 0px 0px 0px 0px;
+    }
+    #searchbars > ul li#searchbar_log {
+        display: none;
+    }
+    #searchbars li .search_form {
+        padding: 0px !important; 
+    }
+    #forums input {
+        padding: 0 8px;
+        font-size: 15px;
+    }
+    .forum_post td.body {
+        width: auto; 
+        padding-left: 12px; 
+    }
+    .forum_post .avatar {
+        max-width: 60px;
+        padding: 0px;
+        width: 60px;
+    }
+    .forum_post .avatar img {
+        max-width: 60px !important;
+        min-width: 60px;
+    }
+    .user_mobile_menu_toggle {
+        border-radius: 6px;
+    }
+    #main_site_menu li a, .user_mobile_menu_toggle #userinfo_username #nav_userinfo a, .user_mobile_menu_toggle #userinfo_major > li a, .user_mobile_menu_toggle #userinfo_minor > li a, .user_mobile_menu_toggle #nav_userinfo a, .user_mobile_menu_toggle #nav_useredit a, .user_mobile_menu_toggle #nav_logout a, #userinfo_stats li {
+        background-color: #262626;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    #menu > ul li.active a, #menu > ul a:hover, #userinfo_username:hover a:hover, #userinfo_minor:hover a:hover, #userinfo_major:hover a:hover, #userinfo_stats:hover a:hover {
+        background-color: rgba(255, 255, 255, 0.07);
+    }
+    #main_site_menu, .user_mobile_menu_toggle {
+        box-shadow: inset rgba(255,255,255,0.1) 0px 1px 0px, rgba(0,0,0,0.12) 0px 2px 2px, rgba(0,0,0,0.1) 0px 4px 14px;
+    }
+    #upload #content > div {
+        max-width: 100%;
+    }
+}
+
+/*****************/
+/* SHADOWS FIXES */
+/*****************/
+#user #userform {
+    display: flex;
+    flex-flow: row wrap;
+    flex: 0 0 100%;
+}
+.box, .box2 {
+    margin-top: 10px;
+}
+@media (max-width: 480px) {
+    .settings_sidebar {
+        width: 100%;
+    }
+}
+@media screen and (min-width: 481px) {
+    .settings_sidebar {
+        margin-right: 8px;
+    }
+    #userform #settings_sections {
+        width: 100%;
+        position: relative; 
+    }
+}

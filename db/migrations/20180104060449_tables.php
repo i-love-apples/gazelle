@@ -8952,6 +8952,7 @@ RETURN IF(n = 0,0.0,((p + 1.35336) / n - 1.6452 * SQRT((p * (n-p)) / n + 0.67668
             ['Name' => 'Apollo Mat', 'Description' => 'Apollo Mat by salem'],
             ['Name' => 'iAnon Imperial', 'Description' => 'Imperial by iAnon'],
             ['Name' => 'Red Esteem', 'Description' => 'Based on redacted theme'],
+            ['Name' => 'VoidBB', 'Description' => 'VoidBB by BIO'],
             ['Name' => 'iAnon Sky', 'Description' => 'Sky by iAnon', 'Default' => '1']
         ])->save();
 
