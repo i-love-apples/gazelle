@@ -328,15 +328,14 @@ foreach ($slice as $Key => $Post) {
                 <?php
                     }
                     if ($PostID == $thread->pinnedPostId()) { ?>
-                                <strong><span class="sticky_post_label btn green-btn">Pinned</span></strong>
                 <?php   if ($Viewer->permitted('site_moderate_forums')) { ?>
-                                <a href="forums.php?action=sticky_post&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>&amp;remove=true&amp;auth=<?=$auth?>" title="Unpin this post" class="btn tooltip"><span class="s-icon"><i class="fa-solid fa-minus"></i></span>&nbsp;<i class="fa-solid fa-thumbtack"></i></a>
+                                <a class="btn green-btn" href="forums.php?action=sticky_post&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>&amp;remove=true&amp;auth=<?=$auth?>" title="Unpin this post" class="btn tooltip"><i class="fa-sharp fa-solid fa-thumbtack"></i></a>
                 <?php
                         }
                     } else {
                         if ($Viewer->permitted('site_moderate_forums')) {
                 ?>
-                                <a href="forums.php?action=sticky_post&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>&amp;auth=<?=$auth?>" title="Pin this post" class="btn tooltip" ><span class="s-icon"><i class="fa-solid fa-plus"></i></span><i class="fa-solid fa-thumbtack"></i></a>
+                                <a href="forums.php?action=sticky_post&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>&amp;auth=<?=$auth?>" title="Pin this post" class="btn tooltip" ><i class="fa-sharp fa-regular fa-thumbtack"></i></a>
                 <?php
                         }
                     }
