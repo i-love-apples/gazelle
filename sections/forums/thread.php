@@ -311,8 +311,11 @@ foreach ($slice as $Key => $Post) {
                     $forumPost = (new Gazelle\Manager\ForumPost)->findById($PostID);
                     $userHasVoted = $forumPost->hasUserVote($Viewer->id());
                 ?> 
-                <a id="upvote_<?=$PostID?>" onclick="Upvote('<?=$threadId?>','<?=$PostID?>');" title="Upvote this post" class="btn <?php if ($userHasVoted) { ?> green-btn <?php } ?>" <?php if ($userHasVoted) { ?>disabled="disabled"<?php } ?>>
-                    <?php if ($userHasVoted) { ?><?php } ?><i id="upvote_<?=$PostID?>_icon" class="fa-sharp <?php if ($userHasVoted) { ?> fa-solid <?php } else { ?> fa-regular <?php } ?> fa-heart"><span id="voted" class="num-votes_<?=$Votes; ?>"><?=$Votes ?? 0; ?></span></i>
+                <a id="upvote_<?=$PostID?>" onclick="Upvote('<?=$threadId?>','<?=$PostID?>');" title="Upvote this post" class="btn" <?php if ($userHasVoted) { ?>style="display: none;"<?php } ?>>
+                    <i class="fa-sharp fa-regular fa-heart"></i><span id="upvote_votes_<?=$PostID; ?>"><?php if ($Votes ?? 0 > 0) { ?> <?=$Votes ?? 0; ?><?php } ?></span>
+                </a>
+                <a id="unvote_<?=$PostID?>" onclick="Unvote('<?=$threadId?>','<?=$PostID?>');" title="Remove vote for this post" class="btn green-btn" <?php if (!$userHasVoted) { ?>style="display: none;"<?php } ?>>
+                    <i class="fa-sharp fa-solid fa-heart"></i><span id="unvote_votes_<?=$PostID; ?>"><?php if ($Votes ?? 0 > 0) { ?> <?=$Votes ?? 0; ?><?php } ?></span>
                 </a>
                 <?php if (!$thread->isLocked() && !$Viewer->disablePosting()) { ?>
                                 <a href="#quickpost" id="quote_<?=$PostID?>" onclick="Quote('<?=$PostID?>', '<?= $author->username() ?>', true);" title="Select text to quote" class="btn"><i class="fa-sharp fa-solid fa-quote-left"></i></a>

@@ -378,6 +378,38 @@ class ForumThread extends BaseObject {
         }
     }
 
+    public function unvotePost(int $userId, int $postId): bool {
+        $forumPost = (new Manager\ForumPost)->findById($postId);
+        if ($forumPost->hasUserVote($userId)) {
+            self::$db->prepared_query("
+            DELETE FROM forums_posts_votes
+            WHERE
+                PostID = ?
+            AND
+                UserID = ?
+                ", $postId, $userId
+            );
+            self::$db->commit();
+    
+            self::$db->prepared_query("
+                UPDATE forums_posts SET
+                    Votes = Votes-1
+                WHERE ID = ?
+                ", $postId
+            );
+            $this->flush();
+            $this->flushCatalog(0, $this->lastPage());
+    
+            if (self::$db->affected_rows() > 0) {
+                $forumPost->flushVote($userId);
+                return true;
+            }
+            return false;
+        } else {
+            return false;
+        }
+    }
+
     protected function updateThread(int $userId, int $postId): int {
         self::$db->prepared_query("
             UPDATE forums_topics SET

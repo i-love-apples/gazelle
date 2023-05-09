@@ -226,13 +226,39 @@ function Delete(post) {
 function Upvote(threadid, postid) {
     ajax.get("ajax.php?action=post_upvote&threadid=" + threadid + "&postid=" + postid, function(response) {
         if (response == "success") {
-            $('#votes_'+postid).raw().innerHTML = parseInt($('#votes_'+postid).raw().innerHTML)+1;
+            var newVotes = parseInt($('#unvote_votes_'+postid).raw().innerHTML);
+            if (isNaN(newVotes)) {
+                newVotes = 1;
+            } else {
+                newVotes += 1;
+            }
+            $('#upvote_votes_'+postid).raw().innerHTML = " "+newVotes;
+            $('#unvote_votes_'+postid).raw().innerHTML = " "+newVotes;
         }
-        $('#upvote_'+postid+'_icon').removeClass('fa-regular');
-        $('#upvote_'+postid+'_icon').addClass('fa-solid');
-        $('#upvote_'+postid).addClass('green-btn'); 
-        $('#upvote_'+postid).addClass('btn-disabled'); 
-        $('#upvote_'+postid).prop( "disabled", true );
+        $('#upvote_'+postid).hide();
+        $('#unvote_'+postid).show();
+    });
+}
+
+function Unvote(threadid, postid) {
+    ajax.get("ajax.php?action=post_unvote&threadid=" + threadid + "&postid=" + postid, function(response) {
+        if (response == "success") {
+            var newVotes = parseInt($('#upvote_votes_'+postid).raw().innerHTML);
+            if (isNaN(newVotes)) {
+                newVotes = 0;
+            } else {
+                newVotes -= 1;
+            }
+            if (newVotes > 0) {
+                $('#upvote_votes_'+postid).raw().innerHTML = " "+newVotes;
+                $('#unvote_votes_'+postid).raw().innerHTML = " "+newVotes;
+            } else {
+                $('#upvote_votes_'+postid).raw().innerHTML = "";
+                $('#unvote_votes_'+postid).raw().innerHTML = "";
+            }
+        }
+        $('#unvote_'+postid).hide();
+        $('#upvote_'+postid).show();
     });
 }
 
