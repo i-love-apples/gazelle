@@ -17,8 +17,7 @@ if ($Viewer->permitted('users_mod') && (int)($_GET['userid'] ?? 0)) {
 $UserID = $user->id();
 $ownProfile = $UserID === $Viewer->id();
 
-$imgTag = '<img src="' . (new Gazelle\User\Stylesheet($Viewer))->imagePath()
-    . '%s.png" class="tooltip" alt="%s" title="%s"/>';
+$imgTag = '<i class="tooltip fa-sharp fa-solid fa-' . '%s" alt="%s" title="%s"></i>';
 $headerMap = [
     'year'     => ['dbColumn' => 'tg.Year',       'defaultSort' => 'desc', 'text' => 'Year'],
     'time'     => ['dbColumn' => 'unt.TorrentID', 'defaultSort' => 'desc', 'text' => 'Time'],
@@ -121,9 +120,9 @@ View::show_header(($ownProfile ? 'My' : $user->username() . "'s") . ' notificati
         <td>Files</td>
         <td class="nobr"><?= $header->emit('time') ?></td>
         <td class="nobr"><?= $header->emit('size') ?></td>
-        <td class="sign nobr snatches"><i class="fa-sharp fa-solid fa-arrow-rotate-left"></i></td>
-        <td class="sign nobr seeders"><i class="fa-sharp fa-solid fa-up"></i></td>
-        <td class="sign nobr leechers"><i class="fa-sharp fa-solid fa-down"></i></td>
+        <td class="sign nobr snatches"><?= $headerIcons->emit('snatched') ?></td>
+        <td class="sign nobr seeders"><?= $headerIcons->emit('seeders') ?></td>
+        <td class="sign nobr leechers"><?= $headerIcons->emit('leechers') ?></td>
     </tr>
 <?php
         unset($FilterResults['FilterLabel']);

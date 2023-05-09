@@ -16,14 +16,14 @@ if (!empty($_GET['searchstr']) || !empty($_GET['groupname'])) {
     }
 }
 
-$imgTag = '<img src="' . (new Gazelle\User\Stylesheet($Viewer))->imagePath() . '%s.png" class="tooltip" alt="%s" title="%s"/>';
+$imgTag = '<i class="tooltip fa-sharp fa-solid fa-' . '%s" alt="%s" title="%s"></i>';
 $headerMap = [
     'year'     => ['defaultSort' => 'desc', 'text' => 'Year'],
     'time'     => ['defaultSort' => 'desc', 'text' => 'Time'],
     'size'     => ['defaultSort' => 'desc', 'text' => 'Size'],
-    'snatched' => ['defaultSort' => 'desc', 'text' => sprintf($imgTag, 'snatched', 'Snatches', 'Snatches')],
-    'seeders'  => ['defaultSort' => 'desc', 'text' => sprintf($imgTag, 'seeders', 'Seeders', 'Seeders')],
-    'leechers' => ['defaultSort' => 'desc', 'text' => sprintf($imgTag, 'leechers', 'Leechers', 'Leechers')],
+    'snatched' => ['defaultSort' => 'desc', 'text' => sprintf($imgTag, 'arrow-rotate-left', 'Snatches', 'Snatches')],
+    'seeders'  => ['defaultSort' => 'desc', 'text' => sprintf($imgTag, 'up', 'Seeders', 'Seeders')],
+    'leechers' => ['defaultSort' => 'desc', 'text' => sprintf($imgTag, 'down', 'Leechers', 'Leechers')],
 ];
 $header = new SortableTableHeader('time', $headerMap);
 $headerIcons = new SortableTableHeader('time', $headerMap, ['asc' => '', 'desc' => '']);
@@ -128,9 +128,9 @@ echo $paginator->linkbox();
         <td>Files</td>
         <td class="nobr"><?= $header->emit('time') ?></td>
         <td class="nobr"><?= $header->emit('size') ?></td>
-        <td class="sign nobr snatches"><i class="fa-sharp fa-solid fa-arrow-rotate-left"></i></td>
-        <td class="sign nobr seeders"><i class="fa-sharp fa-solid fa-up"></i></td>
-        <td class="sign nobr leechers"><i class="fa-sharp fa-solid fa-down"></i></td>
+        <td class="sign nobr snatches"><?= $headerIcons->emit('snatched') ?></td>
+        <td class="sign nobr seeders"><?= $headerIcons->emit('seeders') ?></td>
+        <td class="sign nobr leechers"><?= $headerIcons->emit('leechers') ?></td>
     </tr>
 <?php
 
