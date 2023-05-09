@@ -312,7 +312,7 @@ foreach ($slice as $Key => $Post) {
                     $userHasVoted = $forumPost->hasUserVote($Viewer->id());
                 ?> 
                 <a id="upvote_<?=$PostID?>" onclick="Upvote('<?=$threadId?>','<?=$PostID?>');" title="Upvote this post" class="btn <?php if ($userHasVoted) { ?> green-btn <?php } ?>" <?php if ($userHasVoted) { ?>disabled="disabled"<?php } ?>>
-                    <?php if ($userHasVoted) { ?><?php } ?><i id="upvote_<?=$PostID?>_icon" class="fa-sharp <?php if ($userHasVoted) { ?> fa-solid <?php } else { ?> fa-regular <?php } ?> fa-heart"><span id="voted" class="num-votes_<?=$Votes; ?>"><?=$Votes; ?></span></i>
+                    <?php if ($userHasVoted) { ?><?php } ?><i id="upvote_<?=$PostID?>_icon" class="fa-sharp <?php if ($userHasVoted) { ?> fa-solid <?php } else { ?> fa-regular <?php } ?> fa-heart"><span id="voted" class="num-votes_<?=$Votes; ?>"><?=$Votes ?? 0; ?></span></i>
                 </a>
                 <?php if (!$thread->isLocked() && !$Viewer->disablePosting()) { ?>
                                 <a href="#quickpost" id="quote_<?=$PostID?>" onclick="Quote('<?=$PostID?>', '<?= $author->username() ?>', true);" title="Select text to quote" class="btn"><i class="fa-sharp fa-solid fa-quote-left"></i></a>

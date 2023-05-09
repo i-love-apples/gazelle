@@ -70,7 +70,8 @@ class ForumThread extends BaseObject {
                         p.AddedTime,
                         p.Body,
                         p.EditedUserID,
-                        p.EditedTime
+                        p.EditedTime,
+                        p.Votes
                     FROM forums_posts AS p
                     WHERE p.TopicID = ?
                         AND p.ID = ?
