@@ -436,7 +436,7 @@ class Bonus extends \Gazelle\BaseUser {
             ", $amount, $amount, $toID, $this->user->id(), $amount
         );
         $rows = self::$db->affected_rows();
-        if (($price > 0 && $rows !== 2) || ($price === 0 && $rows !== 1)) {
+        if ($amount > 0 && $rows !== 2) {
             return false;
         }
 

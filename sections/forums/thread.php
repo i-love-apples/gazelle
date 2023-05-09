@@ -330,6 +330,7 @@ foreach ($slice as $Key => $Post) {
                 <?php
                     }
                     if ($PostID == $thread->pinnedPostId()) { ?>
+                        <strong><span class="sticky_post_label btn green-btn">Pinned</span></strong>
                 <?php   if ($Viewer->permitted('site_moderate_forums')) { ?>
                                 <a class="btn green-btn" href="forums.php?action=sticky_post&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>&amp;remove=true&amp;auth=<?=$auth?>" title="Unpin this post" class="btn tooltip"><i class="fa-sharp fa-solid fa-thumbtack"></i></a>
                 <?php
