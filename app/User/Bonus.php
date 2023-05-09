@@ -399,6 +399,67 @@ class Bonus extends \Gazelle\BaseUser {
 
         return $amount;
     }
+    
+    /**
+     * This method does not return a boolean success, but rather the number of
+     * bonus points sent (for use in a response to the receiver).
+     */
+    public function giveBonusPoints(int $toID, int $amount, string $message): int {
+        if ($this->user->id() === $toID) {
+            return 0;
+        }
+        $item = $this->items()[$label];
+        if (!is_numeric($amount) || $amount <= 0) {
+            return 0;
+        }
+
+        self::$db->prepared_query("
+            UPDATE user_bonus ub
+                INNER JOIN users_main self ON (self.ID = ub.user_id),
+                user_bonus ubother
+                INNER JOIN users_main other ON (other.ID = ubother.user_id)
+            SET
+                ub.points = ub.points - ?,
+                ubother.points = ubother.points + ?
+                WHERE
+                    self.Enabled = '1'
+                AND
+                    other.Enabled = '1'
+                AND
+                    other.ID = ?
+                AND
+                    self.ID = ?
+                AND
+                    ub.points >= 0
+                AND
+                    ? < ub.points
+            ", $amount, $amount, $toID, $this->user->id(), $amount
+        );
+        $rows = self::$db->affected_rows();
+        if (($price > 0 && $rows !== 2) || ($price === 0 && $rows !== 1)) {
+            return false;
+        }
+
+        $receiver = new \Gazelle\User($toID);
+        $this->sendBounsPointsPmToOther($receiver, $amount, $message);
+        $this->flush();
+        $receiver->flush();
+
+        return $amount;
+    }
+
+    public function sendBounsPointsPmToOther(\Gazelle\User $receiver, int $amount, string $message) {
+        (new \Gazelle\Manager\User)->sendPM($receiver->id(), 0,
+            "Here " . ($amount == 1 ? 'is' : 'are') . ' ' . article($amount) . " bonus point" . plural($amount) . "!",
+            self::$twig->render('bonus/bonuspoints-other-message.twig', [
+                'to'       => $receiver->username(),
+                'from'     => $this->user->username(),
+                'amount'   => $amount,
+                'wiki_id'  => 57,
+                'message'  => $message
+            ])
+        );
+    }
 
     public function sendPmToOther(\Gazelle\User $receiver, int $amount, string $message) {
         (new \Gazelle\Manager\User)->sendPM($receiver->id(), 0,

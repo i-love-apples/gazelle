@@ -18,22 +18,54 @@ $PRL         = new Gazelle\User\PermissionRateLimit($User);
 $donorMan    = new Gazelle\Manager\Donation;
 $tgMan       = (new Gazelle\Manager\TGroup)->setViewer($Viewer);
 
+$giveBpAmount = 0;
+$giveBpError = "";
+$giveBpEnabled = 0;
+
 if (!empty($_POST)) {
     authorize();
-    foreach (['action', 'flsubmit', 'fltype'] as $arg) {
-        if (!isset($_POST[$arg])) {
+    if ($_POST['action'] == "fltoken") {
+        foreach (['action', 'flsubmit', 'fltype'] as $arg) {
+            if (!isset($_POST[$arg])) {
+                error(403);
+            }
+        }
+        if ($_POST['flsubmit'] !== 'Send') {
             error(403);
         }
-    }
-    if ($_POST['action'] !== 'fltoken' || $_POST['flsubmit'] !== 'Send') {
+        if (!preg_match('/^fl-(other-[1-4])$/', $_POST['fltype'], $match)) {
+            error(403);
+        }
+        $FL_OTHER_tokens = $viewerBonus->purchaseTokenOther($UserID, $match[1], $_POST['message'] ?? '');
+        if (!$FL_OTHER_tokens) {
+            error('Purchase of tokens not concluded. Either you lacked funds or they have chosen to decline FL tokens.');
+        }
+    } else if ($_POST['action'] == "bpoints") {
+        foreach (['action', 'bpsubmit', 'bpamount'] as $arg) {
+            if (!isset($_POST[$arg])) {
+                error(403);
+            }
+        }
+        if ($_POST['bpsubmit'] !== 'Send') {
+            error(403);
+        }
+
+        if (!is_numeric($_POST['bpamount']) || $_POST['bpamount'] <= 0) {
+            error('Giving of bonus points not concluded. Insert a valid numeric value for the amount.');
+        }
+        
+        $giveBpAmount = $_POST['bpamount'];
+
+        if ($giveBpAmount < $Viewer->bonusPointsTotal()) {
+            $giveBpAction = $viewerBonus->giveBonusPoints($UserID, $giveBpAmount, $_POST['message'] ?? '');
+            if (!$giveBpAction) {
+                $giveBpError = "Something went wrong, please retry later or contact our staff.";
+            }
+        } else {
+            $giveBpError = "You don't have enough bonus points!";
+        }
+    } else {
         error(403);
-    }
-    if (!preg_match('/^fl-(other-[1-4])$/', $_POST['fltype'], $match)) {
-        error(403);
-    }
-    $FL_OTHER_tokens = $viewerBonus->purchaseTokenOther($UserID, $match[1], $_POST['message'] ?? '');
-    if (!$FL_OTHER_tokens) {
-        error('Purchase of tokens not concluded. Either you lacked funds or they have chosen to decline FL tokens.');
     }
 }
 
@@ -50,6 +82,7 @@ if ($UserID == $Viewer->id()) {
     //Don't allow any kind of previewing on others' profiles
     $Preview = 0;
     $FL_Items = $viewerBonus->getListOther($Viewer->bonusPointsTotal());
+    $giveBpEnabled = $Viewer->bonusPointsTotal();
 }
 $FA_Key = null;
 
@@ -78,6 +111,11 @@ echo $Twig->render('user/header.twig', [
     'freeleech' => [
         'item'  => $FL_Items,
         'other' => $FL_OTHER_tokens ?? null,
+    ],
+    'givebp' => [
+        'enabled'  => $giveBpEnabled,
+        'amount' => $giveBpAmount,
+        'error' => $giveBpError,
     ],
     'hourly_rate'  => $userBonus->hourlyRate(),
     'preview_user' => $Preview ? $userMan->findById(PARANOIA_PREVIEW_USER) : $Viewer,

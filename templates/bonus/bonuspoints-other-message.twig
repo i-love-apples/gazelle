@@ -1,0 +1,12 @@
+Hello {{ to }},
+
+[user]{{ from }}[/user] has sent you {{ amount }} bonus point{{ amount|plural }}!
+You can use bonus points for a lot of interesting things!
+{% if message is not empty %} 
+
+They said: [quote]{{ message }}[/quote] 
+{% endif %}
+
+More details about can be found on the [url=bonus.php]Bonus Points[/url] page.
+
+Enjoy!

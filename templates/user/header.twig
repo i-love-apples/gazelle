@@ -107,6 +107,35 @@
 </div>
 {% endif %}
 
+{% if user.isEnabled and givebp.enabled > 0 %}
+<div class="box box_info box_userinfo_give_BP">
+    {% if givebp.amount > 0 %}
+    <div class="head colhead_dark">Bonus Points Given</div>
+    <ul class="stats nobullet">
+        {% if givebp.error == "" %}
+    <li>You gave {{ givebp.amount }} bonus point{{ givebp.amount|plural }} to {{ user.username }}. Your generosity is most appreciated!</li>
+        {% else %}
+    <li>You attempted to give {{ givebp.amount }} bonus point{{ givebp.amount|plural }} to {{ user.username }} but something didn't work out.<br><br>
+    {{ givebp.error }}
+    </li>
+        {% endif %}
+            </ul>
+    {% else %}
+    <div class="head colhead_dark">Give Bonus Points</div>
+    <form class="bp_form" name="user" id="bp_form" action="user.php?id={{ user_id }}" method="post">
+        <ul class="stats nobullet">
+            <li>You can five a maximum of {{ givebp.enabled }} bonus points.</li>
+            <li><input type="text" id="bpamount" name="bpamount" placeholder="Bonus points"/> <br /></li>
+            <li><input type="text" id="message" name="message" placeholder="Message"/> <br /></li>
+            <li><input type="submit" name="bpsubmit" value="Send" /></li>
+        </ul>
+        <input type="hidden" name="action" value="bpoints" />
+        <input type="hidden" name="auth" value="{{ viewer.auth }}" />
+    </form>
+    {% endif %}
+</div>
+{% endif %}
+
 <div class="box box_info box_userinfo_stats">
     <div class="head colhead_dark">Statistics</div>
     <ul class="stats nobullet">
