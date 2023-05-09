@@ -100,9 +100,9 @@ View::show_header("Top $limit Voted Groups", ['js' => 'browse,voting']);
         <td class="cats_col"><!-- category --></td>
         <td class="m_th_left" width="70%">Torrents</td>
         <td>Size</td>
-        <td class="sign snatches"><img src="<?= $urlStem ?>snatched.png" alt="Snatches" title="Snatches" class="tooltip" /></td>
-        <td class="sign seeders"><img src="<?= $urlStem ?>seeders.png" alt="Seeders" title="Seeders" class="tooltip" /></td>
-        <td class="sign leechers"><img src="<?= $urlStem ?>leechers.png" alt="Leechers" title="Leechers" class="tooltip" /></td>
+        <td class="sign snatches"><i alt="Snatches" title="Snatches" class="tooltip fa-sharp fa-solid fa-arrow-rotate-left"></i></td>
+        <td class="sign seeders"><i alt="Seeders" title="Seeders" class="tooltip fa-sharp fa-solid fa-up"></i></td>
+        <td class="sign leechers"><i alt="Leechers" title="Leechers" class="tooltip fa-sharp fa-solid fa-down"></i></td>
     </tr>
 <?php
 if (count($topVotes) === 0) { ?>

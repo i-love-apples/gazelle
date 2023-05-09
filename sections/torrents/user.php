@@ -476,9 +476,9 @@ foreach (CATEGORY as $catKey => $catName) {
             <td class="m_th_left nobr"><?= $header->emit('name') ?></td>
             <td class="nobr"><?= $header->emit('time') ?></td>
             <td class="nobr"><?= $header->emit('size') ?></td>
-            <td class="sign nobr snatches m_th_right"><?= $headerIcons->emit('snatched') ?></td>
-            <td class="sign nobr seeders m_th_right"><?= $headerIcons->emit('seeders') ?></td>
-            <td class="sign nobr leechers m_th_right"><?= $headerIcons->emit('leechers') ?></td>
+            <td class="sign nobr snatches m_th_right"><i class="fa-sharp fa-solid fa-arrow-rotate-left"></i></td>
+            <td class="sign nobr seeders m_th_right"><i class="fa-sharp fa-solid fa-up"></i></td>
+            <td class="sign nobr leechers m_th_right"><i class="fa-sharp fa-solid fa-down"></i></td>
         </tr>
 <?php
     $pageSize = 0;

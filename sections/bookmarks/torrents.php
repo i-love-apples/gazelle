@@ -177,9 +177,9 @@ $urlStem = (new Gazelle\User\Stylesheet($Viewer))->imagePath();
                 <td><!-- Category --></td>
                 <td class="m_th_left m_th_left_collapsable" width="70%"><strong>Torrents</strong></td>
                 <td>Size</td>
-                <td class="sign snatches"><img src="<?= $urlStem ?>snatched.png" class="tooltip" alt="Snatches" title="Snatches" /></td>
-                <td class="sign seeders"><img src="<?= $urlStem ?>seeders.png" class="tooltip" alt="Seeders" title="Seeders" /></td>
-                <td class="sign leechers"><img src="<?= $urlStem ?>leechers.png" class="tooltip" alt="Leechers" title="Leechers" /></td>
+                <td class="sign snatches"><i alt="Snatches" title="Snatches" class="tooltip fa-sharp fa-solid fa-arrow-rotate-left"></i></td>
+                <td class="sign seeders"><i alt="Seeders" title="Seeders" class="tooltip fa-sharp fa-solid fa-up"></i></td>
+                <td class="sign leechers"><i alt="Leechers" title="Leechers" class="tooltip fa-sharp fa-solid fa-down"></i></td>
             </tr>
 <?php
 

@@ -292,9 +292,9 @@ if ($sections = $Artist->sections()) {
                         $artistMan->sectionTitle($sectionId) ?></strong> <a href="#" class="tooltip brackets" onclick="$('.releases_<?=
                         $sectionId ?>').gtoggle(true); return false;" title="Show/hide this section">Toggle</a></td>
                     <td>Size</td>
-                    <td class="sign snatches"><img src="<?= $urlStem ?>snatched.png" class="tooltip" alt="Snatches" title="Snatches" /></td>
-                    <td class="sign seeders"><img src="<?= $urlStem ?>seeders.png" class="tooltip" alt="Seeders" title="Seeders" /></td>
-                    <td class="sign leechers"><img src="<?= $urlStem ?>leechers.png" class="tooltip" alt="Leechers" title="Leechers" /></td>
+                    <td class="sign snatches"><i alt="Snatches" title="Snatches" class="tooltip fa-sharp fa-solid fa-arrow-rotate-left"></i></td>
+                    <td class="sign seeders"><i alt="Seeders" title="Seeders" class="tooltip fa-sharp fa-solid fa-up"></i></td>
+                    <td class="sign leechers"><i alt="Leechers" title="Leechers" class="tooltip fa-sharp fa-solid fa-down"></i></td>
                 </tr>
 <?php
     foreach(array_keys($groupList) as $groupId) {

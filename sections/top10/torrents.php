@@ -180,9 +180,9 @@ foreach ($context as $c) {
         <td class="cats_col"></td>
         <td class="m_th_left m_th_left_collapsable">Name</td>
         <td style="text-align: right;">Size</td>
-        <td style="text-align: right;" class="sign snatches"><img src="<?= $urlStem ?>snatched.png" alt="Snatches" title="Snatches" class="tooltip" /></td>
-        <td style="text-align: right;" class="sign seeders"><img src="<?= $urlStem ?>seeders.png" alt="Seeders" title="Seeders" class="tooltip" /></td>
-        <td style="text-align: right;" class="sign leechers"><img src="<?= $urlStem ?>leechers.png" alt="Leechers" title="Leechers" class="tooltip" /></td>
+        <td style="text-align: right;" class="sign snatches"><i alt="Snatches" title="Snatches" class="tooltip fa-sharp fa-solid fa-arrow-rotate-left"></i></td>
+        <td style="text-align: right;" class="sign seeders"><i alt="Seeders" title="Seeders" class="tooltip fa-sharp fa-solid fa-up"></i></td>
+        <td style="text-align: right;" class="sign leechers"><i alt="Leechers" title="Leechers" class="tooltip fa-sharp fa-solid fa-down"></i></td>
         <td style="text-align: right;">Transferred</td>
     </tr>
 <?php

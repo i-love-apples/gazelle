@@ -128,9 +128,9 @@ echo $paginator->linkbox();
         <td>Files</td>
         <td class="nobr"><?= $header->emit('time') ?></td>
         <td class="nobr"><?= $header->emit('size') ?></td>
-        <td class="sign nobr snatches"><?= $headerIcons->emit('snatched') ?></td>
-        <td class="sign nobr seeders"><?= $headerIcons->emit('seeders') ?></td>
-        <td class="sign nobr leechers"><?= $headerIcons->emit('leechers') ?></td>
+        <td class="sign nobr snatches"><i class="fa-sharp fa-solid fa-arrow-rotate-left"></i></td>
+        <td class="sign nobr seeders"><i class="fa-sharp fa-solid fa-up"></i></td>
+        <td class="sign nobr leechers"><i class="fa-sharp fa-solid fa-down"></i></td>
     </tr>
 <?php
 

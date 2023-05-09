@@ -17,8 +17,8 @@
         <td>IP Address</td>
         <td>Useragent</td>
         {% if is_admin %}
-        <td><img src="{{ url_stem|raw }}leechers.png" class="tooltip" alt="Downloaded?" title="Downloaded?" /></td>
-        <td><img src="{{ url_stem|raw }}snatched.png" class="tooltip" alt="Snatched?" title="Snatched?" /></td>
+        <td><i alt="Downloaded?" title="Downloaded?" class="tooltip fa-sharp fa-solid fa-down"></i></td>
+        <td><i alt="Snatched?" title="Snatched?" class="tooltip fa-sharp fa-solid fa-arrow-rotate-left"></i></td>
         {% endif %}
     </tr>
     {% endif %}
