@@ -191,7 +191,7 @@ function Save_Edit(postid) {
     $('#reply_box').gshow();
     if (location.href.match(/forums\.php/)) {
         ajax.post("forums.php?action=takeedit","form" + postid, function (response) {
-            $('#bar' + postid).raw().innerHTML = "<a href=\"reports.php?action=report&amp;type=post&amp;id="+postid+"\" class=\"brackets\">Report</a>&nbsp;<a href=\"#\">&uarr;</a>";
+            $('#bar' + postid).raw().innerHTML = "<a href=\"reports.php?action=report&amp;type=post&amp;id="+postid+"\" class=\"btn\">Report</a>&nbsp;<a href=\"#\"><i class=\"fa-solid fa-triangle-exclamation\"></i></a>";
             $('#content' + postid).raw().innerHTML = response;
             $('#editbox' + postid).ghide();
             $('#pmbox' + postid).ghide();
