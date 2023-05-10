@@ -1063,6 +1063,12 @@ input[type="search"] {
     filter: brightness(70%);
 }
 
+div.linkbox {
+    margin-bottom: 5px;
+    padding: 6px 4px;
+    text-align: center;
+}
+
 @media (min-width: 480px) {
   input#mobile_main_menu,
   .hiden_mobile_menu,
