@@ -35,15 +35,18 @@
 		margin-right: unset;
 	}
 }
-    @media (min-width: 480px) {
-	.thin:last-child > :not(.two_columns) {
-		margin-left: 4px;
-		margin-right: 4px;
-		margin-bottom: 4px;
-	}
-	
+@media (min-width: 480px) {
 	body#user div table.recent tr:nth-of-type(2) td {
 		padding: 0!important;
+	}
+	#nav_donate .tooltip::after {
+	    color: red;
+	    content: "\2764\FE0F";
+	    font-size: 75%;
+	    vertical-align: top;
+	}
+	div .forum_list .forum_index .last_read a {
+	    margin-top: -1.5px;
 	}
 }
 .thin > .sidebar ~ * {
@@ -2987,8 +2990,20 @@ a.vote_tag_up:hover {
 	color: #9e6969
 }
 
+.colhead_dark {
+    box-sizing: initial;
+}
+
 .colhead_dark strong {
 	font-weight: 400
+}
+
+table.forum_post .colhead_dark td>span {
+    cursor: auto;
+    height: 32px;
+    line-height: 32px;
+    padding-left: 12px;
+    vertical-align: middle;
 }
 
 #rules h4,
@@ -6709,7 +6724,8 @@ table.staff {
 	-webkit-transition: all .15s linear;
 	-o-transition: all .15s linear;
 	transition: all .15s linear;
-	vertical-align: middle
+	vertical-align: middle;
+	position: relative;
 }
 
 .torrent_table tr:not(.colhead):not(.colhead_dark) td.number_column {
@@ -8004,7 +8020,7 @@ pre[data-line] {
 	}
 	
 	#userinfo_major {
-		margin-left: -107px;
+		margin-left: -116px;
 	}
 	
 	#main_site_menu {
@@ -8149,7 +8165,6 @@ ul.collage_images li a {
 
 div .last_read a {
 	background: unset;
-	line-height: 1;
 }
 
 code {
@@ -8328,7 +8343,7 @@ ul.collage_images li img {
 	
 	.forum_index .last_read {
 		margin-right: 18px;
-		line-height: 1.5;
+		vertical-align: unset;
 	}
 	
 	.td_author::before {
