@@ -1462,12 +1462,16 @@ class Text {
                 : $DB->row('SELECT ID, Name FROM forums WHERE Name = ?', $val);
             $Cache->cache_value($cacheKey, [$id, $name], 86400 + rand(1, 3600));
         }
-        if (!self::$viewer->readAccess(new Gazelle\Forum($id))) {
-            $name = 'restricted';
+        if (!is_null($id)) {
+            if (!self::$viewer->readAccess(new Gazelle\Forum($id))) {
+                $name = 'restricted';
+            }
+            return $name
+                ? sprintf('<a href="forums.php?action=viewforum&amp;forumid=%d">%s</a>', $id, $name)
+                : '[forum]' . $val . '[/forum]';
+        } else {
+            return '';
         }
-        return $name
-            ? sprintf('<a href="forums.php?action=viewforum&amp;forumid=%d">%s</a>', $id, $name)
-            : '[forum]' . $val . '[/forum]';
     }
 
     protected static function bbcodePostUrl(int $postId) {
