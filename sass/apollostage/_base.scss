@@ -1837,7 +1837,13 @@ ul.collage_images img {
  * than being put here like they should be */
 
 @media (min-width: 480px) {
-  .thin:last-child > :not(.two_columns) {
+  .thin .index_linkbox.linkbox {
+      margin: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+  }
+  
+  .thin:last-child > :not(.two_columns):not(.thin .index_linkbox.linkbox ) {
     margin: 4px;
   }
   
