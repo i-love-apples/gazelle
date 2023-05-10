@@ -1067,6 +1067,11 @@ input[type="search"] {
     width: unset;
     display: none;
   }
+  .move_t {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
 }
 @media (max-width: 480px) {
     tr.colhead_dark.notify_ a.brackets {

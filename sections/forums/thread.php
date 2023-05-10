@@ -393,7 +393,7 @@ if ($Viewer->permitted('site_moderate_forums') || ($Viewer->writeAccess($forum) 
 
 if (count($transitions)) {
 ?>
-    <table class="layout border">
+    <table class="move_t layout border">
         <tr>
             <td class="label">Move thread</td>
             <td>
