@@ -1,11 +1,11 @@
 {{ header('Forums') }}
-<div class="linkbox">
-    <a href="forums.php?action=search" class="brackets">Search forums</a>
-    <a href="forums.php?action=viewunread" class="brackets">Unread topics</a>
-    <a href="forums.php?action=catchup&amp;forumid=all&amp;auth={{ viewer.auth }}" class="brackets">Catch up all</a>
-</div>
 <div class="thin">
     <h2>Forums</h2>
+    <div class="linkbox">
+        <a href="forums.php?action=search" class="brackets">Search forums</a>
+        <a href="forums.php?action=viewunread" class="brackets">Unread topics</a>
+        <a href="forums.php?action=catchup&amp;forumid=all&amp;auth={{ viewer.auth }}" class="brackets">Catch up all</a>
+    </div>
     <div class="forum_list">
 {% for category, list in toc %}
 <a name="{{ category }}"></a>
