@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.a{fill:none;stroke:#a9a9a9;stroke-linecap:round;stroke-linejoin:round}</style></defs><path class="a" d="M5.656 15.059h-1.58A3.576 3.576 0 0 0 .5 18.635V23.5H21v-4.865a3.576 3.576 0 0 0-3.576-3.576h-1.58"/><path class="a" d="M5.656 15.059a5.376 5.376 0 0 1-.332-1.809V8.426a5.426 5.426 0 1 1 10.852 0v4.824a5.414 5.414 0 0 1-10.52 1.809zM22.5 3.5h-4m2-2v4"/></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.4.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#C1C1C1;stroke-linecap:round;stroke-linejoin:round;}
+</style>
+<path class="st0" d="M5.7,15.1H4.1c-2,0-3.6,1.6-3.6,3.6l0,0v4.9H21v-4.9c0-2-1.6-3.6-3.6-3.6l0,0h-1.6"/>
+<path class="st0" d="M5.7,15.1c-0.2-0.6-0.3-1.2-0.3-1.8V8.4c0-3,2.4-5.4,5.4-5.4s5.4,2.4,5.4,5.4v4.8c0,3-2.4,5.4-5.4,5.4
+	C8.5,18.7,6.4,17.2,5.7,15.1z M22.5,3.5h-4 M20.5,1.5v4"/>
+</svg>
