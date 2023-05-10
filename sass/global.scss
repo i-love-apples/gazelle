@@ -992,12 +992,6 @@ input[type="search"] {
     text-decoration: none;
 }
 
-.post-controls .s-icon {
-    font-size: 0.8em;
-    line-height: 1;
-    margin-right: 6px;
-}
-
 .fa-classic,
 .fa-light,
 .fa-regular,
@@ -1077,6 +1071,12 @@ input[type="search"] {
 @media (max-width: 480px) {
     tr.colhead_dark.notify_ a.brackets {
         display: none;
+    }
+    .to-top {
+        display: none;
+    }
+    .post-controls .btn {
+        font-size: 0.85em;
     }
     #main_site_menu {
         border-bottom: unset;
