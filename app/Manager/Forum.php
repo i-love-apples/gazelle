@@ -150,7 +150,7 @@ class Forum extends \Gazelle\BaseManager {
                 ((ft.LastPostId > flr.PostID OR flr.PostID IS NULL) AND (urf.last_read < ft.LastPostTime OR urf.last_read IS NULL))
                 AND
                     ft.LastPostAuthorId <> ?
-                ORDER BY ft.Ranking DESC, ft.IsSticky DESC, ft.LastPostTime DESC
+                ORDER BY ft.LastPostTime DESC
                 LIMIT ?, ?
                 ", $user->id(), $user->id(), $user->id(), ($page - 1) * TOPICS_PER_PAGE, TOPICS_PER_PAGE
             );
