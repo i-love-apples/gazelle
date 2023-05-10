@@ -121,6 +121,7 @@ class ForumPost extends BaseObject {
     }
 
     public function edit(int $userId, string $body): int {
+        $this->info();
         self::$db->begin_transaction();
         self::$db->prepared_query("
             INSERT INTO comments_edits
