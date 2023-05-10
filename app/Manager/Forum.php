@@ -147,7 +147,7 @@ class Forum extends \Gazelle\BaseManager {
                 LEFT JOIN forums_last_read_topics flr ON (flr.TopicID = ft.ID) AND (flr.UserID = ?)
                 LEFT JOIN user_read_forum urf ON (urf.user_id = ?)
                 WHERE 
-                    ((ft.LastPostId > flr.PostID OR flr.PostID IS NULL) AND urf.last_read < ft.LastPostTime)
+                ((ft.LastPostId > flr.PostID OR flr.PostID IS NULL) AND (urf.last_read < ft.LastPostTime OR urf.last_read IS NULL))
                 AND
                     ft.LastPostAuthorId <> ?
                 ORDER BY ft.Ranking DESC, ft.IsSticky DESC, ft.LastPostTime DESC
@@ -170,7 +170,7 @@ class Forum extends \Gazelle\BaseManager {
             LEFT JOIN forums_last_read_topics flr ON (flr.TopicID = ft.ID) AND (flr.UserID = ?)
             LEFT JOIN user_read_forum urf ON (urf.user_id = ?)
             WHERE 
-                ((ft.LastPostId > flr.PostID OR flr.PostID IS NULL) AND urf.last_read < ft.LastPostTime)
+            ((ft.LastPostId > flr.PostID OR flr.PostID IS NULL) AND (urf.last_read < ft.LastPostTime OR urf.last_read IS NULL))
             AND
                 ft.LastPostAuthorId <> ?
             ", $user->id(), $user->id(), $user->id()
