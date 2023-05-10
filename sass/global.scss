@@ -1053,6 +1053,16 @@ input[type="search"] {
     padding-left: 6px;
 }
 
+#inbox .body a:after,
+#forums .cnt > div:nth-child(1) a:after,
+.torrent_description .body a:after {
+    content: "\e1cb";
+    font-family: 'Font Awesome 6 Sharp';
+    padding-left: 6px;
+    font-size: 0.8em;
+    filter: brightness(80%);
+}
+
 @media (min-width: 480px) {
   input#mobile_main_menu,
   .hiden_mobile_menu,
