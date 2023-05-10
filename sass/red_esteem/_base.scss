@@ -6847,10 +6847,6 @@ table.staff {
 	overflow: visible;
 	position: relative;
 	text-align: center;
-	background: #010101;
-	-webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,.4);
-	box-shadow: 0 0 3px 1px rgba(0,0,0,.4);
-	padding: 2px
 }
 
 .group_image img {
@@ -6868,7 +6864,7 @@ table.staff {
 	z-index: 31415
 }
 
-.group_image:hover img {
+/*.group_image:hover img {
 	border-radius: 0;
 	position: absolute;
 	-webkit-transform: scale(3.2);
@@ -6876,7 +6872,7 @@ table.staff {
 	transform: scale(3.2);
 	left: 2px;
 	top: 2px
-}
+}*/
 
 .big_info,
 .group td {
