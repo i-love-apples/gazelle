@@ -309,7 +309,10 @@ foreach ($slice as $Key => $Post) {
                 <span id="postcontrol-<?= $PostID ?>">
                 <?php 
                     $forumPost = (new Gazelle\Manager\ForumPost)->findById($PostID);
-                    $userHasVoted = $forumPost->hasUserVote($Viewer->id());
+                    $userHasVoted = false;
+                    if (!is_null($forumPost)) {
+                        $userHasVoted = $forumPost->hasUserVote($Viewer->id());
+                    }
                 ?> 
                 <a id="upvote_<?=$PostID?>" onclick="Upvote('<?=$threadId?>','<?=$PostID?>');" title="Upvote this post" class="btn" <?php if ($userHasVoted) { ?>style="display: none;"<?php } ?>>
                     <i class="fa-sharp fa-regular fa-heart"></i><span id="upvote_votes_<?=$PostID; ?>" <?php if ($Votes ?? 0 > 0) { ?> class="vote_num"<?php } ?>><?php if ($Votes ?? 0 > 0) { ?><?=$Votes ?? 0; ?><?php } ?></span>
