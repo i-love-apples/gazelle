@@ -3,11 +3,6 @@
         <a href="forums.php">Forums</a> &rsaquo; {{ forum.link|raw }} &rsaquo; {{ thread_title }}
     </h2>
     <div class="linkbox">
-        <a href="forums.php?action=search" class="brackets">Search forums</a>
-        <a href="forums.php?action=viewunread" class="brackets">Unread topics</a>
-        <a href="forums.php?action=catchup&amp;forumid=all&amp;auth={{ viewer.auth }}" class="brackets">Catch up all</a>
-        <br style="user-select: auto;">
-        <br style="user-select: auto;">
 {% for d in dept_list %}
         <a class="brackets" href="forums.php?action=viewforum&amp;forumid={{ d.forum_id }}">
     {%- if d.active %}<b>{% endif %}{{ d.name }}{% if d.active %}</b>{% endif -%}

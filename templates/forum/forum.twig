@@ -6,11 +6,6 @@
 <div class="thin">
     <h2><a href="forums.php">Forums</a> &rsaquo; <a href="forums.php#{{ forum.categoryName }}">{{ forum.categoryName }}</a> &rsaquo; {{ forum.name }}</h2>
     <div class="linkbox">
-    <a href="forums.php?action=search" class="brackets">Search forums</a>
-    <a href="forums.php?action=viewunread" class="brackets">Unread topics</a>
-    <a href="forums.php?action=catchup&amp;forumid=all&amp;auth={{ viewer.auth }}" class="brackets">Catch up all</a>
-    <br style="user-select: auto;">
-    <br style="user-select: auto;">
 {% for d in dept_list %}
         <a class="brackets" href="forums.php?action=viewforum&amp;forumid={{ d.forum_id }}">
     {%- if d.active %}<b>{% endif %}{{ d.name }}{% if d.active %}</b>{% endif -%}
