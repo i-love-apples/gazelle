@@ -228,12 +228,14 @@ function Upvote(threadid, postid) {
         if (response == "success") {
             var newVotes = parseInt($('#unvote_votes_'+postid).raw().innerHTML);
             if (isNaN(newVotes)) {
+                $('#upvote_votes_'+postid).addClass('vote_num');
+                $('#unvote_votes_'+postid).addClass('vote_num');
                 newVotes = 1;
             } else {
                 newVotes += 1;
             }
-            $('#upvote_votes_'+postid).raw().innerHTML = " "+newVotes;
-            $('#unvote_votes_'+postid).raw().innerHTML = " "+newVotes;
+            $('#upvote_votes_'+postid).raw().innerHTML = newVotes;
+            $('#unvote_votes_'+postid).raw().innerHTML = newVotes;
         }
         $('#upvote_'+postid).hide();
         $('#unvote_'+postid).show();
@@ -250,9 +252,11 @@ function Unvote(threadid, postid) {
                 newVotes -= 1;
             }
             if (newVotes > 0) {
-                $('#upvote_votes_'+postid).raw().innerHTML = " "+newVotes;
-                $('#unvote_votes_'+postid).raw().innerHTML = " "+newVotes;
+                $('#upvote_votes_'+postid).raw().innerHTML = newVotes;
+                $('#unvote_votes_'+postid).raw().innerHTML = newVotes;
             } else {
+                $('#upvote_votes_'+postid).removeClass('vote_num');
+                $('#unvote_votes_'+postid).removeClass('vote_num');
                 $('#upvote_votes_'+postid).raw().innerHTML = "";
                 $('#unvote_votes_'+postid).raw().innerHTML = "";
             }

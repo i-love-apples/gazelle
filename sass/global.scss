@@ -1055,6 +1055,9 @@ input[type="search"] {
 .fa-arrow-rotate-left {
     transform: rotate(90deg);
 }
+.vote_num {
+    padding-left: 6px;
+}
 
 @media (min-width: 480px) {
   input#mobile_main_menu,
