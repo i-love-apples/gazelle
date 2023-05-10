@@ -1,3 +1,8 @@
+<div class="linkbox" style="text-align: center; margin-top: 10px;">
+    <a href="forums.php?action=search" class="brackets">Search forums</a>
+    <a href="forums.php?action=viewunread" class="brackets">Unread topics</a>
+    <a href="forums.php?action=catchup&amp;forumid=all&amp;auth={{ viewer.auth }}" class="brackets">Catch up all</a>
+</div>
 <div class="thin">
     <h2>
         <a href="forums.php">Forums</a> &rsaquo; {{ forum.link|raw }} &rsaquo; {{ thread_title }}
@@ -50,7 +55,7 @@
 {{ paginator.linkbox|raw }}
 {% for t in transition %}
     {% if loop.first %}
-    <table class="move_t layout border">
+    <table class="layout border">
         <tr>
             <td class="label">Move thread</td>
             <td>

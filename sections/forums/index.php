@@ -6,6 +6,7 @@ if ($Viewer->disableForums()) {
 
 $Router->addGet('', __DIR__ . '/main.php');
 
+
 $Router->addPost('autosub',          __DIR__ . '/autosub.php');
 $Router->addPost('add_poll_option',  __DIR__ . '/add_poll_option.php');
 $Router->addPost('mod_thread',       __DIR__ . '/mod_thread.php');
@@ -29,4 +30,5 @@ $Router->addGet('takeedit',           __DIR__ . '/takeedit.php');
 $Router->addGet('viewforum',          __DIR__ . '/forum.php');
 $Router->addGet('viewthread',         __DIR__ . '/thread.php');
 $Router->addGet('viewtopic',          __DIR__ . '/thread.php');
+$Router->addGet('viewunread',         __DIR__ . '/viewunread.php');
 $Router->addGet('warn',               __DIR__ . '/warn.php');

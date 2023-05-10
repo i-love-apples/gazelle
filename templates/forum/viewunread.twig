@@ -1,0 +1,51 @@
+{{ header('Forums') }}
+<div class="linkbox" style="text-align: center; margin-top: 10px;">
+    <a href="forums.php?action=search" class="brackets">Search forums</a>
+    <a href="forums.php?action=viewunread" class="brackets">Unread topics</a>
+    <a href="forums.php?action=catchup&amp;forumid=all&amp;auth={{ viewer.auth }}" class="brackets">Catch up all</a>
+</div>
+<div class="thin">
+    <h2><a href="forums.php">Forums</a> &rsaquo; Unread topics</h2>
+    {{ paginator.linkbox|raw }}
+    <table class="forum_index m_table" width="100%">
+        {% set tooltip = donor_forum ? 'tooltip_gold' : 'tooltip' %}
+        <tr class="colhead">
+            <td class="m_th_left">Forum</td>
+            <td class="m_th_left">Thread</td>
+            <td class="m_th_right" style="width: 7%;">Replies</td>
+            <td style="width: 14%;">Author</td>
+        </tr>
+        {% for thread in toc %}
+            <tr class="row{{ cycle(['a', 'b'], loop.index0) }}">
+                <td class="td_latest">
+                    <span style="float: left;" class="last_topic">
+                        <strong>
+                            <a href="forums.php?action=viewforum&amp;forumid={{ thread.ForumID }}" class="tooltip" data-title-plain="{{ thread.Name }}">{{ thread.Name }}</a>
+                        </strong>
+                    </span>
+                </td>
+                <td class="td_latest">
+                    <span style="float: left;" class="last_topic">
+                        <strong>
+                            <a href="forums.php?action=viewthread&amp;threadid={{ thread.ID }}" class="tooltip" data-title-plain="{{ thread.Title }}"{%
+                                if thread.Title != thread.cut_title %} title="{{ thread.Title }}"{% endif %}>{{ thread.cut_title }}</a>
+                        </strong>
+                        {{ thread.page_links|raw }}
+                    </span>
+                    {% if thread.is_read %}
+                        <span style="float: left;" class="{{ tooltip }} last_read" title="Jump to last read">
+                            <a href="forums.php?action=viewthread&amp;threadid={{ thread.ID }}&amp;page={{ thread.last_read_page }}#post{{ thread.last_read_post }}"><i class="fa-solid fa-circle-arrow-right"></i></a>
+                        </span>
+                    {% endif %}
+                    <span style="float: right;" class="last_poster">by {{ thread.LastPostAuthorID|user_url }} {{ thread.LastPostTime|time_diff }}</span>
+                </td>
+                <td class="td_replies number_column m_td_right">{{ (thread.NumPosts - 1)|number_format }}</td>
+                <td class="td_author">{{ thread.AuthorID|user_url }}</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="4">Nothing found!</td></tr>
+        {% endfor %}
+    </table>
+    {{ paginator.linkbox|raw }}
+</div>
+{{ footer() }}

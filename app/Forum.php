@@ -7,6 +7,7 @@ class Forum extends BaseObject {
     const CACHE_FORUM       = 'forum_%d';
     const CACHE_THREAD_INFO = 'thread_%d_info';
     const CACHE_CATALOG     = 'thread_%d_catalogue_%d';
+    const CACHE_UN_THREAD_FORUM   = 'forum_unthread_%d';
 
     protected \Gazelle\DB\Pg $pg;
 
