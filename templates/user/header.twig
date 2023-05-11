@@ -121,10 +121,10 @@
         {% endif %}
             </ul>
     {% else %}
-    <div class="head colhead_dark">Send Bonus Points</div>
+    <div class="head colhead_dark">Give Bonus Points</div>
     <form class="bp_form" name="user" id="bp_form" action="user.php?id={{ user_id }}" method="post">
         <ul class="stats nobullet">
-            <li>You can send a maximum of {{ givebp.enabled }} bonus points.</li>
+            <li>You can give a maximum of {{ givebp.enabled }} bonus points.</li>
             <li><input type="text" id="bpamount" name="bpamount" placeholder="Bonus points"/> <br /></li>
             <li><input type="text" id="message" name="message" placeholder="Message"/> <br /></li>
             <li><input type="submit" name="bpsubmit" value="Send" /></li>
