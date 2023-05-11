@@ -10,7 +10,7 @@
         </a>
 {% endfor %}
     </div>
-    <div class="linkbox">
+    <div class="linkbox thread-controls">
         <div class="btn-group center">
             <a class="btn-outline-secondary btn" href="reports.php?action=report&amp;type=thread&amp;id={{ thread_id }}" class="brackets">Report thread</a>
             {{- dom.click('#subscribelink' ~ thread_id, "Subscribe(" ~ thread_id ~ ");return false;") -}}
