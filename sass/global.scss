@@ -975,34 +975,43 @@ input[type="search"] {
     background: #606060;
     color: #e0e0e0;
 }
-.btnGroup>.btn:first-child:not(:last-child) {
+.btn-outline {
+    border-color: rgb(255,255,255, 0.12);
+}
+.btn-outline:hover {
+    background-color: rgb(255,255,255, 0.12);
+    border-color: rgb(255,255,255, 0.12);
+}
+.btn-group, .btn-group-vertical {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+}
+.linkbox>:last-child {
+    margin-bottom: 0;
+}
+.linkbox>.btn, .linkbox>.btn-group {
+    margin: 0.25rem 0.125rem;
+}
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+    cursor: pointer;
+}
+.btn-group-vertical>.btn, .btn-group>.btn {
+    position: relative;
+    flex: 1 1 auto;
+}
+.btn-group>.btn-group:not(:last-child)>.btn, .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
-.btnGroup>.btn:not(:first-child):not(:last-child) {
-    border-radius: 0;
+.btn-group>.btn-group:not(:first-child), .btn-group>.btn:not(:first-child) {
+    margin-left: -1px;
 }
-.btnGroup>.btn:not(:first-child) {
-    border-left: none;
-}
-.btnGroup>.btn:last-child:not(:first-child) {
+.btn-group>.btn-group:not(:first-child)>.btn, .btn-group>.btn:nth-child(n+3), .btn-group>:not(.btn-check)+.btn {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
-.btnGroup>.btn:not(:first-child) {
-    border-left: none;
-}
-.btnGroup:after {
-    clear: both;
-}
-.btnGroup {
-    display: inline-block;
-    vertical-align: top;
-}
-.btnGroup:before, .btnGroup:after {
-    content: " ";
-    display: table;
-}
+
 .btn {
   -webkit-appearance: button;
   cursor: pointer;
