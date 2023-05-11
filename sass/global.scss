@@ -996,6 +996,9 @@ input[type="search"] {
 .green-btn,.green-btn:hover {
     color: #fff;
 }
+.green-btn:hover {
+    background: rgba(0, 255, 0, 0.12);
+}
 .btn-group, .btn-group-vertical {
     position: relative;
     display: inline-flex;
