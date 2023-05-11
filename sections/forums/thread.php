@@ -314,34 +314,34 @@ foreach ($slice as $Key => $Post) {
                         $userHasVoted = $forumPost->hasUserVote($Viewer->id());
                     }
                 ?> 
-                <a id="upvote_<?=$PostID?>" onclick="Upvote('<?=$threadId?>','<?=$PostID?>');" title="Upvote this post" class="btn" <?php if ($userHasVoted) { ?>style="display: none;"<?php } ?>>
+                <a id="upvote_<?=$PostID?>" onclick="Upvote('<?=$threadId?>','<?=$PostID?>');" title="Upvote this post" class="btn btn-secondary" <?php if ($userHasVoted) { ?>style="display: none;"<?php } ?>>
                     <i class="fa-sharp fa-regular fa-heart"></i><span id="upvote_votes_<?=$PostID; ?>" <?php if ($Votes ?? 0 > 0) { ?> class="vote_num"<?php } ?>><?php if ($Votes ?? 0 > 0) { ?><?=$Votes ?? 0; ?><?php } ?></span>
                 </a>
                 <a id="unvote_<?=$PostID?>" onclick="Unvote('<?=$threadId?>','<?=$PostID?>');" title="Remove vote for this post" class="btn green-btn" <?php if (!$userHasVoted) { ?>style="display: none;"<?php } ?>>
                     <i class="fa-sharp fa-solid fa-heart"></i><span id="unvote_votes_<?=$PostID; ?>" <?php if ($Votes ?? 0 > 0) { ?> class="vote_num"<?php } ?>><?php if ($Votes ?? 0 > 0) { ?><?=$Votes ?? 0; ?><?php } ?></span>
                 </a>
                 <?php if (!$thread->isLocked() && !$Viewer->disablePosting()) { ?>
-                                <a href="#quickpost" id="quote_<?=$PostID?>" onclick="Quote('<?=$PostID?>', '<?= $author->username() ?>', true);" title="Select text to quote" class="btn"><i class="fa-sharp fa-solid fa-quote-left"></i></a>
+                                <a href="#quickpost" id="quote_<?=$PostID?>" onclick="Quote('<?=$PostID?>', '<?= $author->username() ?>', true);" title="Select text to quote" class="btn btn-secondary"><i class="fa-sharp fa-solid fa-quote-left"></i></a>
                 <?php
                     }
                     if ((!$thread->isLocked() && $Viewer->writeAccess($forum) && $AuthorID == $Viewer->id()) && !$Viewer->disablePosting() || $Viewer->permitted('site_moderate_forums')) {
                 ?>
-                                <a href="#post<?=$PostID?>" onclick="Edit_Form('<?=$PostID?>', '<?=$Key?>');" class="btn"><i class="fa-solid fa-pencil"></i></a>
+                                <a href="#post<?=$PostID?>" onclick="Edit_Form('<?=$PostID?>', '<?=$Key?>');" class="btn btn-secondary"><i class="fa-solid fa-pencil"></i></a>
                 <?php } ?>
                 <?php if ($Viewer->permitted('site_forum_post_delete') && $thread->postTotal() > 1) { ?>
-                                <a href="#post<?=$PostID?>" onclick="Delete('<?=$PostID?>');" class="btn"><i class="fa-solid fa-trash-can"></i></a>
+                                <a href="#post<?=$PostID?>" onclick="Delete('<?=$PostID?>');" class="btn btn-secondary"><i class="fa-solid fa-trash-can"></i></a>
                 <?php
                     }
                     if ($PostID == $thread->pinnedPostId()) { ?>
                         <strong><span class="sticky_post_label btn green-btn">Pinned</span></strong>
                 <?php   if ($Viewer->permitted('site_moderate_forums')) { ?>
-                                <a class="btn green-btn" href="forums.php?action=sticky_post&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>&amp;remove=true&amp;auth=<?=$auth?>" title="Unpin this post" class="btn tooltip"><i class="fa-sharp fa-solid fa-thumbtack"></i></a>
+                                <a class="btn green-btn" href="forums.php?action=sticky_post&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>&amp;remove=true&amp;auth=<?=$auth?>" title="Unpin this post" class="btn btn-secondary tooltip"><i class="fa-sharp fa-solid fa-thumbtack"></i></a>
                 <?php
                         }
                     } else {
                         if ($Viewer->permitted('site_moderate_forums')) {
                 ?>
-                                <a href="forums.php?action=sticky_post&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>&amp;auth=<?=$auth?>" title="Pin this post" class="btn tooltip" ><i class="fa-sharp fa-regular fa-thumbtack"></i></a>
+                                <a href="forums.php?action=sticky_post&amp;threadid=<?=$threadId?>&amp;postid=<?=$PostID?>&amp;auth=<?=$auth?>" title="Pin this post" class="btn btn-secondary tooltip" ><i class="fa-sharp fa-regular fa-thumbtack"></i></a>
                 <?php
                         }
                     }
@@ -351,7 +351,7 @@ foreach ($slice as $Key => $Post) {
                             </span>
 
                             <span id="bar<?=$PostID?>">
-                                <a href="reports.php?action=report&amp;type=post&amp;id=<?=$PostID?>" class="btn"><i class="fa-solid fa-triangle-exclamation"></i></a>
+                                <a href="reports.php?action=report&amp;type=post&amp;id=<?=$PostID?>" class="btn btn-secondary"><i class="fa-solid fa-triangle-exclamation"></i></a>
                 <?php
                     $author = new Gazelle\User($AuthorID);
                     if ($Viewer->permitted('users_warn') && $Viewer->id() != $AuthorID && $Viewer->classLevel() >= $author->classLevel()) {
@@ -363,7 +363,7 @@ foreach ($slice as $Key => $Post) {
                                     <input type="hidden" name="userid" value="<?=$AuthorID?>" />
                                     <input type="hidden" name="key" value="<?=$Key?>" />
                                 </form>
-                                <a href="#" onclick="$('#warn<?=$PostID?>').raw().submit(); return false;" class="btn"><i class="fa-solid fa-circle-exclamation"></i></a>
+                                <a href="#" onclick="$('#warn<?=$PostID?>').raw().submit(); return false;" class="btn btn-secondary"><i class="fa-solid fa-circle-exclamation"></i></a>
                 <?php } ?>
                                 <a class="to-top" href="#"><i class="fa-sharp fa-solid fa-up-to-line"></i></a>
                             </span>

@@ -38,17 +38,17 @@
                     </div>
                 <div class="post-controls">
                         <span id="postcontrol-{{ post.ID }}">
-                       <a href="#quickpost" onclick="Quote('{{ post.ID }}','{{ post.author_name }}', true);" class="btn"><i class="fa-sharp fa-solid fa-quote-left"></i></a>
+                       <a href="#quickpost" onclick="Quote('{{ post.ID }}','{{ post.author_name }}', true);" class="btn btn-secondary"><i class="fa-sharp fa-solid fa-quote-left"></i></a>
         {% if (viewer.permitted('site_moderate_forums')) or (post.AuthorID == viewer.Id) %}
-                       <a href="#post{{ post.ID }}" onclick="Edit_Form('{{ post.ID }}','{{ key }}');" class="btn"><i class="fa-solid fa-pencil"></i></a>
+                       <a href="#post{{ post.ID }}" onclick="Edit_Form('{{ post.ID }}','{{ key }}');" class="btn btn-secondary"><i class="fa-solid fa-pencil"></i></a>
         {% endif %}
                         </span>
                     
                     <span id="bar{{ post.ID }}">
                         {% if viewer.permitted('site_forum_post_delete') %}
-                                   <a href="#post{{ post.ID }}" onclick="Delete('{{ post.ID }}');" class="btn"><i class="fa-solid fa-trash-can"></i></a>
+                                   <a href="#post{{ post.ID }}" onclick="Delete('{{ post.ID }}');" class="btn btn-secondary"><i class="fa-solid fa-trash-can"></i></a>
                         {% endif %}
-                        <a href="reports.php?action=report&amp;type=comment&amp;id={{ post.ID }}" class="btn"><i class="fa-solid fa-triangle-exclamation"></i></a>
+                        <a href="reports.php?action=report&amp;type=comment&amp;id={{ post.ID }}" class="btn btn-secondary"><i class="fa-solid fa-triangle-exclamation"></i></a>
         {% if viewer.permitted('site_admin_forums') %}
             
             {% if (viewer.permitted('users_warn')) or (post.AuthorID == viewer.Id) or (viewer.classLevel >= userMan.findById(post.AuthorID).classLevel)  %}
@@ -56,7 +56,7 @@
                             <input type="hidden" name="action" value="warn" />
                             <input type="hidden" name="postid" value="{{ post.ID }}" />
                         </form>
-                       <a href="#" onclick="$('#warn{{ post.ID }}').raw().submit(); return false;" class="btn"><i class="fa-solid fa-circle-exclamation"></i></a>
+                       <a href="#" onclick="$('#warn{{ post.ID }}').raw().submit(); return false;" class="btn btn-secondary"><i class="fa-solid fa-circle-exclamation"></i></a>
             {% endif %}
         {% endif %}
                         <a class="to-top" href="#"><i class="fa-sharp fa-solid fa-up-to-line"></i></a>
