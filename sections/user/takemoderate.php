@@ -72,7 +72,6 @@ if (isset($_POST['BonusPoints'])) {
     $bonusPoints = (float)$_POST['BonusPoints'];
 }
 $Collages = (int)($_POST['Collages'] ?? 0);
-$flTokens = (int)($_POST['FLTokens'] ?? 0);
 
 $warnWeeks        = (int)($_POST['WarnLength'] ?? 0);
 $extendWarning   = $_POST['ExtendWarning'] ?? '---';
@@ -110,6 +109,13 @@ $mergeStatsFrom = trim($_POST['MergeStatsFrom']);
 $reason = trim($_POST['Reason']);
 
 $cur = $user->info();
+
+if (isset($_POST['FLTokens'])) {
+    $flTokens = (int)($_POST['FLTokens'] ?? 0);
+} else {
+    $flTokens = $cur['FLTokens'];
+}
+
 if ($_POST['comment_hash'] != $cur['CommentHash']) {
     error("Somebody else has moderated this user since you loaded it. Please go back and refresh the page.");
 }

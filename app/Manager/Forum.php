@@ -139,6 +139,7 @@ class Forum extends \Gazelle\BaseManager {
         $key = sprintf(self::CACHE_TOC_UN_THREAD, $user->id());
         $forumToc = null;
         if ($page > 1 || ($page == 1 && !$forumToc = self::$cache->get_value($key))) {
+            $forumToc = [];
             self::$db->prepared_query("
                 SELECT ft.ID, ft.ForumID, f.Name, ft.Title, ft.AuthorID, ft.IsLocked, ft.IsSticky,
                     ft.NumPosts, ft.LastPostID, ft.LastPostTime, ft.LastPostAuthorID
@@ -154,7 +155,14 @@ class Forum extends \Gazelle\BaseManager {
                 LIMIT ?, ?
                 ", $user->id(), $user->id(), $user->id(), ($page - 1) * TOPICS_PER_PAGE, TOPICS_PER_PAGE
             );
-            $forumToc = self::$db->to_array('ID', MYSQLI_ASSOC, false);
+            $forumTocForums = self::$db->to_array('ID', MYSQLI_ASSOC, false);
+            foreach ($forumTocForums as $forumTocForum) {
+                $forum = $this->findById($forumTocForum['ForumID']);
+                if (!$user->readAccess($forum)) {
+                    continue;
+                }
+                array_push($forumToc, $forumTocForum);
+            }
             if ($page == 1) {
                 self::$cache->cache_value($key, $forumToc, 5);
             }
@@ -164,8 +172,9 @@ class Forum extends \Gazelle\BaseManager {
 
     public function tableOfContentsUnreadThreadTotalPages(\Gazelle\User $user): int {
         $key = sprintf(self::CACHE_TOC_UN_THREAD, $user->id());
-        $forumTocCount = self::$db->scalar("
-            SELECT COUNT(ft.ID)
+        $forumTocCount = 0;
+        self::$db->prepared_query("
+            SELECT ft.ID, ft.ForumID
             FROM forums_topics ft
             LEFT JOIN forums_last_read_topics flr ON (flr.TopicID = ft.ID) AND (flr.UserID = ?)
             LEFT JOIN user_read_forum urf ON (urf.user_id = ?)
@@ -175,11 +184,14 @@ class Forum extends \Gazelle\BaseManager {
                 ft.LastPostAuthorId <> ?
             ", $user->id(), $user->id(), $user->id()
         );
-        if (is_null($forumTocCount)) {
-            $forumTocCount = 0;
-        }
-        
-        return (int)$forumTocCount;
+        $forumTocForums = self::$db->to_array('ID', MYSQLI_ASSOC, false);
+        foreach ($forumTocForums as $forumTocForum) {
+            $forum = $this->findById($forumTocForum['ForumID']);
+            if ($user->readAccess($forum)) {
+                $forumTocCount++;
+            }
+        }    
+        return $forumTocCount;
     }
 
     public function tableOfContents(\Gazelle\User $user): array {
