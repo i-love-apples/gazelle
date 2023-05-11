@@ -975,7 +975,34 @@ input[type="search"] {
     background: #606060;
     color: #e0e0e0;
 }
-
+.btnGroup>.btn:first-child:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.btnGroup>.btn:not(:first-child):not(:last-child) {
+    border-radius: 0;
+}
+.btnGroup>.btn:not(:first-child) {
+    border-left: none;
+}
+.btnGroup>.btn:last-child:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.btnGroup>.btn:not(:first-child) {
+    border-left: none;
+}
+.btnGroup:after {
+    clear: both;
+}
+.btnGroup {
+    display: inline-block;
+    vertical-align: top;
+}
+.btnGroup:before, .btnGroup:after {
+    content: " ";
+    display: table;
+}
 .btn {
   -webkit-appearance: button;
   cursor: pointer;
@@ -987,11 +1014,9 @@ input[type="search"] {
   user-select: none;
   overflow: visible;
 }
-
 .btn:hover {
     text-decoration: none;
 }
-
 .fa-classic,
 .fa-light,
 .fa-regular,

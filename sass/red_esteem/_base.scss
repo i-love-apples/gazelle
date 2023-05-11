@@ -3042,7 +3042,7 @@ table.forum_post .colhead_dark td>span {
 #torrents .linkbox a,
 #torrents .thin .header>.linkbox a,
 #user .linkbox a,
-.linkbox:not(.pager) a {
+.linkbox:not(.pager) a:not(.btn--link.btn) {
 	display: inline-block;
 	padding: 5px 4px
 }
