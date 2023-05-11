@@ -991,14 +991,10 @@ input[type="search"] {
   text-transform: none;
   margin: 0;
   font-family: inherit;
+  cursor: pointer;
 }
-
-.btn-outline-secondary {
-    border-color: rgb(255,255,255, 0.12);
-}
-.btn-outline-secondary:hover {
-    background-color: rgb(255,255,255, 0.12);
-    border-color: rgb(255,255,255, 0.12);
+.green-btn,.green-btn:hover {
+    color: #fff;
 }
 .btn-group, .btn-group-vertical {
     position: relative;
@@ -1010,9 +1006,6 @@ input[type="search"] {
 }
 .linkbox>.btn, .linkbox>.btn-group {
     margin: 0.25rem 0.125rem;
-}
-[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
-    cursor: pointer;
 }
 .btn-group-vertical>.btn, .btn-group>.btn {
     position: relative;
@@ -1036,25 +1029,25 @@ input[type="search"] {
 
 .btn-secondary {
     color: #fff;
-    background-color: #6c757d;
-    border-color: #6c757d;
+    background-color: rgb(46 46 46);
+    border-color: rgb(46 46 46);
 }
 
 .btn-secondary:hover {
     color: #fff;
-    background-color: #5c636a;
-    border-color: #565e64;
+    background-color: rgb(73 73 73);
+    border-color: rgb(73 73 73);
 }
 
-.btn-outline-primary {
-    color: #6c757d;
-    border-color: #6c757d;
+.btn-outline-secondary {
+    background-color: rgb(46 46 46);
+    border-color: rgb(73, 73, 73);
 }
 
-.btn-outline-primary:hover {
+.btn-outline-secondary:hover {
     color: #fff;
-    background-color: #5c636a;
-    border-color: #5c636a;
+    background-color: rgb(54 54 54);
+    border-color: rgb(73, 73, 73);
 }
 
 .post-controls {
