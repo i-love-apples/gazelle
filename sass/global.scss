@@ -1069,6 +1069,12 @@ div.linkbox {
     text-align: center;
 }
 
+#forums #content table.layout.border {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 @media (min-width: 480px) {
   input#mobile_main_menu,
   .hiden_mobile_menu,
