@@ -158,10 +158,12 @@ class Forum extends \Gazelle\BaseManager {
             $forumTocForums = self::$db->to_array('ID', MYSQLI_ASSOC, false);
             foreach ($forumTocForums as $forumTocForum) {
                 $forum = $this->findById($forumTocForum['ForumID']);
-                if (!$user->readAccess($forum)) {
-                    continue;
+                if (!is_null($forum)) {
+                    if (!$user->readAccess($forum)) {
+                        continue;
+                    }
+                    array_push($forumToc, $forumTocForum);
                 }
-                array_push($forumToc, $forumTocForum);
             }
             if ($page == 1) {
                 self::$cache->cache_value($key, $forumToc, 5);
@@ -187,8 +189,10 @@ class Forum extends \Gazelle\BaseManager {
         $forumTocForums = self::$db->to_array('ID', MYSQLI_ASSOC, false);
         foreach ($forumTocForums as $forumTocForum) {
             $forum = $this->findById($forumTocForum['ForumID']);
-            if ($user->readAccess($forum)) {
-                $forumTocCount++;
+            if (!is_null($forum)) {
+                if ($user->readAccess($forum)) {
+                    $forumTocCount++;
+                }
             }
         }    
         return $forumTocCount;
