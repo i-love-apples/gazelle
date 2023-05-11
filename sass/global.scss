@@ -1026,10 +1026,6 @@ input[type="search"] {
     border-bottom-left-radius: 0;
 }
 
-div .linkbox.thread-controls {
-    text-align: right;
-}
-
 .btn:hover {
     text-decoration: none;
 }
@@ -1172,6 +1168,9 @@ div.linkbox {
       display: flex;
       align-items: center;
       justify-content: center;
+  }
+  div .linkbox.thread-controls {
+      text-align: right;
   }
 }
 @media (max-width: 480px) {
