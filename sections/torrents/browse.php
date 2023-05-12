@@ -139,30 +139,38 @@ $snatcher = new Gazelle\User\Snatch($Viewer);
 
 $groupsClosed = (bool)$Viewer->option('TorrentGrouping');
 foreach ($Results as $GroupID) {
+    $isGrouped = false;
+    $SnatchedGroupClass = "";
     if ($GroupResults) {
         $tgroup = $tgMan->findById($GroupID);
         if (is_null($tgroup)) {
             continue;
         }
+        $isGrouped = $tgroup->categoryGrouped();
+        $SnatchedGroupClass = $tgroup->isSnatched($Viewer->id()) ? ' snatched_group' : '';
         $torrentList = $tgroup->torrentIdList();
         if (empty($torrentList)) {
             continue;
         }
     } else {
         $torrentRow = $torMan->findById($GroupID);
-        $torrentList = [$torrentRow->id()];
-        if (is_null($torrentList)) {
-            continue;
-        }
-        $tgroup = $torrentRow->group();
-        if (empty($tgroup)) {
-            continue;
+        if (!is_null($torrentRow)) {
+            $torrentList = [$torrentRow->id()];
+            if (is_null($torrentList)) {
+                continue;
+            }
+            $tgroup = $torrentRow->group();
+            if (empty($tgroup)) {
+                continue;
+            }
+            $isGrouped = $tgroup->categoryGrouped();
+            $SnatchedGroupClass = $tgroup->isSnatched($Viewer->id()) ? ' snatched_group' : '';
+        } else {
+            $torrentList = [];
         }
     }
 
-    $SnatchedGroupClass = $tgroup->isSnatched($Viewer->id()) ? ' snatched_group' : '';
-
-    if ($GroupResults && (count($torrentList) > 1 || $tgroup->categoryGrouped())) {
+    if ($GroupResults && (count($torrentList) > 1 || $isGrouped)) {
 ?>
     <tr class="group groupid_<?=$GroupID?>_header<?=$SnatchedGroupClass?>">
 <?= $Twig->render('tgroup/collapse-tgroup.twig', [ 'closed' => $groupsClosed, 'id' => $tgroup->id() ]) ?>
