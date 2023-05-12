@@ -1699,9 +1699,31 @@ blockquote {
 	color: #fff;
 }
 
+.main_site_menu_inner #nav_staff > a,
+ul.main_site_menu_inner li#nav_staff > a {
+	color: $a-color;
+}
+
+.alertbar > a {
+	color: $a-color;
+}
+
+.alertbar > a:hover {
+	color: $a-hover-color;
+}
+
 #userinfo_minor:hover a,
-#userinfo_username:hover a {
-	color: #fff;
+#userinfo_username:hover a,
+.main_site_menu_inner #nav_index > a,
+.main_site_menu_inner #nav_torrents > a,
+.main_site_menu_inner #nav_collages > a,
+.main_site_menu_inner #nav_requests > a,
+.main_site_menu_inner #nav_forums > a,
+.main_site_menu_inner #nav_irc > a,
+.main_site_menu_inner #nav_top10 > a,
+.main_site_menu_inner #nav_rules > a,
+.main_site_menu_inner #nav_wiki > a {
+	color: #fff!important;
 }
 
 #searchbars .search_form {
@@ -2939,7 +2961,7 @@ div input[value="Join here!"] {
 	div#main_site_menu #menu ul.main_site_menu_inner li a,
 	#main_site_menu > #menu > ul > #nav_staff > a,
 	#main_site_menu > #menu > ul > #nav_staff > a:hover {
-	    color: #fff;
+	    color: #fff!important;
 	}
 
 	div#userinfo #userinfo_stats li {
