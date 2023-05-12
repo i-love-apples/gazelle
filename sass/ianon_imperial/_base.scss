@@ -7,7 +7,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #aaa;
+	color: #aaa;
 }
 
 .wiki_article h1,
@@ -15,121 +15,140 @@ h6 {
 .wiki_article h3,
 .wiki_article h4,
 .wiki_article h5 {
-  color: #fff;
+	color: #fff;
 }
 
 .forum_post .colhead_dark,
 .head {
-  background-color: $forum-head-background-color;
-  border-bottom: 2px solid #171616;
+	background-color: $forum-head-background-color;
+	border-bottom: 2px solid #171616;
 }
 
 .sidebar .head.colhead_dark {
-  color: $primary-accent-color;
+	color: $primary-accent-color;
 }
 
 .tl_free {
-  color: $free-leech-color;
+	color: $free-leech-color;
 }
 
 .box .head span,
 .box2 .head span {
-  color: $base-text-color;
+	color: $base-text-color;
 }
 
 .colhead_dark.notify_ {
-  background-color: $input-background-color;
+	background-color: $input-background-color;
 }
 
 .forum_post.forum_unread {
-  border-top: 2px solid #94806f;
+	border-top: 2px solid #94806f;
 }
 
 #searchbars > ul {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
-  background-color: $form-background-color;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
+	background-color: $form-background-color;
 }
 
 #searchbars > ul input {
-  background-color: $forum-head-background-color;
+	background-color: $forum-head-background-color;
 }
 
 #searchbars .search_form input:focus {
-  background-color: $base-background-color;
+	background-color: $base-background-color;
 }
 
 #user #content .header h2,
 #forums #content .thin > h2 {
-  color: #fff;
+	color: #fff;
 }
 
 .forum_post .colhead_dark strong a {
-  color: $primary-accent-color;
+	color: $primary-accent-color;
 }
 
 .forum_post .body {
-  background-color: $forum-body-background-color;
+	background-color: $forum-body-background-color;
 }
 
 .torrent_table tr:not(.colhead):not(.colhead_dark) {
-  border-top: 2px solid #1f1f1f;
+	border-top: 2px solid #1f1f1f;
 }
 
 .read {
-  background-size: 18px;
+	background-size: 18px;
 }
 
 .unread {
-  background-size: 18px;
+	background-size: 18px;
 }
 
 .read_locked {
-  background-size: 18px;
+	background-size: 18px;
 }
 
 .unread_locked {
-  background-size: 18px;
+	background-size: 18px;
 }
 
 .read_sticky {
-  background-size: 18px;
+	background-size: 18px;
 }
 
 .unread_sticky {
-  background-size: 18px;
+	background-size: 18px;
 }
 
 .read_locked_sticky {
-  background-size: 18px;
+	background-size: 18px;
 }
 
 .unread_locked_sticky {
-  background-size: 18px;
+	background-size: 18px;
 }
 
-.btn.new-thread,
-input[value="Post reply"], input[value="Upload torrent"], input[value="Save profile"], input[value="Create collage"], input[value="Create request"], input[value="Send message"], input[value="Join here!"] {
-    background: #6a5c50;
+a.btn.new-thread,
+input[value="Post reply"],
+input[value="Upload torrent"],
+input[value="Save profile"],
+input[value="Create collage"],
+input[value="Create request"],
+input[value="Send message"],
+input[value="Join here!"] {
+	background: #6a5c50;
 }
 
-.btn.new-thread:hover,
-input[value="Post reply"]:active, input[value="Post reply"]:hover, input[value="Upload torrent"]:active, input[value="Upload torrent"]:hover, input[value="Save profile"]:active, input[value="Save profile"]:hover, input[value="Create collage"]:active, input[value="Create collage"]:hover, input[value="Create request"]:active, input[value="Create request"]:hover, input[value="Send message"]:active, input[value="Send message"]:hover, input[value="Join here!"]:active, input[value="Join here!"]:hover {
-    background: #7f6e5f;
+a.btn.new-thread:hover,
+input[value="Post reply"]:active,
+input[value="Post reply"]:hover,
+input[value="Upload torrent"]:active,
+input[value="Upload torrent"]:hover,
+input[value="Save profile"]:active,
+input[value="Save profile"]:hover,
+input[value="Create collage"]:active,
+input[value="Create collage"]:hover,
+input[value="Create request"]:active,
+input[value="Create request"]:hover,
+input[value="Send message"]:active,
+input[value="Send message"]:hover,
+input[value="Join here!"]:active,
+input[value="Join here!"]:hover {
+	background: #7f6e5f;
 }
 
 @media (max-width: 480px) {
-  #searchbars > ul {
-    box-shadow: none;
-    background-color: transparent;
-  }
-  
-  #searchbars .search_form input:focus {
-    background: rgba(0, 0, 0, 0.5);
-    transition: all .2s linear;
-  }
-  
-  #wrapper .td_read {
-    height: 18px;
-    width: 18px;
-  }
+	#searchbars > ul {
+		box-shadow: none;
+		background-color: transparent;
+	}
+	
+	#searchbars .search_form input:focus {
+		background: rgba(0, 0, 0, 0.5);
+		transition: all .2s linear;
+	}
+	
+	#wrapper .td_read {
+		height: 18px;
+		width: 18px;
+	}
 }

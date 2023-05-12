@@ -2,48 +2,48 @@
 @namespace svg url(http://www.w3.org/2000/svg);
 
 .forum_post tbody {
-  background: #26272b;
+	background: #26272b;
 }
 
 .forum_post blockquote {
-  background: #323338;
+	background: #323338;
 }
 
 .read {
-  background-size: 18px;
+	background-size: 18px;
 }
 
 .unread {
-  background-size: 18px;
+	background-size: 18px;
 }
 
 .read_locked {
-  background-size: 18px;
+	background-size: 18px;
 }
 
 .unread_locked {
-  background-size: 18px;
+	background-size: 18px;
 }
 
 .read_sticky {
-  background-size: 18px;
+	background-size: 18px;
 }
 
 .unread_sticky {
-  background-size: 18px;
+	background-size: 18px;
 }
 
 .read_locked_sticky {
-  background-size: 18px;
+	background-size: 18px;
 }
 
 .unread_locked_sticky {
-  background-size: 18px;
+	background-size: 18px;
 }
 
 @media (max-width: 480px) {
-  #wrapper .td_read {
-    height: 18px;
-    width: 18px;
-  }
+	#wrapper .td_read {
+		height: 18px;
+		width: 18px;
+	}
 }
