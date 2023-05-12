@@ -704,11 +704,16 @@ table.box2 {
 	background-color: $a-hover-color;
 }
 
-#main_site_menu > #menu li:not(#nav_staff) a,
-#main_site_menu > #menu li:not(#nav_staff) a:hover,
+#main_site_menu > #menu li a,
+#main_site_menu > #menu li a:hover,
 #userinfo_username #nav_userinfo > a,
 #userinfo_username #nav_userinfo > a:hover {
 	color: #fff;
+}
+
+#main_site_menu > #menu > ul > #nav_staff > a,
+#main_site_menu > #menu > ul > #nav_staff > a:hover {
+	color: $a-color;
 }
 
 #userinfo_minor:hover a,
@@ -2930,7 +2935,10 @@ div input[value="Join here!"] {
 	}
 
 	div#userinfo li a,
-	div#main_site_menu #menu ul.main_site_menu_inner li a {
+	div#userinfo li a:hover,
+	div#main_site_menu #menu ul.main_site_menu_inner li a,
+	#main_site_menu > #menu > ul > #nav_staff > a,
+	#main_site_menu > #menu > ul > #nav_staff > a:hover {
 	    color: #fff;
 	}
 
