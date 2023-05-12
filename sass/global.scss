@@ -1178,10 +1178,11 @@ div.linkbox {
 }
 
 a.btn-outline-secondary.btn.new-thread {
-    background: rgba(0, 255, 0, 0.07)
+    color: #fff;
+    background: rgba(0, 255, 0, 0.07);
 }
 a.btn-outline-secondary.btn.new-thread:hover {
-    background: rgba(0, 255, 0, 0.14);
+    background: rgba(0, 255, 0, 0.16);
 }
 
 @media (min-width: 480px) {
