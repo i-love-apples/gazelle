@@ -28,6 +28,11 @@ pre br {
     display: none;
 }
 
+pre {
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
 code {
     word-break: break-all;
 }
