@@ -47,11 +47,11 @@ h6 {
 
 #searchbars > ul {
 	box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
-	background-color: $form-background-color;
+	background-color: #1e1e1e;
 }
 
 #searchbars > ul input {
-	background-color: $forum-head-background-color;
+	background-color: #303030;
 }
 
 #searchbars .search_form input:focus {
@@ -150,5 +150,11 @@ input[value="Join here!"]:hover {
 	#wrapper .td_read {
 		height: 18px;
 		width: 18px;
+	}
+}
+
+@media (min-width: 480px) {
+	#menu > ul a {
+		color: #fff;
 	}
 }
