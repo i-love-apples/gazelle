@@ -396,10 +396,6 @@ if ($Viewer->permitted('site_moderate_forums') || ($Viewer->writeAccess($forum) 
 
 if (count($transitions)) {
 ?>
-    <table class="move_t layout border">
-        <tr>
-            <td class="label">Move thread</td>
-            <td>
 <?php foreach ($transitions as $transition) { ?>
                 <form action="forums.php" method="post" style="display: inline-block">
                     <input type="hidden" name="action" value="mod_thread" />
@@ -410,9 +406,6 @@ if (count($transitions)) {
                     <input type="submit" value="<?=$transition['label']?>" />
                 </form>
 <?php } ?>
-            </td>
-        </tr>
-    </table>
 <?php
 }
 if ($Viewer->permitted('site_moderate_forums')) {

@@ -1053,6 +1053,31 @@ input[type="search"] {
     border-color: #383838;
 }
 
+.linkbox .btn-group input[type="submit"] {
+    color: #bfbfbf;
+    background: transparent;
+    border-color: transparent;
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+.linkbox .btn-group input[type="submit"]:hover {
+    color: #fff;
+    background-color: #383838;
+    border-color: #383838;
+}
+
+.linkbox .btn-group form {
+    background-color: transparent;
+    border-radius: 4px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border: 1px solid transparent;
+    border-color: #383838;
+    margin-left: -1px;
+}
+
 .post-controls {
   padding-top: 10px;
   float: right;
