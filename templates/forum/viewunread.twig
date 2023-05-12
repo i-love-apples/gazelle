@@ -2,8 +2,10 @@
 <div class="thin">
     <h2><a href="forums.php">Forums</a> &rsaquo; Unread topics</h2>
     <div class="linkbox">
-        <a href="forums.php?action=search" class="brackets">Search forums</a>
-        <a href="forums.php?action=catchup&amp;forumid=all&amp;auth={{ viewer.auth }}" class="brackets">Catch up</a>
+        <div class="btn-group center">
+        <a class="btn-outline-secondary btn" href="forums.php?action=search" class="brackets">Search forums</a>
+        <a class="btn-outline-secondary btn" href="forums.php?action=catchup&amp;forumid=all&amp;auth={{ viewer.auth }}" class="brackets">Catch up</a>
+        </div>
     </div>
     {{ paginator.linkbox|raw }}
     <table class="forum_index m_table" width="100%">
