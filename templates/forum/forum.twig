@@ -5,20 +5,20 @@
 {% endif %}
 <div class="thin">
     <h2><a href="forums.php">Forums</a> &rsaquo; <a href="forums.php#{{ forum.categoryName }}">{{ forum.categoryName }}</a> &rsaquo; {{ forum.name }}</h2>
-    <div class="linkbox">
     <div class="linkbox forum-page">
         <div class="btn-group center">
-{% if viewer.permitted('site_forum_autosub') %}
-        {{- dom.click('#autosub', "autosub(" ~ forum.id ~ "); return false;") -}}
-        <a class="btn-outline-secondary btn" id="autosub" title="Be subscribed automatically to any new threads that are created in this forum" href="#" class="brackets">{%
-            if forum.isAutoSubscribe(viewer.id) %}Cancel autosubscribe{% else %}Auto subscribe{% endif %}</a>
-{% endif %}
-        <a class="btn-outline-secondary btn" href="#" onclick="$('#searchforum').gtoggle(); this.innerHTML = (this.innerHTML == 'Search this forum' ? 'Hide search' : 'Search this forum'); return false;" class="brackets">Search this forum</a>
-        <a class="btn-outline-secondary btn" href="forums.php?action=catchup&amp;forumid={{ forum.id }}&amp;auth={{ viewer.auth }}" class="brackets">Catch up</a>
+            {% if viewer.permitted('site_forum_autosub') %}
+                {{- dom.click('#autosub', "autosub(" ~ forum.id ~ "); return false;") -}}
+                <a class="btn-outline-secondary btn" id="autosub" title="Be subscribed automatically to any new threads that are created in this forum" href="#" class="brackets">{%
+                    if forum.isAutoSubscribe(viewer.id) %}Cancel autosubscribe{% else %}Auto subscribe{% endif %}</a>
+            {% endif %}
+            <a class="btn-outline-secondary btn" href="#" onclick="$('#searchforum').gtoggle(); this.innerHTML = (this.innerHTML == 'Search this forum' ? 'Hide search' : 'Search this forum'); return false;" class="brackets">Search this forum</a>
+            <a class="btn-outline-secondary btn" href="forums.php?action=catchup&amp;forumid={{ forum.id }}&amp;auth={{ viewer.auth }}" class="brackets">Catch up</a>
         </div>
         {% if viewer.createAccess(forum) and not viewer.disablePosting %}
                 <a class="btn new-thread" href="forums.php?action=new&amp;forumid={{ forum.id }}" class="brackets"><i class="fa-sharp fa-solid fa-pen-to-square"></i>New thread</a>
         {% endif %}
+    </div>
         <div id="searchforum" class="hidden center">
             <div style="display: inline-block;">
                 <h3>Search this forum:</h3>
@@ -57,7 +57,6 @@
                 <br />
             </div>
         </div>
-    </div>
 
     {{ paginator.linkbox|raw }}
     <table class="forum_index m_table" width="100%">
