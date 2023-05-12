@@ -1177,6 +1177,13 @@ div.linkbox {
     justify-content: center;
 }
 
+a.btn-outline-secondary.btn.new-thread {
+    background: rgba(0, 255, 0, 0.07)
+}
+a.btn-outline-secondary.btn.new-thread:hover {
+    background: rgba(0, 255, 0, 0.14);
+}
+
 @media (min-width: 480px) {
   input#mobile_main_menu,
   .hiden_mobile_menu,
