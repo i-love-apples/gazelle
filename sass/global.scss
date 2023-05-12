@@ -1177,12 +1177,31 @@ div.linkbox {
     justify-content: center;
 }
 
-a.btn-outline-secondary.btn.new-thread {
-    color: #fff;
-    background: rgba(0, 255, 0, 0.07);
+.linkbox.forum-page {
+    position: relative;
 }
-a.btn-outline-secondary.btn.new-thread:hover {
-    background: rgba(0, 255, 0, 0.16);
+
+.linkbox.forum-page .btn.new-thread {
+    position: absolute;
+    right: 0;
+}
+
+.linkbox.forum-page .btn.new-thread i {
+    margin-right: 6px;
+}
+
+.linkbox .brackets:first-child {
+    margin-left: 0;
+}
+
+.btn.new-thread {
+    color: #fff;
+    background: #248046;
+    border-color: transparent;
+}
+.btn.new-thread:hover {
+    background-color: #2c9f56;
+    border-color: transparent;
 }
 
 @media (min-width: 480px) {
