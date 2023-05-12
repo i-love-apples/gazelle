@@ -107,6 +107,16 @@ h6 {
   background-size: 18px;
 }
 
+.btn.new-thread,
+input[value="Post reply"], input[value="Upload torrent"], input[value="Save profile"], input[value="Create collage"], input[value="Create request"], input[value="Send message"], input[value="Join here!"] {
+    background: #6a5c50;
+}
+
+.btn.new-thread:hover,
+input[value="Post reply"]:active, input[value="Post reply"]:hover, input[value="Upload torrent"]:active, input[value="Upload torrent"]:hover, input[value="Save profile"]:active, input[value="Save profile"]:hover, input[value="Create collage"]:active, input[value="Create collage"]:hover, input[value="Create request"]:active, input[value="Create request"]:hover, input[value="Send message"]:active, input[value="Send message"]:hover, input[value="Join here!"]:active, input[value="Join here!"]:hover {
+    background: #7f6e5f;
+}
+
 @media (max-width: 480px) {
   #searchbars > ul {
     box-shadow: none;
