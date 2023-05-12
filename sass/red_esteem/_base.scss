@@ -3041,8 +3041,7 @@ table.forum_post .colhead_dark td>span {
 #artist .header>.linkbox a,
 #torrents .linkbox a,
 #torrents .thin .header>.linkbox a,
-#user .linkbox a,
-.linkbox:not(.pager) a:not(.btn-outline-secondary.btn) {
+#user .linkbox a {
 	display: inline-block;
 	padding: 5px 4px
 }
