@@ -1181,11 +1181,6 @@ div.linkbox {
     position: relative;
 }
 
-.linkbox.forum-page .btn.new-thread {
-    position: absolute;
-    right: 0;
-}
-
 .linkbox.forum-page .btn.new-thread i {
     margin-right: 6px;
 }
@@ -1225,6 +1220,10 @@ div.linkbox {
   }
   div .linkbox.thread-controls {
       text-align: right;
+  }
+  .linkbox.forum-page .btn.new-thread {
+      position: absolute;
+      right: 0;
   }
 }
 @media (max-width: 480px) {
@@ -1394,5 +1393,11 @@ div.linkbox {
     
     .post-controls .s-icon {
       display: none;
+    }
+    .linkbox.forum-page {
+        width: 100%;
+    }
+    .btn.new-thread {
+        margin-top: 6px;
     }
 }
