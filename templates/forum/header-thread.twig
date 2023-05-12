@@ -2,14 +2,6 @@
     <h2>
         <a href="forums.php">Forums</a> &rsaquo; {{ forum.link|raw }} &rsaquo; {{ thread_title }}
     </h2>
-    <div class="linkbox">
-{% for d in dept_list %}
-        <a class="brackets" href="forums.php?action=viewforum&amp;forumid={{ d.forum_id }}">
-    {%- if d.active %}<b>{% endif %}{{ d.name }}{% if d.active %}</b>{% endif -%}
-    {%- if d.unread %} <span title="unread">({{ d.unread|number_format }})</span>{% endif -%}
-        </a>
-{% endfor %}
-    </div>
     <div class="linkbox thread-controls">
         <div class="btn-group center">
             <a class="btn-outline-secondary btn" href="reports.php?action=report&amp;type=thread&amp;id={{ thread_id }}" class="brackets">Report thread</a>
