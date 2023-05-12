@@ -1171,7 +1171,7 @@ div.linkbox {
     text-align: center;
 }
 
-#forums #content table:not(#thread_notes_table).layout.border {
+#forums #content table:not(.hidden).layout.border {
     display: flex;
     align-items: center;
     justify-content: center;
