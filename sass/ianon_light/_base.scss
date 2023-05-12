@@ -2920,6 +2920,23 @@ div input[value="Join here!"] {
 		height: 18px;
 		width: 18px;
 	}
+
+	.menu_container .hiden_mobile_menu {
+	    color: $a-color;
+	}
+
+	label.main_mobile_menu_toggle .spinner {
+		background-color: $a-color;
+	}
+
+	div#userinfo li a,
+	div#main_site_menu #menu ul.main_site_menu_inner li a {
+	    color: #fff;
+	}
+
+	div#userinfo #userinfo_stats li {
+	    color: #a4a4a4;
+	}
 }
 
 @media (max-width: 480px) and (max-height: 480px) {
