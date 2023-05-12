@@ -14,16 +14,18 @@
 {% endfor %}
     </div>
     <div class="linkbox">
+        <div class="btn-group center">
 {% if viewer.permitted('site_forum_autosub') %}
         {{- dom.click('#autosub', "autosub(" ~ forum.id ~ "); return false;") -}}
-        <a id="autosub" title="Be subscribed automatically to any new threads that are created in this forum" href="#" class="brackets">{%
+        <a class="btn-outline-secondary btn" id="autosub" title="Be subscribed automatically to any new threads that are created in this forum" href="#" class="brackets">{%
             if forum.isAutoSubscribe(viewer.id) %}Cancel autosubscribe{% else %}Auto subscribe{% endif %}</a>
 {% endif %}
 {% if viewer.createAccess(forum) and not viewer.disablePosting %}
-        <a href="forums.php?action=new&amp;forumid={{ forum.id }}" class="brackets">New thread</a>
+        <a class="btn-outline-secondary btn" href="forums.php?action=new&amp;forumid={{ forum.id }}" class="brackets">New thread</a>
 {% endif %}
-        <a href="#" onclick="$('#searchforum').gtoggle(); this.innerHTML = (this.innerHTML == 'Search this forum' ? 'Hide search' : 'Search this forum'); return false;" class="brackets">Search this forum</a>
-        <a href="forums.php?action=catchup&amp;forumid={{ forum.id }}&amp;auth={{ viewer.auth }}" class="brackets">Catch up</a>
+        <a class="btn-outline-secondary btn" href="#" onclick="$('#searchforum').gtoggle(); this.innerHTML = (this.innerHTML == 'Search this forum' ? 'Hide search' : 'Search this forum'); return false;" class="brackets">Search this forum</a>
+        <a class="btn-outline-secondary btn" href="forums.php?action=catchup&amp;forumid={{ forum.id }}&amp;auth={{ viewer.auth }}" class="brackets">Catch up</a>
+        </div>
         <div id="searchforum" class="hidden center">
             <div style="display: inline-block;">
                 <h3>Search this forum:</h3>
