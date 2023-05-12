@@ -7,7 +7,6 @@
 {%- if show_unread %} with unread posts{% endif -%}
 {%- if paginator.total %} {{ paginator.total }} new{% endif %}</h2>
         <div class="linkbox">
-            <br /><br />
 {% if show_unread %}
             <a href="userhistory.php?action=subscriptions&amp;showunread=0" class="brackets">Show all subscriptions</a>
 {% else %}
