@@ -397,7 +397,7 @@ if ($Viewer->permitted('site_moderate_forums') || ($Viewer->writeAccess($forum) 
 if (count($transitions)) {
 ?>
 <?php foreach ($transitions as $transition) { ?>
-                <form action="forums.php" method="post" style="display: inline-block">
+                <form class="center" action="forums.php" method="post" style="display: inline-block">
                     <input type="hidden" name="action" value="mod_thread" />
                     <input type="hidden" name="auth" value="<?=$auth?>" />
                     <input type="hidden" name="threadid" value="<?=$threadId?>" />
