@@ -170,7 +170,7 @@ class Forum extends \Gazelle\BaseManager {
         $key = sprintf(self::CACHE_TOC_UN_THREAD_PAGES, $user->id());
         $cached_pages = self::$cache->get_value($key);
         if (!$cached_pages) {
-        $permitted = $user->permittedForums();
+            $permitted = $user->permittedForums();
             $cached_pages = self::$db->scalar("
                 SELECT COUNT(ft.ID)
                 FROM forums_topics ft
@@ -178,6 +178,8 @@ class Forum extends \Gazelle\BaseManager {
                 LEFT JOIN forums_last_read_topics flr ON (flr.TopicID = ft.ID) AND (flr.UserID = ?)
                 LEFT JOIN user_read_forum urf ON (urf.user_id = ?)
                 WHERE 
+                    ((ft.LastPostId > flr.PostID OR flr.PostID IS NULL) AND (urf.last_read < ft.LastPostTime OR urf.last_read IS NULL))
+                AND
                     (f.MinClassRead <= ? OR f.ID IN ( ? ))
                 AND
                     ft.LastPostAuthorId <> ?
