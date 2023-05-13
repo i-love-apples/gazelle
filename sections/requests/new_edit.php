@@ -85,7 +85,7 @@ if ($isRequestVersion) {
 } else {
     $pageTitle    = $newRequest ? 'Create a request' : 'Edit request &rsaquo; ' . $request->selfLink();
 }
-View::show_header($pageTitle, ['js' => 'requests,form_validate']);
+View::show_header($pageTitle, ['js' => 'requests,form_validate,bbcode']);
 ?>
 <div class="thin">
     <div class="header">
