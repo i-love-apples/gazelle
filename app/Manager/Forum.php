@@ -11,6 +11,7 @@ class Forum extends \Gazelle\BaseManager {
     protected const ID_THREAD_KEY    = 'zz_ft_%d';
     protected const ID_POST_KEY      = 'zz_fp_%d';
     protected const CACHE_TOC_UN_THREAD   = 'forum_toc_un_thread_%d';
+    protected const CACHE_TOC_UN_THREAD_PAGES   = 'forum_toc_un_thread_%d_pages';
 
     /**
      * Create a forum
@@ -139,7 +140,7 @@ class Forum extends \Gazelle\BaseManager {
         $key = sprintf(self::CACHE_TOC_UN_THREAD, $user->id());
         $forumToc = null;
         if ($page > 1 || ($page == 1 && !$forumToc = self::$cache->get_value($key))) {
-            $forumToc = [];
+            $permitted = $user->permittedForums();
             self::$db->prepared_query("
                 SELECT ft.ID, ft.ForumID, f.Name, ft.Title, ft.AuthorID, ft.IsLocked, ft.IsSticky,
                     ft.NumPosts, ft.LastPostID, ft.LastPostTime, ft.LastPostAuthorID
@@ -148,23 +149,16 @@ class Forum extends \Gazelle\BaseManager {
                 LEFT JOIN forums_last_read_topics flr ON (flr.TopicID = ft.ID) AND (flr.UserID = ?)
                 LEFT JOIN user_read_forum urf ON (urf.user_id = ?)
                 WHERE 
-                ((ft.LastPostId > flr.PostID OR flr.PostID IS NULL) AND (urf.last_read < ft.LastPostTime OR urf.last_read IS NULL))
+                    ((ft.LastPostId > flr.PostID OR flr.PostID IS NULL) AND (urf.last_read < ft.LastPostTime OR urf.last_read IS NULL))
+                AND
+                    (f.MinClassRead <= ? OR f.ID IN ( ? ))
                 AND
                     ft.LastPostAuthorId <> ?
                 ORDER BY ft.LastPostTime DESC
                 LIMIT ?, ?
-                ", $user->id(), $user->id(), $user->id(), ($page - 1) * TOPICS_PER_PAGE, TOPICS_PER_PAGE
+                ", $user->id(), $user->id(), $user->classLevel(), placeholders($permitted), $user->id(), ($page - 1) * TOPICS_PER_PAGE, TOPICS_PER_PAGE
             );
-            $forumTocForums = self::$db->to_array('ID', MYSQLI_ASSOC, false);
-            foreach ($forumTocForums as $forumTocForum) {
-                $forum = $this->findById($forumTocForum['ForumID']);
-                if (!is_null($forum)) {
-                    if (!$user->readAccess($forum)) {
-                        continue;
-                    }
-                    array_push($forumToc, $forumTocForum);
-                }
-            }
+            $forumToc = self::$db->to_array('ID', MYSQLI_ASSOC, false);
             if ($page == 1) {
                 self::$cache->cache_value($key, $forumToc, 5);
             }
@@ -173,29 +167,29 @@ class Forum extends \Gazelle\BaseManager {
     }
 
     public function tableOfContentsUnreadThreadTotalPages(\Gazelle\User $user): int {
-        $key = sprintf(self::CACHE_TOC_UN_THREAD, $user->id());
-        $forumTocCount = 0;
-        self::$db->prepared_query("
-            SELECT ft.ID, ft.ForumID
-            FROM forums_topics ft
-            LEFT JOIN forums_last_read_topics flr ON (flr.TopicID = ft.ID) AND (flr.UserID = ?)
-            LEFT JOIN user_read_forum urf ON (urf.user_id = ?)
-            WHERE 
-            ((ft.LastPostId > flr.PostID OR flr.PostID IS NULL) AND (urf.last_read < ft.LastPostTime OR urf.last_read IS NULL))
-            AND
-                ft.LastPostAuthorId <> ?
-            ", $user->id(), $user->id(), $user->id()
-        );
-        $forumTocForums = self::$db->to_array('ID', MYSQLI_ASSOC, false);
-        foreach ($forumTocForums as $forumTocForum) {
-            $forum = $this->findById($forumTocForum['ForumID']);
-            if (!is_null($forum)) {
-                if ($user->readAccess($forum)) {
-                    $forumTocCount++;
-                }
+        $key = sprintf(self::CACHE_TOC_UN_THREAD_PAGES, $user->id());
+        $cached_pages = self::$cache->get_value($key);
+        if (!$cached_pages) {
+        $permitted = $user->permittedForums();
+            $cached_pages = self::$db->scalar("
+                SELECT COUNT(ft.ID)
+                FROM forums_topics ft
+                LEFT JOIN forums f ON (f.ID = ft.ForumID)
+                LEFT JOIN forums_last_read_topics flr ON (flr.TopicID = ft.ID) AND (flr.UserID = ?)
+                LEFT JOIN user_read_forum urf ON (urf.user_id = ?)
+                WHERE 
+                    (f.MinClassRead <= ? OR f.ID IN ( ? ))
+                AND
+                    ft.LastPostAuthorId <> ?
+                ", $user->id(), $user->id(), $user->classLevel(), placeholders($permitted), $user->id()
+            );
+            if ($cached_pages > 0) {
+                self::$cache->cache_value($key, $cached_pages, 10);
             }
-        }    
-        return $forumTocCount;
+            return $cached_pages;
+        } else {
+            return $cached_pages;
+        }
     }
 
     public function tableOfContents(\Gazelle\User $user): array {
