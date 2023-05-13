@@ -106,9 +106,10 @@ class Forum extends \Gazelle\BaseManager {
      *    - int 'IsSticky' Last post is locked (0/1)
      *    - int 'IsLocked' Last post is sticky (0/1)
      */
-    public function tableOfContentsMain(): array {
+    public function tableOfContentsMain(\Gazelle\User $user): array {
         $toc = self::$cache->get_value(self::CACHE_TOC_MAIN);
         if ($toc === false ) {
+            $permitted = $user->permittedForums();
             self::$db->prepared_query("
                 SELECT cat.Name AS categoryName, cat.ID AS categoryId,
                     f.ID, f.Name, f.Description, f.NumTopics, f.NumPosts,
@@ -120,8 +121,10 @@ class Forum extends \Gazelle\BaseManager {
                 INNER JOIN forums_categories cat ON (cat.ID = f.CategoryID)
                 LEFT JOIN forums_topics ft ON (ft.ID = f.LastPostTopicID)
                 LEFT JOIN forums_polls fp ON (fp.TopicID = ft.ID)
+                WHERE (f.MinClassRead <= ? OR f.ID IN ( ? ))
                 ORDER BY cat.Sort, cat.Name, f.Sort, f.Name
-            ");
+                ", $user->classLevel(), placeholders($permitted)
+            );
             $toc = [];
             while ($row = self::$db->next_row(MYSQLI_ASSOC)) {
                 $category = $row['categoryName'];
@@ -195,15 +198,12 @@ class Forum extends \Gazelle\BaseManager {
     }
 
     public function tableOfContents(\Gazelle\User $user): array {
-        $toc = $this->tableOfContentsMain();
+        $toc = $this->tableOfContentsMain($user);
         $userToc = [];
         foreach ($toc as $category => $forumList) {
             $seen = 0;
             foreach ($forumList as $f) {
                 $forum = $this->findById($f['ID']);
-                if (!$user->readAccess($forum)) {
-                    continue;
-                }
                 $autosubList = $forum->autoSubscribeForUserList($user);
                 $userLastRead = $forum->userLastRead($user->id(), $user->postsPerPage());
                 if (isset($userLastRead[$f['LastPostTopicID']])) {
