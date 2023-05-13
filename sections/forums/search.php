@@ -68,16 +68,14 @@ $paginator->setTotal($search->totalHits());
 
 View::show_header('Forums &rsaquo; Search', ['js' => 'bbcode,forum_search,datetime_picker', 'css' => 'datetime_picker']);
 ?>
-<div class="linkbox" style="text-align: center; margin-top: 10px;">
-    <div class="btn-group center">
-    <a class="btn-outline-secondary btn" href="forums.php?action=search" class="brackets">Search forums</a>
-    <a class="btn-outline-secondary btn" href="forums.php?action=viewunread" class="brackets">Unread topics</a>
-    <a class="btn-outline-secondary btn" href="forums.php?action=catchup&amp;forumid=all&amp;auth=<?= $Viewer->auth() ?>" class="brackets">Catch up</a>
-    </div>
-</div>
 <div class="thin">
-    <div class="header">
-        <h2><a href="forums.php">Forums</a> &rsaquo; Search<?=$Title?></h2>
+    <h2><a href="forums.php">Forums</a> &rsaquo; Search<?=$Title?></h2>
+    <div class="index_linkbox linkbox">
+        <div class="btn-group center">
+        <a class="btn-outline-secondary btn" href="forums.php?action=search" class="brackets">Search forums</a>
+        <a class="btn-outline-secondary btn" href="forums.php?action=viewunread" class="brackets">Unread topics</a>
+        <a class="btn-outline-secondary btn" href="forums.php?action=catchup&amp;forumid=all&amp;auth=<?= $Viewer->auth() ?>" class="brackets">Catch up</a>
+        </div>
     </div>
     <form class="search_form" name="forums" action="" method="get">
         <input type="hidden" name="action" value="search" />
