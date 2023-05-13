@@ -189,7 +189,7 @@ if (!$newRequest && $CanEdit && !$ownRequest && $Viewer->permitted('site_edit_re
                 <tr>
                     <td class="label">Description</td>
                     <td>
-                        <textarea name="description" cols="70" rows="7"><?= $description ?></textarea> <br />
+                        <?= (new \Gazelle\Util\Textarea('description', display_str($description ?? ''), 70, 7))->emit() ?><br />
                     </td>
                 </tr>
 <?php    if ($Viewer->permitted('site_moderate_requests')) { ?>
@@ -256,7 +256,7 @@ if (!$newRequest && $CanEdit && !$ownRequest && $Viewer->permitted('site_edit_re
 <?php    } ?>
             </table>
         </form>
-        <script type="text/javascript">ToggleLogCue();<?=$newRequest ? " Calculate();" : '' ?></script>
+        <script type="text/javascript"><?=$newRequest ? " Calculate();" : '' ?></script>
         <script type="text/javascript">SetAutocomplete();</script>
     </div>
 </div>
