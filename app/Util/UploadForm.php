@@ -57,12 +57,12 @@ class UploadForm extends \Gazelle\Base {
      */
     function albumReleaseJS(): string {
         $groupDesc = new Textarea('album_desc', '');
-        $relDesc   = new Textarea('release_desc', '');
+        $relDesc   = new Textarea('desc', '');
         return Textarea::factory();
     }
 
     function descriptionJS(): string {
-        $groupDesc = new Textarea('desc', '');
+        $groupDesc = new Textarea('album_desc', '');
         return Textarea::factory();
     }
 
@@ -191,7 +191,9 @@ class UploadForm extends \Gazelle\Base {
                 </td>
             </tr>
         </table>
-        <script>SetAutocomplete();</script>
+        <script>
+            SetAutocomplete();
+        </script>
 <?php
         return ob_get_clean();
     }

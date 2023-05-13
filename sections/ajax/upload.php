@@ -11,7 +11,7 @@ switch (CATEGORY[$_GET['categoryid']-1]) {
     case 'IOS Applications':
     case 'IOS Games':
         if ($emitJS) {
-            echo $uploadForm->descriptionJS();
+            echo $uploadForm->albumReleaseJS();
         } else {
             echo $uploadForm->simple_group_form();
         }
