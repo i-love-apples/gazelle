@@ -72,7 +72,6 @@ View::show_header('Forums &rsaquo; Search', ['js' => 'bbcode,forum_search,dateti
     <h2><a href="forums.php">Forums</a> &rsaquo; Search<?=$Title?></h2>
     <div class="index_linkbox linkbox">
         <div class="btn-group center">
-        <a class="btn-outline-secondary btn" href="forums.php?action=search" class="brackets">Search forums</a>
         <a class="btn-outline-secondary btn" href="forums.php?action=viewunread" class="brackets">Unread topics</a>
         <a class="btn-outline-secondary btn" href="forums.php?action=catchup&amp;forumid=all&amp;auth=<?= $Viewer->auth() ?>" class="brackets">Catch up</a>
         </div>
