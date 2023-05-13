@@ -53,6 +53,7 @@ if ($fromReportPage && in_array($_POST['resolve_type'], ['manual', 'dismiss'])) 
     }
     if ($report->moderatorResolve($Viewer->id(), $comment)) {
         $Cache->delete_multi(['num_torrent_reportsv2', "reports_torrent_$torrentId"]);
+        $report->flush();
     } else {
         echo $Twig->render('reportsv2/already-resolved.twig', ['report' => $report]);
     }
@@ -185,6 +186,7 @@ if ($modNote || $weeksWarned > 0 || isset($_POST['delete']) || $SendPM) {
 }
 
 $Cache->delete_value("reports_torrent_$torrentId");
+$report->flush();
 
 // Now we've done everything, update the DB with values
 if ($fromReportPage) {

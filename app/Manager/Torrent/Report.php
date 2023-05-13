@@ -4,6 +4,7 @@ namespace Gazelle\Manager\Torrent;
 
 class Report extends \Gazelle\BaseManager {
     protected const ID_KEY = 'zz_tr_%d';
+    const ID_T_KEY = 'zz_tr_t_%d';
 
     protected array $categories = [
         'master' => 'General',
@@ -61,6 +62,21 @@ class Report extends \Gazelle\BaseManager {
             }
         }
         return $id ? new \Gazelle\Torrent\Report($reportId, $this->torMan) : null;
+    }
+
+    public function findByTorrentId(int $torrentId): ?\Gazelle\Torrent\Report {
+        $key = sprintf(self::ID_T_KEY, $torrentId);
+        $id = self::$cache->get_value($key);
+        if ($id === false) {
+            $id = self::$db->scalar("
+                SELECT ID FROM reportsv2 WHERE TorrentID = ? AND Status < 2
+                ", $torrentId
+            );
+            if (!is_null($id)) {
+                self::$cache->cache_value($key, $id, 7200);
+            }
+        }
+        return $id ? new \Gazelle\Torrent\Report($id, $this->torMan) : null;
     }
 
     public function findNewest(): ?\Gazelle\Torrent\Report {

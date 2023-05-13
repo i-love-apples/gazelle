@@ -13,7 +13,12 @@ class Report extends \Gazelle\BaseObject {
         parent::__construct($id);
     }
 
-    public function flush(): Report { $this->info = []; return $this; }
+    public function flush(): Report {
+        $this->info = [];
+        $torrent_id = $this->torrentId();
+        self::$cache->delete_value(sprintf(\Gazelle\Manager\Torrent\Report::ID_T_KEY, $torrent_id));
+        return $this;
+    }
     public function link(): string { return sprintf('<a href="%s">Report #%d</a>', $this->url(), $this->id()); }
     public function location(): string { return "reportsv2.php?view=report&id=" . $this->id; }
     public function tableName(): string { return 'reportsv2'; }

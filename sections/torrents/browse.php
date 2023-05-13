@@ -242,6 +242,23 @@ foreach ($Results as $GroupID) {
                 'viewer'  => $Viewer,
             ]) ?>
             &raquo; <?php echo($torrent->versionLink()); ?>
+            <?php
+                if ($Viewer->permitted('users_mod')) {
+                    $reportTypeName = "";
+                    $report = $reportMan->findByTorrentId($torrent->id());
+                    if (!is_null($report)) {
+                        $reportType = $report->reportType();
+                        if (!is_null($reportType)) {
+                            $reportTypeName = $reportType->name() ?? '';
+                        }
+                    }
+                    if ($reportTypeName != "") {
+                        ?>
+                            <i class="r04"> &nbsp; <?= $reportTypeName ?></i>
+                        <?php
+                    }
+                }
+            ?>
         </td>
         <td class="td_file_count"><?=$torrent->fileTotal()?></td>
         <td class="td_time nobr"><?=time_diff($torrent->created(), 1)?></td>
@@ -277,7 +294,24 @@ foreach ($Results as $GroupID) {
                     'torrent' => $torrent,
                     'viewer'  => $Viewer,
                 ]) ?>
-                <? if ($GroupResults) { echo($torrent->fullLink()); } else { echo($torrent->fullVersionLink()); } ?><br>
+                <? if ($GroupResults) { echo($torrent->fullLink()); } else { echo($torrent->fullVersionLink()); } ?> 
+                <?php
+                    if ($Viewer->permitted('users_mod')) {
+                        $reportTypeName = "";
+                        $report = $reportMan->findByTorrentId($torrent->id());
+                        if (!is_null($report)) {
+                            $reportType = $report->reportType();
+                            if (!is_null($reportType)) {
+                                $reportTypeName = $reportType->name() ?? '';
+                            }
+                        }
+                        if ($reportTypeName != "") {
+                            ?>
+                                <i class="r04"> &nbsp; <?= $reportTypeName ?></i>
+                            <?php
+                        }
+                    }
+                ?><br>
                 <div class="tags">
                     <small><a href="torrents.php?action=<?= $searchMode ?>&amp;filter_cat=<?= $tgroup->categoryName() ?>"><?= $tgroup->categoryName() ?></a></small> - <?= implode(', ',
                     array_map(fn($name) => "<a href=\"torrents.php?action={$searchMode}&amp;taglist=$name\">$name</a>", $tgroup->tagNameList())
