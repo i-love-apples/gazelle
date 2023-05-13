@@ -551,9 +551,16 @@ if (!$torrentList) {
 <?php
         }
     }
+
+    if ($torrent->freeleechStatus() > 0) {
 ?>
-                            <br /><br />If you download this, your ratio will become <?=
-                                Format::get_ratio_html($Viewer->uploadedSize(), $Viewer->downloadedSize() + $torrent->size());
+                            <br /><br />If you download this, your ratio will remain <?= Format::get_ratio_html($Viewer->uploadedSize(), $Viewer->downloadedSize()) ?>
+<?php
+    } else {
+?>
+                            <br /><br />If you download this, your ratio will become <?= Format::get_ratio_html($Viewer->uploadedSize(), $Viewer->downloadedSize() + $torrent->size()); ?>
+<?php
+    }
                             ?>.
                         </blockquote>
                     </div>
