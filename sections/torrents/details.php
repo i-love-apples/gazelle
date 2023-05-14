@@ -77,7 +77,7 @@ $section = [
     ['id' => ARTIST_ARRANGER,  'name' => 'arranger',  'class' => 'artists_arranger',   'role' => 'Arranger',  'title' => 'Arranged by:'],
 ];
 
-View::show_header(display_str($title), ['js' => 'browse,comments,torrent,bbcode,cover_art,subscriptions,voting']);
+View::show_header(display_str($title), ['js' => 'browse,comments,torrent,bbcode,whutbbcode,cover_art,subscriptions,voting']);
 ?>
 <div class="thin">
     <div class="header">

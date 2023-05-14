@@ -26,7 +26,7 @@ $tgroupId     = $torrent->groupId();
 $torrentId    = $torrent->id();
 $releaseTypes = (new Gazelle\ReleaseType)->list();
 
-View::show_header('Edit torrent', ['js' => 'upload,torrent,bbcode']);
+View::show_header('Edit torrent', ['js' => 'upload,torrent,bbcode,whutbbcode']);
 ?>
 <div class="thin">
     <div class="header">

@@ -22,7 +22,7 @@ $topVoteList = array_slice($request->userVoteList($userMan), 0, 5);
 $filler = $userMan->findById($request->fillerId());
 $roleList = $request->artistRole()?->roleList() ?? [];
 
-View::show_header("View request: {$request->text()}", ['js' => 'comments,requests,bbcode,subscriptions']);
+View::show_header("View request: {$request->text()}", ['js' => 'comments,requests,bbcode,whutbbcode,subscriptions']);
 ?>
 <div class="thin">
     <div class="header">

@@ -66,7 +66,7 @@ if (empty($Err)) {
 $dnu     = new Gazelle\Manager\DNU;
 $dnuNew  = $dnu->hasNewForUser($Viewer);
 
-View::show_header('Upload', ['js' => 'upload,validate_upload,valid_tags,musicbrainz,bbcode']);
+View::show_header('Upload', ['js' => 'upload,validate_upload,valid_tags,musicbrainz,bbcode,whutbbcode']);
 ?>
 <div class="torrents_hide_dnu" style="margin: 0px auto; width: 700px;">
     <h3 id="dnu_header">Do Not Upload List</h3>
