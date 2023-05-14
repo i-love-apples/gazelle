@@ -8,8 +8,7 @@
     <div class="linkbox forum-page">
         <div class="btn-group center">
             {% if viewer.permitted('site_forum_autosub') %}
-                {{- dom.click('#autosub', "autosub(" ~ forum.id ~ "); return false;") -}}
-                <a class="btn-outline-secondary btn" id="autosub" title="Be subscribed automatically to any new threads that are created in this forum" href="#" class="brackets">{%
+                <a class="btn-outline-secondary btn" id="autosub" title="Be subscribed automatically to any new threads that are created in this forum" href="#" onclick="autosub({{ forum.id }});" class="brackets">{%
                     if forum.isAutoSubscribe(viewer.id) %}Cancel autosubscribe{% else %}Auto subscribe{% endif %}</a>
             {% endif %}
             <a class="btn-outline-secondary btn" href="#" onclick="$('#searchforum').gtoggle(); this.innerHTML = (this.innerHTML == 'Search this forum' ? 'Hide search' : 'Search this forum'); return false;" class="brackets">Search this forum</a>
