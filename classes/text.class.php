@@ -824,42 +824,15 @@ class Text {
             switch ($Block['Type']) {
                 case 'youtube':
                 case 'yt':
-                    $val = $Block['Val'];
-                    if (is_array($val)) {
-                        //[tag][/tag]
-                        if (count($val) > 0) {
-                            if (is_array($val[0])) {
-                                if ($val[0]['Type'] == 'inlineurl') {
-                                    $parameter = $val[0]['Attr'];
-                                    $equalPos = strrpos($parameter,'=');
-                                    if ($equalPos > 0) {
-                                        $parameter = substr($parameter,$equalPos+1,strlen($parameter)-$equalPos);
-                                        $Str .= '<iframe src="https://www.youtube.com/embed/'.$parameter.'" style="width: 560px; max-width: 100%; max-height: 315px; aspect-ratio: 16/9;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
-                                    } else {
-                                        $Str = self::to_html($val, $Rules);
-                                    }
-                                } else {
-                                    $Str = self::to_html($val, $Rules);
-                                }
-                            } else {
-                                $parameter = self::to_html($val, $Rules);
-                                $Str .= '<iframe src="https://www.youtube.com/embed/'.$parameter.'" style="width: 560px; max-width: 100%; max-height: 315px; aspect-ratio: 16/9;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
-                            }
-                        } else {
-                            $parameter = $Block['Attr'];
-                            $Str .= '<iframe src="https://www.youtube.com/embed/'.$parameter.'" style="width: 560px; max-width: 100%; max-height: 315px; aspect-ratio: 16/9;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
-                        }
-                    } else {
-                        //[tag=]
-                        $parameter = $Block['Val'];
+                    $parameter = $Block['Val'];
+                    if (self::valid_url($parameter)) {
+                        $parameter = preg_replace('/.*\//','',$parameter);
                         $equalPos = strrpos($parameter,'=');
                         if ($equalPos > 0) {
                             $parameter = substr($parameter,$equalPos+1,strlen($parameter)-$equalPos);
-                            $Str .= '<iframe src="https://www.youtube.com/embed/'.$parameter.'" style="width: 560px; max-width: 100%; max-height: 315px; aspect-ratio: 16/9;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
-                        } else {
-                            $Str .= '<iframe src="https://www.youtube.com/embed/'.$parameter.'" style="width: 560px; max-width: 100%; max-height: 315px; aspect-ratio: 16/9;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
                         }
                     }
+                    $Str .= '<iframe src="https://www.youtube.com/embed/'.$parameter.'" style="width: 560px; max-width: 100%; max-height: 315px; aspect-ratio: 16/9;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
                     break;
                 case 'b':
                     $Str .= '<strong>'.self::to_html($Block['Val'], $Rules).'</strong>';
