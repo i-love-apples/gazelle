@@ -215,13 +215,19 @@ class Text {
 
         self::$Headlines = [];
 
-        //Inline links
-        $URLPrefix = '(\[url\]|\[url\=|\[img\=|\[img\]|\[btn\=|\[btn\])';
+        //Inline links        
+        $URLPrefix .= '(\[url\]|\[url\=|\[img\=|\[img\]|\[btn\=|\[btn\]|\[youtube\=|\[youtube\]|\[yt\=|\[yt\])';
+        $URLPrefix1 .= '(\[url\]|\[url\=|\[img\=|\[img\]|\[btn\=|\[btn\])';
+        $URLPrefix2 .= '(\[youtube\]|\[youtube\=)';
+        $URLPrefix3 .= '(\[yt\]|\[yt\=)';
+
         $Str = preg_replace('/'.$URLPrefix.'\s+/i', '$1', $Str);
-        $Str = preg_replace('/(?<!'.$URLPrefix.')http(s)?:\/\//i', '$1[inlineurl]http$2://', $Str);
+        
+        $Str = preg_replace('/(?:(?<!'.$URLPrefix1.')|(?<!'.$URLPrefix2.')|(?<!'.$URLPrefix3.'))http(s)?:\/\//i', '$1[inlineurl]http$2://', $Str);
+        
         // For anonym.to and archive.org links, remove any [inlineurl] in the middle of the link
         $callback = function($m) {return str_replace('[inlineurl]', '', $m[0]);};
-        $Str = preg_replace_callback('/(?<=\[inlineurl\]|'.$URLPrefix.')(\S*\[inlineurl\]\S*)/m', $callback, $Str);
+        $Str = preg_replace_callback('/(?<=\[inlineurl\]|'.$URLPrefix1.'|'.$URLPrefix2.'|'.$URLPrefix3.')(\S*\[inlineurl\]\S*)/m', $callback, $Str);
 
         if (self::$TOC) {
             $Str = preg_replace('/(\={5})([^=].*)\1/i', '[headline=4]$2[/headline]', $Str);
@@ -472,7 +478,10 @@ class Text {
             // Thus, we have to handle these before we handle the majority of tags
 
             //5a) Different for different types of tag. Some tags don't close, others are weird like [*]
-            if ($TagName == 'img' && !empty($Tag[3][0])) { //[img=...]
+            if ($TagName == 'youtube' && !empty($Tag[3][0])) { //[img=...]
+                $Block = ''; // Nothing inside this tag
+                // Don't need to touch $i
+            } elseif ($TagName == 'img' && !empty($Tag[3][0])) { //[img=...]
                 $Block = ''; // Nothing inside this tag
                 // Don't need to touch $i
             } elseif ($TagName == 'hr') {
@@ -583,6 +592,13 @@ class Text {
                     break;
                 case 'pad':
                     $Array[$ArrayPos] = ['Type'=>'pad', 'Attr'=>$Attrib, 'Val'=>self::parse($Block)];
+                    break;
+                case 'youtube':
+                case 'yt':
+                    if (empty($Block)) {
+                        $Block = $Attrib;
+                    }
+                    $Array[$ArrayPos] = ['Type'=>'youtube', 'Val'=>$Block];
                     break;
                 case 'img':
                 case 'image':
@@ -808,7 +824,42 @@ class Text {
             switch ($Block['Type']) {
                 case 'youtube':
                 case 'yt':
-                    $Str .= '<iframe src="https://www.youtube.com/embed/'.self::to_html($Block['Val'], $Rules).'" style="width: 560px; max-width: 100%; max-height: 315px; aspect-ratio: 16/9;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
+                    $val = $Block['Val'];
+                    if (is_array($val)) {
+                        //[tag][/tag]
+                        if (count($val) > 0) {
+                            if (is_array($val[0])) {
+                                if ($val[0]['Type'] == 'inlineurl') {
+                                    $parameter = $val[0]['Attr'];
+                                    $equalPos = strrpos($parameter,'=');
+                                    if ($equalPos > 0) {
+                                        $parameter = substr($parameter,$equalPos+1,strlen($parameter)-$equalPos);
+                                        $Str .= '<iframe src="https://www.youtube.com/embed/'.$parameter.'" style="width: 560px; max-width: 100%; max-height: 315px; aspect-ratio: 16/9;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
+                                    } else {
+                                        $Str = self::to_html($val, $Rules);
+                                    }
+                                } else {
+                                    $Str = self::to_html($val, $Rules);
+                                }
+                            } else {
+                                $parameter = self::to_html($val, $Rules);
+                                $Str .= '<iframe src="https://www.youtube.com/embed/'.$parameter.'" style="width: 560px; max-width: 100%; max-height: 315px; aspect-ratio: 16/9;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
+                            }
+                        } else {
+                            $parameter = $Block['Attr'];
+                            $Str .= '<iframe src="https://www.youtube.com/embed/'.$parameter.'" style="width: 560px; max-width: 100%; max-height: 315px; aspect-ratio: 16/9;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
+                        }
+                    } else {
+                        //[tag=]
+                        $parameter = $Block['Val'];
+                        $equalPos = strrpos($parameter,'=');
+                        if ($equalPos > 0) {
+                            $parameter = substr($parameter,$equalPos+1,strlen($parameter)-$equalPos);
+                            $Str .= '<iframe src="https://www.youtube.com/embed/'.$parameter.'" style="width: 560px; max-width: 100%; max-height: 315px; aspect-ratio: 16/9;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
+                        } else {
+                            $Str .= '<iframe src="https://www.youtube.com/embed/'.$parameter.'" style="width: 560px; max-width: 100%; max-height: 315px; aspect-ratio: 16/9;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>';
+                        }
+                    }
                     break;
                 case 'b':
                     $Str .= '<strong>'.self::to_html($Block['Val'], $Rules).'</strong>';
