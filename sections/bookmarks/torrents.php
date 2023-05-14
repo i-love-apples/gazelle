@@ -174,8 +174,8 @@ $urlStem = (new Gazelle\User\Stylesheet($Viewer))->imagePath();
         <table class="torrent_table grouping cats m_table" id="torrent_table">
             <tr class="colhead_dark">
                 <td><!-- expand/collapse --></td>
-                <td><!-- Category --></td>
-                <td class="m_th_left m_th_left_collapsable" width="70%"><strong>Torrents</strong></td>
+                <td class="center cats_col"><!-- Category --></td>
+                <td class="m_th_left m_th_left_collapsable" width="100%"><strong>Torrents</strong></td>
                 <td>Size</td>
                 <td class="sign snatches"><i alt="Snatches" title="Snatches" class="tooltip fa-sharp fa-solid fa-arrow-rotate-left"></i></td>
                 <td class="sign seeders"><i alt="Seeders" title="Seeders" class="tooltip fa-sharp fa-solid fa-up"></i></td>
@@ -204,16 +204,14 @@ foreach ($bookmarkList as $bm) {
             </td>
             <td class="td_info" colspan="5">
                 <strong><?= $tgroup->link() ?></strong>
-                <span style="text-align: right;" class="float_right">
- <?php if ($ownProfile) { ?>
-        <a href="#group_<?= $tgroupId ?>" class="brackets remove_bookmark"
-           onclick="Unbookmark('torrent', <?= $tgroupId ?>, ''); return false;">Remove bookmark</a>
-        <br/>
-<?php } ?>
-                    <?= time_diff($bm['added']); ?>
-                        </span>
-                <div class="tags"><?= implode(', ',
-                    array_map(fn ($name) => "<a href=\"torrents.php?taglist=$name\">$name</a>", $tgroup->tagNameList())
+
+                <?php if ($ownProfile) { ?>
+                    &nbsp;<a href="#group_<?= $tgroupId ?>" class="brackets remove_bookmark" onclick="Unbookmark('torrent', <?= $tgroupId ?>, ''); return false;">Remove bookmark</a>
+                <?php } ?>
+
+                <div class="tags">
+                    <small><a href="torrents.php?action=<?= $searchMode ?>&amp;filter_cat=<?= $tgroup->categoryName() ?>"><?= $tgroup->categoryName() ?></a></small> - <?= implode(', ',
+                    array_map(fn($name) => "<a href=\"torrents.php?action={$searchMode}&amp;taglist=$name\">$name</a>", $tgroup->tagNameList())
                     ) ?></div>
             </td>
         </tr>
@@ -235,16 +233,7 @@ foreach ($bookmarkList as $bm) {
             $current = $torrent->remasterTuple();
             if ($prev != $current || (isset($FirstUnknown) && $FirstUnknown)) {
                 $EditionID++;
-?>
-                <tr class="group_torrent groupid_<?= $tgroupId ?> edition<?= $SnatchedGroupClass . ($groupsClosed ? ' hidden' : '') ?>">
-                    <td colspan="7" class="edition_info"><strong><a href="#"
-                        onclick="toggle_edition(<?= $tgroupId ?>, <?= $EditionID ?>, this, event)"
-                        class="tooltip"
-                        title="Collapse this edition. Hold [Command] <em>(Mac)</em> or [Ctrl] <em>(PC)</em> while clicking to collapse all editions in this torrent group.">&minus;</a>
-                            <?= $torrent->edition() ?>
-                        </strong></td>
-                </tr>
-<?php
+                
             }
             $prev = $current;
 ?>
@@ -255,7 +244,7 @@ foreach ($bookmarkList as $bm) {
                     'torrent' => $torrent,
                     'viewer'  => $Viewer,
                 ]) ?>
-                    &nbsp;&nbsp;&raquo;&nbsp;<?= $torrent->shortLabelLink() ?>
+                &raquo; <?php echo($torrent->versionLink()); ?>
                 </td>
                 <?= $Twig->render('torrent/stats.twig', ['torrent' => $torrent]) ?>
             </tr>
@@ -280,14 +269,15 @@ foreach ($bookmarkList as $bm) {
                     'viewer'  => $Viewer,
                 ]) ?>
                 <strong><?= $tgroup->text() ?></strong>
-                <div class="tags"><?= implode(', ',
-                    array_map(fn($name) => "<a href=\"torrents.php?taglist=$name\">$name</a>", $tgroup->tagNameList())
+
+                <?php if ($ownProfile) { ?>
+                    &nbsp;<a href="#group_<?= $tgroupId ?>" class="brackets remove_bookmark" onclick="Unbookmark('torrent', <?= $tgroupId ?>, ''); return false;">Remove bookmark</a>
+                <?php } ?>
+
+                <div class="tags">
+                    <small><a href="torrents.php?action=<?= $searchMode ?>&amp;filter_cat=<?= $tgroup->categoryName() ?>"><?= $tgroup->categoryName() ?></a></small> - <?= implode(', ',
+                    array_map(fn($name) => "<a href=\"torrents.php?action={$searchMode}&amp;taglist=$name\">$name</a>", $tgroup->tagNameList())
                     ) ?></div>
-<?php if ($ownProfile) { ?>
-                    <span class="float_right float_clear"><a href="#group_<?= $tgroupId
-                        ?>" class="brackets remove_bookmark" onclick="Unbookmark('torrent', <?= $tgroupId ?>, ''); return false;">Remove bookmark</a></span>
-<?php } ?>
-                <span class="float_right float_clear"><?= time_diff($bm['added']); ?></span>
 
             </td>
             <?= $Twig->render('torrent/stats.twig', ['torrent' => $torrent]) ?>
