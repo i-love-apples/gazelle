@@ -50,7 +50,7 @@ class ForumTest extends TestCase {
      */
     public function testForum(\Gazelle\ForumCategory $category) {
         $initial      = count($this->forumMan->nameList());
-        $tocTotal     = count($this->forumMan->tableOfContentsMain($user));
+        $tocTotal     = count($this->forumMan->tableOfContentsMain());
         $user         = $this->userMan->find('@user');
         $userTocTotal = count($this->forumMan->tableOfContents($user));
 
