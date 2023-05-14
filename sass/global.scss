@@ -22,6 +22,13 @@
 	font-size: 110%;
 }
 
+#userform td:not(.label)>strong,
+h1,
+h2,
+h3 {
+    margin: 0 0 10px;
+}
+
 img {
 	max-width: 100%;
 }
@@ -38,6 +45,26 @@ pre {
 
 code {
 	word-break: break-all;
+}
+
+code {
+	width: auto;
+	height: auto;
+	padding: 0.2em;
+	margin: -0.2em 0;
+	border-radius: 3px;
+	font-size: 85%;
+	font-family: Consolas,"Andale Mono WT","Andale Mono","Lucida Console","Lucida Sans Typewriter","DejaVu Sans Mono","Bitstream Vera Sans Mono","Liberation Mono","Nimbus Mono L","Courier New",Courier,monospace;
+	text-indent: 0;
+	border: none;
+	white-space: pre-wrap;
+	vertical-align: baseline;
+	background-color: rgba(0, 0, 0, 0.15);
+}
+
+pre {
+	font-size: 85%;
+	font-family: Consolas,"Andale Mono WT","Andale Mono","Lucida Console","Lucida Sans Typewriter","DejaVu Sans Mono","Bitstream Vera Sans Mono","Liberation Mono","Nimbus Mono L","Courier New",Courier,monospace;
 }
 
 /*tr.torrent:not(.group_torrent) td:first-of-type:before {
@@ -1239,10 +1266,40 @@ input[type="search"] {
     filter: brightness(70%);
 }*/
 
-div.linkbox {
-	margin-bottom: 5px;
-	padding: 6px 4px;
+.thin > .header .linkbox {
+	text-align: right;
+}
+
+#user .linkbox,
+#requests .linkbox,
+#torrents .linkbox,
+#collage .linkbox,
+#inbox .linkbox,
+#forums .linkbox:not(.thread-controls) {
 	text-align: center;
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+#forums .index_linkbox.linkbox:not(.thread-controls) {
+	padding-bottom: 0;
+	padding-top: 0;
+}
+
+#forums .linkbox {
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+#forums .linkbox.forum-page,
+#forums .index_linkbox.linkbox,
+.unread_linkbox.linkbox {
+	text-align: center;
+}
+
+span.remove_bookmark,
+.add_bookmark {
+	margin-left: 8px;
 }
 
 #forums #content table:not(.hidden).layout.border {
@@ -1289,6 +1346,10 @@ div.linkbox {
 		display: none;
 	}
 	
+	#forums .linkbox:nth-child(4) {
+		padding-top: 0;
+	}
+	
 	.move_t {
 		display: flex;
 		align-items: center;
@@ -1319,6 +1380,17 @@ div.linkbox {
 	
 	.post-controls .btn {
 		font-size: 0.85em;
+	}
+	
+	.linkbox.thread-controls {
+		width: 100%;
+		text-align: center;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	#forums .btn-group, .btn-group-vertical {
+		align-self: center;
 	}
 	
 	#main_site_menu {
@@ -1513,7 +1585,6 @@ div.linkbox {
 	}
 	
 	#forums #content .thin > h2 {
-		margin-bottom: 12px;
 		margin-top: 12px;
 	}
 }

@@ -160,7 +160,7 @@ li:last-child {
 
 blockquote {
 	background-color: $blockquote-background-color;
-	border: 1px dashed rgba(255, 255, 255, 0.25);
+	border: 1px dashed rgba(0, 0, 0, 0.25);
 	margin: 12px;
 	padding: 12px;
 }
@@ -365,6 +365,11 @@ a.btn-secondary:hover {
 	background: $btn-secondary-background-hover;
 }
 
+div .linkbox .btn-group input[type=submit]:hover {
+	background: transparent;
+	border-color: transparent;
+}
+
 .body,
 .head,
 .pad {
@@ -534,8 +539,9 @@ table.box2 {
 	color: #12a1e3;
 }
 
-.forum_post .avatar {
-    background: #cdd9d7;
+.forum_post div:not(.post-controls) > a,
+.forum_post div:not(.post-controls) ul > li > a {
+	color: #198e70;
 }
 
 .forum_post.forum_unread {
@@ -1623,7 +1629,6 @@ ul.collage_images li a > span {
 
 .box.pad {
 	border: 1px dashed rgba(255, 255, 255, 0.25) !important;
-	filter: brightness(93%) !important;
 }
 
 .box table:not(.layout),
@@ -1962,9 +1967,17 @@ ul.collage_images img {
 }
 
 a.btn-outline-secondary,
-.linkbox .btn-group form input[type=submit] {
-    color: #383838;
-    border-color: #383838;
+.linkbox .btn-group form input[type=submit],
+.linkbox .btn-outline-secondary,
+div .linkbox .btn-group form {
+	color: #6f6f6f;
+	border-color: #6f6f6f;
+}
+
+.linkbox .btn-outline-secondary:hover,
+div .linkbox .btn-group form:hover {
+	border-color: #6f6f6f;
+	background-color: #6f6f6f;
 }
 
 button,
@@ -2947,25 +2960,25 @@ div input[value="Join here!"] {
 		height: 18px;
 		width: 18px;
 	}
-
+	
 	.menu_container .hiden_mobile_menu {
-	    color: $a-color;
+		color: $a-color;
 	}
-
+	
 	label.main_mobile_menu_toggle .spinner {
 		background-color: $a-color;
 	}
-
+	
 	div#userinfo li a,
 	div#userinfo li a:hover,
 	div#main_site_menu #menu ul.main_site_menu_inner li a,
 	#main_site_menu > #menu > ul > #nav_staff > a,
 	#main_site_menu > #menu > ul > #nav_staff > a:hover {
-	    color: #fff!important;
+		color: #fff!important;
 	}
-
+	
 	div#userinfo #userinfo_stats li {
-	    color: #a4a4a4;
+		color: #a4a4a4;
 	}
 }
 

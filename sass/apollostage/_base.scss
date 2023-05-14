@@ -698,10 +698,6 @@ table.box2 {
 	width: 100px;
 }
 
-.linkbox {
-	text-align: left;
-}
-
 #userinfo_major > li,
 #userinfo_stats > li,
 .linkbox .brackets {
@@ -841,7 +837,6 @@ table.box2 {
 	flex: 1 0 auto;
 	-ms-flex: 1 0 auto;
 	-ms-flex-item-align: end;
-	margin-top: 8px;
 }
 
 #noty_bottomRight_layout_container {
@@ -1095,15 +1090,15 @@ div#flip_view_1 div#similar-artist .name {
 	color: $a-hover-color;
 }
 
+#forums .linkbox {
+	padding: 8px 4px;
+}
+
 .group_info > span:first-child,
 .group_torrent td:first-child > span,
 .torrent_links_block {
 	color: $footer-color;
 	float: right;
-	margin-right: 4px;
-}
-
-.add_bookmark {
 	margin-right: 4px;
 }
 
@@ -1702,20 +1697,6 @@ blockquote {
 	font-size: 14.5px;
 }
 
-code {
-	width: auto;
-	height: auto;
-	padding: 0.2em;
-	margin: -0.2em 0;
-	border-radius: 3px;
-	font-size: 85%;
-	font-family: Consolas,"Andale Mono WT","Andale Mono","Lucida Console","Lucida Sans Typewriter","DejaVu Sans Mono","Bitstream Vera Sans Mono","Liberation Mono","Nimbus Mono L","Courier New",Courier,monospace;;
-	text-indent: 0;
-	border: none;
-	white-space: pre-wrap;
-	vertical-align: baseline;
-	background-color: rgba(0, 0, 0, 0.15);
-}
 /*
  * We want vertical flex unless there's a sidebar. However, CSS has no parent selectors.
  * So, instead, we set width: 100% on everything, which is basically the same as column
@@ -1783,12 +1764,6 @@ ul.collage_images img {
  * than being put here like they should be */
 
 @media (min-width: 480px) {
-	.thin .index_linkbox.linkbox {
-		margin: 0;
-		margin-top: 0;
-		margin-bottom: 0;
-	}
-	
 	.thin:last-child > :not(.two_columns):not(.thin .index_linkbox.linkbox ) {
 		margin: 4px;
 	}
@@ -1929,11 +1904,6 @@ ul.collage_images img {
 		width: 5rem;
 	}
 	
-	.linkbox {
-		text-align: left;
-		width: 90%;
-	}
-	
 	html body .scale_image,
     #stats img {
 		max-width: 100%;
@@ -1989,6 +1959,10 @@ ul.collage_images img {
 	.cat_list tr {
 		display: flex;
 		flex-wrap: wrap;
+	}
+	
+	#forums #content .thin > h2 {
+		margin-bottom: 8px;
 	}
     /* END forms */
   

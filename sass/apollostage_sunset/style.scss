@@ -19,7 +19,7 @@ $a-color: #f4f4f4;
 $a-hover-color: #fad5cd;
 $header-background-color: #ab718d;
 
-$menu-li-second-child-background-color: #ff886f;
+$menu-li-second-child-background-color: #ffb0a0;
 $menu-li-third-child-background-color: #ff9e98;
 $menu-li-fourth-child-background-color: #fe8691;
 $menu-li-fifth-child-background-color: #f07c8e;
@@ -31,7 +31,7 @@ $blockquote-background-color: #38363d;
 $input-background-color: #3f3e46;
 
 $span-green-color: #54ba54;
-$span-blue-color: #5454ed;
+$span-blue-color: #5487ed;
 
 $torrent-background-color: #38363d;
 
@@ -48,14 +48,14 @@ $menu-background-color-2: #c47891;
 $selection-background-color: rgba(217, 130, 111, 0.6);
 $poll-background-color: rgba(230, 159, 144, 0.1);
 
-$unread-icon: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAACVBMVEX////g4ODg4ODBKPUMAAAAAnRSTlMAAHaTzTgAAAAtSURBVHhefYuhEQAwCMTetvv9Pl2CIfgpoSBwRORiguFKD4dMydeyqlZtrU8A6JMUKeHoG3AAAAAASUVORK5CYII=);
-$unread-locked-icon: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAD1BMVEX////g4ODg4ODg4ODg4OAMRpkCAAAABHRSTlMAAFZXqn1YHwAAADxJREFUeF6VirERACAIxBxBmYCCERhAOPefyQc8KxtT5fLfHqxgQmyAFAT7Kj2LOZ0iwiXkMeGqyiH1uWz5Fw69ZPQ3OgAAAABJRU5ErkJggg==);
-$unread-sticky-icon: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAG1BMVEXg4OD////g4ODg4ODg4ODg4ODg4ODg4ODg4OBQ7+XbAAAACHRSTlMAAFFTUl5URdDB1TQAAABISURBVHhehcahEYAwEADBY0AgE4ekDCRlUAKSEp6oKxvmJwLHqqV2lBlgeOPO4V1ZbMCbsmlkRiWDrcdzzVwxRSaAv6j6Te0es5kZ6IK/EdsAAAAASUVORK5CYII=);
-$unread-locked-sticky-icon: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAIVBMVEX////g4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4OCDOE8QAAAACnRSTlMAAFZRUlNXVF5FRF9ofwAAAFxJREFUeF49zLEVgCAMBNDQWhmeNlbUdI7gGo7ACI5g5wYGu5vSkPC46r+7vNBI2FgzK3DwjZdowqeNIpyAGFbAG9at49oNjyxiEPvjqLE3OSdHrG0CpJTkaDcjPwJ6HWxMBPutAAAAAElFTkSuQmCC);
+$unread-icon: url(./assets/icons/Forum-Dark-Unread.svg);
+$unread-locked-icon: url(./assets/icons/Forum-Dark-Locked.svg);
+$unread-sticky-icon: url(./assets/icons/Forum-Dark-Pinned.svg);
+$unread-locked-sticky-icon: url(./assets/icons/Forum-Dark-Pinned-Locked.svg);
 
-$read-icon: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAACVBMVEX///+QkJCQkJBzLNgEAAAAAnRSTlMAAHaTzTgAAAAtSURBVHhefYuhEQAwCMTetvv9Pl2CIfgpoSBwRORiguFKD4dMydeyqlZtrU8A6JMUKeHoG3AAAAAASUVORK5CYII=);
-$read-locked-icon: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAD1BMVEX///+QkJCQkJCQkJCQkJAi+GD7AAAABHRSTlMAAFZXqn1YHwAAADxJREFUeF6VirERACAIxBxBmYCCERhAOPefyQc8KxtT5fLfHqxgQmyAFAT7Kj2LOZ0iwiXkMeGqyiH1uWz5Fw69ZPQ3OgAAAABJRU5ErkJggg==);
-$read-sticky-icon: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAG1BMVEWQkJD///+QkJCQkJCQkJCQkJCQkJCQkJCQkJA3mkjtAAAACHRSTlMAAFFTUl5URdDB1TQAAABISURBVHhehcahEYAwEADBY0AgE4ekDCRlUAKSEp6oKxvmJwLHqqV2lBlgeOPO4V1ZbMCbsmlkRiWDrcdzzVwxRSaAv6j6Te0es5kZ6IK/EdsAAAAASUVORK5CYII=);
-$read-locked-sticky-icon: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAIVBMVEX///+QkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJBBpNmTAAAACnRSTlMAAFZRUlNXVF5FRF9ofwAAAFxJREFUeF49zLEVgCAMBNDQWhmeNlbUdI7gGo7ACI5g5wYGu5vSkPC46r+7vNBI2FgzK3DwjZdowqeNIpyAGFbAG9at49oNjyxiEPvjqLE3OSdHrG0CpJTkaDcjPwJ6HWxMBPutAAAAAElFTkSuQmCC);
+$read-icon: url(./assets/icons/Forum-Dark-Read.svg);
+$read-locked-icon: url(./assets/icons/Forum-Dark-Pinned-Locked-Read.svg);
+$read-sticky-icon: url(./assets/icons/Forum-Dark-Pinned-Read.svg);
+$read-locked-sticky-icon: url(./assets/icons/Forum-Dark-Pinned-Locked-Read.svg);
 
 @import '../apollostage/_base';

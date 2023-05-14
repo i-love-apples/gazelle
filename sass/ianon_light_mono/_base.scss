@@ -566,12 +566,9 @@ table.box2 {
 	color: #12a1e3;
 }
 
-.forum_post div:not(.post-controls) > a {
+.forum_post div:not(.post-controls) > a,
+.forum_post div:not(.post-controls) ul > li > a {
 	color: #06c;
-}
-
-.forum_post .avatar {
-    background: #cdd9d7;
 }
 
 .forum_post.forum_unread {
