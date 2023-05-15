@@ -1,6 +1,6 @@
 {
-  "name": "gazelle",
-  "version": "0.0.0",
+  "name": "ianon gazelle",
+  "version": "1.0.4",
   "description": "",
   "scripts": {
     "dev": "yarn build",
