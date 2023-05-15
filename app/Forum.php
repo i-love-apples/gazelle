@@ -390,7 +390,8 @@ class Forum extends BaseObject {
             SELECT id_user FROM forum_autosub WHERE id_forum = ?
             ", $this->id()
         );
-        return self::$db->to_array('id_user', MYSQLI_ASSOC, false);
+        return self::$db->collect('id_user', false);
+        
     }
 
     public function autoSubscribeForUserList(User $user): array {
@@ -401,7 +402,7 @@ class Forum extends BaseObject {
             SELECT id_forum FROM forum_autosub WHERE id_user = ?
             ", $user->id()
         );
-        return self::$db->to_array('id_forum', MYSQLI_ASSOC, false);
+        return self::$db->collect('id_forum', false);
     }
 
     /**
