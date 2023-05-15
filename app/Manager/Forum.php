@@ -12,6 +12,7 @@ class Forum extends \Gazelle\BaseManager {
     protected const ID_POST_KEY      = 'zz_fp_%d';
     protected const CACHE_TOC_UN_THREAD   = 'forum_toc_un_thread_%d';
     protected const CACHE_TOC_UN_THREAD_PAGES   = 'forum_toc_un_thread_%d_pages';
+    protected const CACHE_TOC_RC_THREAD   = 'forum_toc_rc_thread_%d';
 
     /**
      * Create a forum
@@ -134,6 +135,28 @@ class Forum extends \Gazelle\BaseManager {
             self::$cache->cache_value(self::CACHE_TOC_MAIN, $toc, 86400 * 10);
         }
         return $toc;
+    }
+
+    public function tableOfContentsRecentThread(\Gazelle\User $user, $limit): array {
+        $key = sprintf(self::CACHE_TOC_RC_THREAD, $user->id());
+        $forumToc = null;
+        if (!$forumToc = self::$cache->get_value($key)) {
+            $permitted = $user->permittedForums();
+            self::$db->prepared_query("
+                SELECT ft.ID, ft.ForumID, f.Name, ft.Title, ft.AuthorID, ft.IsLocked, ft.IsSticky,
+                    ft.NumPosts, ft.LastPostID, ft.LastPostTime, ft.LastPostAuthorID
+                FROM forums_topics ft
+                LEFT JOIN forums f ON (f.ID = ft.ForumID)
+                WHERE
+                    (f.MinClassRead <= ? OR f.ID IN ( ? ))
+                ORDER BY ft.LastPostTime DESC
+                LIMIT ?, ?
+                ", $user->classLevel(), placeholders($permitted), 0, $limit
+            );
+            $forumToc = self::$db->to_array('ID', MYSQLI_ASSOC, false);
+            self::$cache->cache_value($key, $forumToc, 60);
+        }
+        return $forumToc;
     }
 
     public function tableOfContentsUnreadThread(\Gazelle\User $user, int $page = 1): array {

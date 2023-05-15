@@ -32,6 +32,55 @@ if (!$contest) {
     }
 }
 
+$forumToc = (new Gazelle\Manager\Forum())->tableOfContentsRecentThread($Viewer, 5);
+$perPage = $Viewer->postsPerPage();
+if (count($forumToc) > 0) {
+    foreach ($forumToc as &$thread) {
+        $forum = (new Gazelle\Manager\Forum)->findById((int)$thread['ForumID']);
+        if (!is_null($forum)) {
+            $userLastRead = $forum->userLastRead($Viewer->id(), $perPage);
+        }
+        if (isset($userLastRead[$thread['ID']])) {
+            $thread['last_read_page'] = (int)$userLastRead[$thread['ID']]['Page'];
+            $thread['last_read_post'] = $userLastRead[$thread['ID']]['PostID'];
+            $catchup = $userLastRead[$thread['ID']]['PostID'] >= $thread['LastPostID']
+                || $Viewer->forumCatchupEpoch() >= strtotime($thread['LastPostTime']);
+            $thread['is_read'] = true;
+        } else {
+            $thread['last_read_page'] = null;
+            $thread['last_read_post'] = null;
+            $catchup = $Viewer->forumCatchupEpoch() >= strtotime($thread['LastPostTime']);
+            $thread['is_read'] = false;
+        }
+    
+        $thread['icon_class'] = (($thread['IsLocked'] && !$thread['IsSticky']) || $catchup ? 'read' : 'unread')
+            . ($thread['IsLocked'] ? '_locked' : '')
+            . ($thread['IsSticky'] ? '_sticky' : '');
+    
+        $links = [];
+        $threadPages = ceil($thread['NumPosts'] / $perPage);
+        if ($threadPages > 1) {
+            $ellipsis = false;
+            for ($i = 1; $i <= $threadPages; $i++) {
+                if ($threadPages > 4 && ($i > 2 && $i <= $threadPages - 2)) {
+                    if (!$ellipsis) {
+                        $links[] = '-';
+                        $ellipsis = true;
+                    }
+                    continue;
+                }
+                $links[] = sprintf('<a href="forums.php?action=viewthread&amp;threadid=%d&amp;page=%d">%d</a>',
+                    $thread['ID'], $i, $i);
+            }
+        }
+        $thread = array_merge($thread, [
+            'cut_title'  => shortenString($thread['Title'] ?? "", 75 - (2 * count($links))),
+            'page_links' => $links ? (' (' . implode(' ', $links) . ')') : '',
+        ]);
+        unset($thread); // because looping by reference
+    }
+}
+
 echo $Twig->render('index/private-sidebar.twig', [
     'blog'              => new Gazelle\Manager\Blog,
     'collage_count'     => (new Gazelle\Stats\Collage)->collageCount(),
@@ -48,8 +97,9 @@ echo $Twig->render('index/private-sidebar.twig', [
 ]);
 
 echo $Twig->render('index/private-main.twig', [
-    'admin'   => (int)$Viewer->permitted('admin_manage_news'),
-    'contest' => $contestMan->currentContest(),
-    'latest'  => (new Gazelle\Manager\Torrent)->latestUploads(5),
-    'news'    => $newsMan->headlines(),
+    'admin'         => (int)$Viewer->permitted('admin_manage_news'),
+    'contest'       => $contestMan->currentContest(),
+    'latest'        => (new Gazelle\Manager\Torrent)->latestUploads(5),
+    'latest_posts'  => $forumToc,
+    'news'          => $newsMan->headlines(),
 ]);
