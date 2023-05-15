@@ -1320,6 +1320,11 @@ span.remove_bookmark,
 	margin-left: 0;
 }
 
+#forums .linkbox.linkbox:nth-of-type(5):not(.thread-controls) {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
 .btn.new-thread {
 	color: #fff;
 	background: #248046;
@@ -1366,7 +1371,8 @@ span.remove_bookmark,
 	}
 }
 	@media (max-width: 480px) {
-	.hide_torrents>a, .show_torrents>a {
+	.hide_torrents>a,
+	.show_torrents>a {
 		line-height: 1.4;
 		margin-top: 4px;
 	}
