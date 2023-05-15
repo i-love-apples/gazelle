@@ -1366,6 +1366,11 @@ span.remove_bookmark,
 	}
 }
 	@media (max-width: 480px) {
+	.hide_torrents>a, .show_torrents>a {
+		line-height: 1.4;
+		margin-top: 4px;
+	}
+
 	tr.colhead_dark.notify_ a.brackets {
 		display: none;
 	}
