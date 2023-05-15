@@ -710,15 +710,15 @@ table.box2 {
 	background-color: $a-hover-color;
 }
 
-#main_site_menu > #menu li a,
-#main_site_menu > #menu li a:hover,
+#menu ul > li > a,
+#menu ul > li > a:hover,
 #userinfo_username #nav_userinfo > a,
 #userinfo_username #nav_userinfo > a:hover {
 	color: #fff;
 }
 
-#main_site_menu > #menu > ul > #nav_staff > a,
-#main_site_menu > #menu > ul > #nav_staff > a:hover {
+#menu ul > #nav_staff > a,
+#menu ul > #nav_staff > a:hover {
 	color: $a-color;
 }
 
@@ -1719,15 +1719,15 @@ ul.main_site_menu_inner li#nav_staff > a {
 
 #userinfo_minor:hover a,
 #userinfo_username:hover a,
-.main_site_menu_inner #nav_index > a,
-.main_site_menu_inner #nav_torrents > a,
-.main_site_menu_inner #nav_collages > a,
-.main_site_menu_inner #nav_requests > a,
-.main_site_menu_inner #nav_forums > a,
-.main_site_menu_inner #nav_irc > a,
-.main_site_menu_inner #nav_top10 > a,
-.main_site_menu_inner #nav_rules > a,
-.main_site_menu_inner #nav_wiki > a {
+#menu ul > #nav_index > a,
+#menu ul > #nav_torrents > a,
+#menu ul > #nav_collages > a,
+#menu ul > #nav_requests > a,
+#menu ul > #nav_forums > a,
+#menu ul > #nav_irc > a,
+#menu ul > #nav_top10 > a,
+#menu ul > #nav_rules > a,
+#menu ul > #nav_wiki > a {
 	color: #fff!important;
 }
 
