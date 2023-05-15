@@ -41,7 +41,7 @@ function AlterParanoia() {
     });
 
     $.each([
-        'collagecontribs', 'collages', 'leeching', 'torrentcomments', 'perfectflacs', 'seeding', 'snatched', 'uniquegroups', 'uploads',
+        'collagecontribs', 'collages', 'leeching', 'torrentcomments', 'seeding', 'snatched', 'uniquegroups', 'uploads',
     ], function(i,val) {
         $('input[name=p_l_' + val + ']').raw().disabled = !$('input[name=p_c_' + val + ']').raw().checked;
         UncheckIfDisabled($('input[name=p_l_' + val + ']').raw());
@@ -62,16 +62,16 @@ function AlterParanoia() {
         $('input[name=p_c_uniquegroups]').raw().disabled = true;
         $('input[name=p_l_uniquegroups]').raw().checked = true;
         $('input[name=p_l_uniquegroups]').raw().disabled = true;
-        $('input[name=p_c_perfectflacs]').raw().checked = true;
-        $('input[name=p_c_perfectflacs]').raw().disabled = true;
-        $('input[name=p_l_perfectflacs]').raw().checked = true;
-        $('input[name=p_l_perfectflacs]').raw().disabled = true;
-        $('input[type=checkbox][name=p_artistsadded]').raw().checked = true;
-        $('input[type=checkbox][name=p_artistsadded]').raw().disabled = true;
+        // $('input[name=p_c_perfectflacs]').raw().checked = true;
+        // $('input[name=p_c_perfectflacs]').raw().disabled = true;
+        // $('input[name=p_l_perfectflacs]').raw().checked = true;
+        // $('input[name=p_l_perfectflacs]').raw().disabled = true;
+        // $('input[type=checkbox][name=p_artistsadded]').raw().checked = true;
+        // $('input[type=checkbox][name=p_artistsadded]').raw().disabled = true;
     } else {
         $('input[name=p_c_uniquegroups]').raw().disabled = false;
-        $('input[name=p_c_perfectflacs]').raw().disabled = false;
-        $('input[type=checkbox][name=p_artistsadded]').raw().disabled = false;
+        // $('input[name=p_c_perfectflacs]').raw().disabled = false;
+        // $('input[type=checkbox][name=p_artistsadded]').raw().disabled = false;
     }
 
     if (!$('input[name=p_l_collagecontribs]').raw().checked) {

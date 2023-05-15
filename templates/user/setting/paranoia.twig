@@ -85,18 +85,6 @@
         <td class="label"><strong>Unique groups uploaded</strong></td>
         <td>{{ paranoia_list(user, 'uniquegroups') }}</td>
     </tr>
-    <tr id="para_uplpflac_tr">
-        <td class="label"><strong>"Perfect" FLACs uploaded</strong></td>
-        <td>{{ paranoia_list(user, 'perfectflacs') }}</td>
-    </tr>
-    <tr id="para_artistsadded_tr">
-        <td class="label tooltip" title="This option controls the display of the artists you have added to torrent groups on the site. This number includes artists added via the torrent upload form, as well as artists added via the &quot;Add artists&quot; box on torrent group pages.">
-            <strong>Artists added via uploads</strong>
-        </td>
-        <td>
-            <label><input type="checkbox" name="p_artistsadded"{{ checked(not user.isParanoid('artistsadded')) }} /> Show count</label>
-        </td>
-    </tr>
     <tr id="para_torsubscr_tr">
         <td class="label tooltip" title="This option allows other users to subscribe to your torrent uploads.">
             <strong>Notifications</strong>
