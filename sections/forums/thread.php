@@ -378,20 +378,24 @@ foreach ($slice as $Key => $Post) {
 </div>
 <?php
 echo $paginator->linkbox();
-$lastPost = end($slice);
+if (!empty($slice)) {
+    $lastPost = end($slice);
 
-if ($Viewer->permitted('site_moderate_forums') || ($Viewer->writeAccess($forum) && !$thread->isLocked())) {
-    echo $Twig->render('reply.twig', [
-        'action'   => 'reply',
-        'forum'    => $forumId,
-        'id'       => $threadId,
-        'merge'    => strtotime($lastPost['AddedTime']) > time() - 3600 && $lastPost['AuthorID'] == $Viewer->id(),
-        'name'     => 'threadid',
-        'subbed'   => $isSubscribed,
-        'textarea' => (new Gazelle\Util\Textarea('quickpost', '', 90, 8))->setPreviewManual(true),
-        'userMan'  => $userMan,
-        'viewer'   => $Viewer,
-    ]);
+    if ($Viewer->permitted('site_moderate_forums') || ($Viewer->writeAccess($forum) && !$thread->isLocked())) {
+        $merge = $lastPost['AddedTime'] !== null && strtotime($lastPost['AddedTime']) > time() - 3600 && $lastPost['AuthorID'] == $Viewer->id();
+
+        echo $Twig->render('reply.twig', [
+            'action'   => 'reply',
+            'forum'    => $forumId,
+            'id'       => $threadId,
+            'merge'    => $merge,
+            'name'     => 'threadid',
+            'subbed'   => $isSubscribed,
+            'textarea' => (new Gazelle\Util\Textarea('quickpost', '', 90, 8))->setPreviewManual(true),
+            'userMan'  => $userMan,
+            'viewer'   => $Viewer,
+        ]);
+    }
 }
 
 if (count($transitions)) {

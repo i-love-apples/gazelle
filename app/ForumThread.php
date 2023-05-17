@@ -80,7 +80,7 @@ class ForumThread extends BaseObject {
                 self::$cache->cache_value($key, $info, 86400);
             }
         }
-        $this->info = $info;
+        $this->info = $info ?? [];
         return $this->info;
     }
 
@@ -97,7 +97,10 @@ class ForumThread extends BaseObject {
     }
 
     public function forumId(): int {
-        return $this->info()['forum_id'];
+        if (isset($this->info()['forum_id'])) {
+            return (int)$this->info()['forum_id'];
+        }
+        return 0;
     }
 
     public function forum(): Forum {
@@ -105,7 +108,8 @@ class ForumThread extends BaseObject {
     }
 
     public function hasPoll(): bool {
-        return !$this->info()['no_poll'];
+        $info = $this->info();
+        return isset($info['no_poll']) ? !$info['no_poll'] : false;
     }
 
     public function poll(): ForumPoll {
@@ -113,11 +117,13 @@ class ForumThread extends BaseObject {
     }
 
     public function isLocked(): bool {
-        return (bool)$this->info()['is_locked'];
+        $info = $this->info();
+        return isset($info['is_locked']) ? (bool)$info['is_locked'] : false;
     }
 
     public function isPinned(): bool {
-        return (bool)$this->info()['is_locked'];
+        $info = $this->info();
+        return isset($info['is_pinned']) ? (bool)$info['is_pinned'] : false;
     }
 
     public function lastAuthorId(): int {
@@ -132,8 +138,9 @@ class ForumThread extends BaseObject {
         return $this->info()['last_post_time'];
     }
 
-    public function pinnedPostId(): ?int {
-        return $this->info()['pinned_post_id'];
+    public function pinnedPostId(): int {
+        $info = $this->info();
+        return isset($info['pinned_post_id']) ? (int)$info['pinned_post_id'] : 0;
     }
 
     public function pinnedPostInfo(): array {
@@ -141,19 +148,23 @@ class ForumThread extends BaseObject {
     }
 
     public function pinnedRanking(): int {
-        return $this->info()['pinned_ranking'];
+        $info = $this->info();
+        return isset($info['pinned_ranking']) ? (int)$info['pinned_ranking'] : 0;
     }
 
     public function postTotal(): int {
-        return $this->info()['post_total'];
+        $info = $this->info();
+        return isset($info['post_total']) ? (int)$info['post_total'] : 0;
     }
+
 
     public function postTotalSummary(): int {
         return $this->info()['post_total_summary'];
     }
 
     public function title(): string {
-        return $this->info()['title'];
+        $info = $this->info();
+        return isset($info['title']) ? (string)$info['title'] : '';
     }
 
     public function lastPage(): int {

@@ -92,7 +92,8 @@ class ForumPoll extends BaseObject {
     }
 
     public function question(): string {
-        return $this->info()['question'];
+        $info = $this->info();
+        return isset($info['question']) ? (string)$info['question'] : '';
     }
 
     public function total(): int {

@@ -107,7 +107,7 @@ class Forum extends BaseObject {
             );
             self::$cache->cache_value($key, $info, 86400);
         }
-        $this->info = $info;
+        $this->info = $info ?? [];
         return $this->info;
     }
 
@@ -168,7 +168,8 @@ class Forum extends BaseObject {
     }
 
     public function minClassRead(): int {
-        return $this->info()['min_class_read'];
+        $info = $this->info();
+        return isset($info['min_class_read']) ? (int)$info['min_class_read'] : 0;
     }
 
     public function minClassWrite(): int {
@@ -176,7 +177,8 @@ class Forum extends BaseObject {
     }
 
     public function name(): string {
-        return $this->info()['name'];
+        $info = $this->info();
+        return isset($info['name']) ? (string)$info['name'] : '';
     }
 
     public function numPosts(): int {
