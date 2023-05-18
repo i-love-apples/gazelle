@@ -68,6 +68,7 @@
                 <strong>{{ article.title|bb_format }}</strong> {{ article.created|time_diff }}
 {% if admin %}
                 - <a href="tools.php?action=editnews&amp;id={{ article.id }}" class="brackets">Edit</a>
+                <a href="tools.php?action=deletenews&amp;id={{ article.id }}&amp;auth={{ auth }}" class="brackets">Delete</a>
 {% endif %}
 
 {%- set name = 'news' ~ article.id -%}
