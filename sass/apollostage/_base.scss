@@ -1728,6 +1728,10 @@ blockquote {
 ul.collage_images img {
 	object-fit: cover;
 }
+
+#content form table {
+    background: $form-background-color;
+}
 /*
  * Documentation of mobile classes:
  * GENERAL:

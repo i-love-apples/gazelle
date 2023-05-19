@@ -30,6 +30,23 @@
 	font-weight: unset;
 }
 
+.linkbox > :last-child {
+    margin-bottom: 0;
+    align-items: center;
+}
+
+.linkbox .btn {
+    line-height: 1.2745;
+}
+
+.linkbox .btn-group input[type=submit] {
+    line-height: 1.2745;
+}
+
+.linkbox .btn-group input[type=submit] {
+    padding: 0.375rem 0.75rem;
+}
+
 @media only screen and (min-width: 768px) {
 	div .avatar_container > :last-child {
 		margin-right: unset;
@@ -8144,7 +8161,7 @@ code {
 }
 
 table.forum_post td.body {
-	line-height: 1.4;
+	line-height: 1.313;
 }
 
 ul.collage_images img {
@@ -8989,6 +9006,10 @@ ul.collage_images li img {
 	
 	#torrents .torrent_table .group td:nth-of-type(4) {
 		display: none;
+	}
+
+	.linkbox .btn-group input[type=submit] {
+	    font-size: .9em!important;
 	}
 }
 /* END MOBILE */
