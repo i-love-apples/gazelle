@@ -423,7 +423,7 @@ if ($Viewer->permitted('site_moderate_forums')) {
 <?php } ?>
             <tr>
                 <td colspan="2" class="center">
-                    <div class="field_div textarea_wrap"><textarea id="topic_notes" name="body" cols="90" rows="3" onkeyup="resize('threadnotes');" style=" margin: 0px; width: 735px;"></textarea></div>
+                    <div class="field_div textarea_wrap"><textarea id="topic_notes" name="body" cols="90" rows="3" onkeyup="resize('threadnotes');"></textarea></div>
                     <input type="submit" value="Save" />
                 </td>
             </tr>

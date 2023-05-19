@@ -9,7 +9,7 @@ $search->setSearchType($_GET['type'] ?? 'title')
 // Searching for posts in a specific thread
 $ThreadID = (int)($_GET['threadid'] ?? 0);
 if (!$ThreadID) {
-    $Title = " &rsaquo; &ldquo;" . display_str($search->searchText()) . "&rdquo;";
+    $Title = " &rsaquo; " . display_str($search->searchText());
 } else {
     $Title = $search->threadTitle($ThreadID);
     if (is_null($Title)) {
@@ -68,122 +68,134 @@ $paginator->setTotal($search->totalHits());
 
 View::show_header('Forums &rsaquo; Search', ['js' => 'bbcode,forum_search,datetime_picker', 'css' => 'datetime_picker']);
 ?>
-<div class="thin">
+<div class="thin search_page">
     <h2><a href="forums.php">Forums</a> &rsaquo; Search<?=$Title?></h2>
-    <div class="index_linkbox linkbox">
+    <div class="search_linkbox linkbox">
         <div class="btn-group center">
         <a class="btn-outline-secondary btn" href="forums.php?action=viewunread" class="brackets">Unread topics</a>
         <a class="btn-outline-secondary btn" href="forums.php?action=catchup&amp;forumid=all&amp;auth=<?= $Viewer->auth() ?>" class="brackets">Catch up</a>
         </div>
     </div>
-    <form class="search_form" name="forums" action="" method="get">
+    <form id="advanced_container" class="search_form" name="forums" action="" method="get">
         <input type="hidden" name="action" value="search" />
-        <table cellpadding="6" cellspacing="1" border="0" class="layout border" width="100%">
-            <tr>
-                <td><strong>Search for:</strong></td>
+        <div class="head"><span style="float: right"><a href="#" onclick="$('.advanced').gtoggle(); this.innerHTML = (this.innerHTML == 'Switch to advanced' ? 'Switch to basic' : 'Switch to advanced'); return false;" class="brackets">Switch to advanced</a></span>&nbsp;</div>
+        <table cellpadding="6" cellspacing="1" border="0" class="basic_top layout border" width="100%">
+            <tr class="search_term">
+                <td class="label">Search for:</td>
                 <td>
                     <input type="search" name="search" size="70" value="<?= display_str($search->searchText()) ?>" />
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Posted by:</strong></td>
-                <td>
-                    <input type="search" name="user" placeholder="Username" size="70" value="<?= display_str($search->authorName()) ?>" />
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Topic created:</strong></td>
-                <td>
-                    After:
-                    <input type="text" class="date_picker" name="thread_created_after" id="thread_created_after" value="<?= $threadCreatedAfter ?>" />
-                    Before:
-                    <input type="text" class="date_picker" name="thread_created_before" id="thread_created_before" value="<?= $threadCreatedBefore ?>" />
-                </td>
-            </tr>
-<?php if (!$ThreadID) { ?>
-            <tr>
-                <td><strong>Search in:</strong></td>
-                <td>
                     <input type="radio" name="type" id="type_title" value="title"<?php if (!$search->isBodySearch()) { echo ' checked="checked"'; } ?> />
                     <label for="type_title">Titles</label>
                     <input type="radio" name="type" id="type_body" value="body"<?php if ($search->isBodySearch()) { echo ' checked="checked"'; } ?> />
                     <label for="type_body">Post bodies</label>
                 </td>
-            </tr>
-            <tr id="post_created_row" <?php if (!$search->isBodySearch()) { echo "class='hidden'"; } ?>>
-                <td><strong>Post created:</strong></td>
-                <td>
-                    After:
-                    <input type="text" class="date_picker" name="post_created_after" id="post_created_after" value="<?= $postCreatedAfter ?? '' ?>" />
-                    Before:
-                    <input type="text" class="date_picker" name="post_created_before" id="post_created_before" value="<?= $postCreatedBefore ?? '' ?>" />
-                </td>
+                    
             </tr>
             <tr>
-                <td><strong>Forums:</strong></td>
-                <td>
-        <table id="forum_search_cat_list" class="cat_list layout">
-<?php
-    // List of forums
-    $Open = false;
-    $LastCategoryID = -1;
-    $Columns = 0;
-    $i = 0;
-    $Forums = (new Gazelle\Manager\Forum)->forumList();
-    foreach ($Forums as $forumId) {
-        $forum = new Gazelle\Forum($forumId);
-        if (!$Viewer->readAccess($forum)) {
-            continue;
-        }
-        $Columns++;
+                <!-- begin full container -->           
+                            <tr class="advanced hidden search_term" id="forum_posted_by">
+                                <td class="label">Posted by:</td>
+                                <td>
+                                    <input type="search" name="user" placeholder="Username" size="32" value="<?= display_str($search->authorName()) ?>" />
+                                </td>
+                            </tr>
+                            <tr class="advanced hidden search_term" id="forum_topic_created">
+                                <td class="label">Created:</td>
+                                <td colspan="2">
+                                    <input placeholder="After" type="text" class="date_picker" name="thread_created_after" id="thread_created_after" size="32" value="<?= $threadCreatedAfter ?>" />
+                                    <input placeholder="Before" type="text" size="32" class="date_picker" name="thread_created_before" id="thread_created_before" value="<?= $threadCreatedBefore ?>" />
+                                </td>
+                            </tr>
 
-        if ($forum->categoryId() != $LastCategoryID) {
-            $LastCategoryID = $forum->categoryId();
-            if ($Open) {
-                if ($Columns % 5) {
-?>
-                <td colspan="<?=(5 - ($Columns % 5))?>"></td>
-<?php           } ?>
+                        <table id="forum_search_cat_list" class="cat_list layout">
+                            <?php if (!$ThreadID) { ?>
+                                        <tr class="search_term" id="post_created_row" <?php if (!$search->isBodySearch()) { echo "class='hidden'"; } ?>>
+                                            <td class="label">After:</td>
+                                            <td>
+                                              <input type="text" size="32" class="date_picker" name="post_created_after" id="post_created_after" value="<?= $postCreatedAfter ?? '' ?>" />
+                                            </td>
+                                            <td class="label">Before:</td>
+                                            <td>
+                                              <input type="text" size="32" class="date_picker" name="post_created_before" id="post_created_before" value="<?= $postCreatedBefore ?? '' ?>" />
+                                            </td>
+                                        </tr>
+                            <tr class="advanced hidden cat_list_row">
+                            <td id="all_forums">
+                        <!-- begin full container -->
+
+                <?php
+                    // List of forums
+                    $Open = false;
+                    $LastCategoryID = -1;
+                    $Columns = 0;
+                    $i = 0;
+                    $Forums = (new Gazelle\Manager\Forum)->forumList();
+                    foreach ($Forums as $forumId) {
+                        $forum = new Gazelle\Forum($forumId);
+                        if (!$Viewer->readAccess($forum)) {
+                            continue;
+                        }
+                        $Columns++;
+
+                        if ($forum->categoryId() != $LastCategoryID) {
+                            $LastCategoryID = $forum->categoryId();
+                            if ($Open) {
+                                if ($Columns % 5) {
+                ?>
+                                
+                <?php           } ?>
+                            </tr>
+                <?php
+                            }
+                            $Columns = 0;
+                            $Open = true;
+                            $i++;
+                ?>
+                            <!-- begin cat container -->
+                            <table class="cat_container">
+                                <tr>
+                                <td>
+                            <!-- begin cat container -->
+                            <tr class="cat_name">
+                                <td colspan="5" class="forum_cat">
+                                    <strong><?= $forum->categoryName() ?></strong>
+                                    <a href="#" class="brackets forum_category" id="forum_category_<?=$i?>">Check all</a>
+                                </td>
+                            </tr>
+                            <tr class="forum_name">
+                <?php   } elseif ($Columns % 5 == 0) { ?>
+                            </tr>
+                            <tr class="forum_row">
+                <?php   } ?>
+                                <td>
+                                    <input type="checkbox" name="forums[]" value="<?= $forumId ?>" data-category="forum_category_<?=$i?>" id="forum_<?= $forumId ?>"<?= in_array( $forumId , ($_GET['forums'] ?? [])) ? ' checked="checked"' : '' ?> />
+                                    <label for="forum_<?= $forumId ?>"><?=htmlspecialchars($forum->name())?></label>
+                                </td>
+                <?php
+                    }
+                    if ($Columns % 5) {
+                ?>
+                                
+                <?php    } ?>
+                            </tr>
+                <?php } else { ?>
+                                        <input type="hidden" name="threadid" value="<?=$ThreadID?>" />
+                <?php } ?>
+                                    </td>
+                                </tr>
+                            <!-- end cat container -->
+                            </td>
+                            </tr>
+                            </table>
+                            <!-- end cat container -->
+
+                            <!-- end full container -->
+                        </td>
+                        </tr>
+                        </table> 
+                <!-- end full container -->
             </tr>
-<?php
-            }
-            $Columns = 0;
-            $Open = true;
-            $i++;
-?>
-            <tr>
-                <td colspan="5" class="forum_cat">
-                    <strong><?= $forum->categoryName() ?></strong>
-                    <a href="#" class="brackets forum_category" id="forum_category_<?=$i?>">Check all</a>
-                </td>
-            </tr>
-            <tr>
-<?php   } elseif ($Columns % 5 == 0) { ?>
-            </tr>
-            <tr>
-<?php   } ?>
-                <td>
-                    <input type="checkbox" name="forums[]" value="<?= $forumId ?>" data-category="forum_category_<?=$i?>" id="forum_<?= $forumId ?>"<?= in_array( $forumId , ($_GET['forums'] ?? [])) ? ' checked="checked"' : '' ?> />
-                    <label for="forum_<?= $forumId ?>"><?=htmlspecialchars($forum->name())?></label>
-                </td>
-<?php
-    }
-    if ($Columns % 5) {
-?>
-                <td colspan="<?=(5 - ($Columns % 5))?>"></td>
-<?php    } ?>
-            </tr>
-        </table>
-<?php } else { ?>
-                        <input type="hidden" name="threadid" value="<?=$ThreadID?>" />
-<?php } ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="center">
-                        <input type="submit" value="Search" />
-                    </td>
-                </tr>
+            <input class="search_submit center" type="submit" value="Search" />
             </table>
         </form>
 
