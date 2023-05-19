@@ -28,39 +28,37 @@
             </div>
         </div>
 
-        <div id="last_posts">
-            <div class="head">
-                <strong>Latest Posts</strong>
-            </div>
-                <table class="forum_index m_table" width="100%" style="margin: 0px 0px 10px 0px; border-top-left-radius: 0px; border-top-right-radius: 0px;">
+
+        <table class="homepage_forums forum_index m_table">
+        <tr class="colhead">
+            <td><strong>Latest Posts</strong></td>
+        </tr>
 {% for thread in latest_posts %}
-                    <tr class="row{{ cycle(['a', 'b'], loop.index0) }}">
-                        <td class="td_forum">
-                            <h4 class="min_padding">
-                                <strong>
-                                    <a href="forums.php?action=viewforum&amp;forumid={{ thread.ForumID }}" class="tooltip" data-title-plain="{{ thread.Name }}">{{ thread.Name }}</a>
-                                </strong>
-                            </h4>
-                        </td>
-                        <td class="td_latest">
-                            <span style="float: left;" class="last_topic">
-                                <strong>
-                                    <a href="forums.php?action=viewthread&amp;threadid={{ thread.ID }}" class="tooltip" data-title-plain="{{ thread.Title }}"{%
-                                        if thread.Title != thread.cut_title %} title="{{ thread.Title }}"{% endif %}>{{ thread.cut_title }}</a>
-                                </strong>
-                                {{ thread.page_links|raw }}
-                            </span>
-                            {% if thread.is_read %}
-                                <span style="float: left;" class="{{ tooltip }} last_read" title="Jump to last read">
-                                    <a href="forums.php?action=viewthread&amp;threadid={{ thread.ID }}&amp;page={{ thread.last_read_page }}#post{{ thread.last_read_post }}"><i class="fa-solid fa-circle-arrow-right"></i></a>
-                                </span>
-                            {% endif %}
-                            <span style="float: right;" class="last_poster">by {{ thread.LastPostAuthorID|user_url }} {{ thread.LastPostTime|time_diff }}</span>
-                        </td>
-                    </tr>
+            <tr class="row{{ cycle(['a', 'b'], loop.index0) }}">
+                <td class="td_latest">
+                    <span style="float: left;" class="last_topic">
+                        <a href="forums.php?action=viewthread&amp;threadid={{ thread.ID }}" class="tooltip" data-title-plain="{{ thread.Title }}"{%
+                            if thread.Title != thread.cut_title %} title="{{ thread.Title }}"{% endif %}>{{ thread.cut_title }}</a>
+                        {{ thread.page_links|raw }}
+                    </span>
+                    {% if thread.is_read %}
+                        <span style="float: left;" class="{{ tooltip }} last_read" title="Jump to last read">
+                            <a href="forums.php?action=viewthread&amp;threadid={{ thread.ID }}&amp;page={{ thread.last_read_page }}#post{{ thread.last_read_post }}"><i class="fa-solid fa-circle-arrow-right"></i></a>
+                        </span>
+                    {% endif %}
+                    <span style="float: right;" class="last_poster">by {{ thread.LastPostAuthorID|user_url }} {{ thread.LastPostTime|time_diff }}</span>
+                </td>
+            </tr>
 {% endfor %}
-                </table>
-        </div>
+        <tr>
+            <td>
+                <span style="float: right;">
+                    <a href="forums.php?action=search">Show all</a>
+                </span>
+            </td>
+        </tr>
+        </table>
+
 
 {% for article in news[0:5] %}
         <div class="box news_post">
