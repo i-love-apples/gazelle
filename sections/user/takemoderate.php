@@ -499,7 +499,7 @@ if ($privChange && $userReason) {
         $Twig->render('user/pm-privilege.twig', [
             'privs'  => $privChange,
             'reason' => $userReason,
-            'url'    => 'wiki.php?action=article&amp;id=5',
+            'url'    => 'wiki.php?action=article&amp;id=2',
         ])
     );
     $editSummary[] = 'PM sent';
